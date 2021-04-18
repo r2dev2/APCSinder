@@ -1,1 +1,3 @@
-# Connect 4
+# APCSinder
+
+Hot singletons in your RAM.
