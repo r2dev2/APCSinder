@@ -1,0 +1,27 @@
+#!/bin/bash
+
+hjelp="
+APCS Friend matchmaking app\n
+\n
+Usage:\n
+	\t./apcsinder\n
+\n
+Subcommands:\n
+	\tclient:\n
+		\t\tRuns the client\n
+	\tserver:\n
+		\t\tRuns the host server\n
+"
+
+
+case $1 in
+	server)
+		cd bin && java Server
+		;;
+	-h|--help|help)
+		echo $hjelp | sed 's/\\n/\n/g' | sed 's/\\t/\t/g'
+		;;
+	''|client)
+		cd bin && java Client
+		;;
+esac
