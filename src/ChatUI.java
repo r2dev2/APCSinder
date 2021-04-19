@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.*;
-
+//ronak sucks
 public class ChatUI extends JFrame{
     private JScrollPane chatBoxScroll;
     private JTextArea chatBox;
