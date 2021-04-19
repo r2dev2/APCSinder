@@ -9,7 +9,7 @@ public class ChatUI extends JFrame{
     private JButton send;
 
     public ChatUI() {
-        setTitle("Hello World");
+        setTitle("APCSinder Chat");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setSize(1000, 600);
@@ -21,7 +21,7 @@ public class ChatUI extends JFrame{
         chatBoxScroll = new JScrollPane(chatBox);
 
         send.addActionListener(sendButtonListener());
-        chatBox.addKeyListener(enterSendListener());
+        messageBox.addKeyListener(enterSendListener());
 
         add(send, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
@@ -31,9 +31,18 @@ public class ChatUI extends JFrame{
 
     private KeyListener enterSendListener()
     {
-        // TODO @Justin
         return new KeyListener() {
-            public void keyPressed(KeyEvent e) { }
+            public void keyPressed(KeyEvent e) { 
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String t = messageBox.getText();
+                    if (t.length() != 0) {
+                        String messageText = chatBox.getText();
+                        messageText += t + "\n";
+                        chatBox.setText(messageText);
+                        messageBox.setText("");
+                    }
+                }
+            }
             public void keyReleased(KeyEvent e) { }
             public void keyTyped(KeyEvent e) { }
         };
