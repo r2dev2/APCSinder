@@ -21,7 +21,7 @@ public class ChatUI extends JFrame{
         chatBoxScroll = new JScrollPane(chatBox);
 
         send.addActionListener(sendButtonListener());
-        messageBox.addKeyListener(enterSendListener());
+        messageBox.addKeyListener(e -> sendText());
 
         add(send, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
@@ -29,35 +29,27 @@ public class ChatUI extends JFrame{
         setVisible(true);
     }
 
+    private void sendText()
+    {
+        String t = messageBox.getText();
+        if (t.length() != 0) {
+            String messageText = chatBox.getText();
+            messageText += t + "\n";
+            chatBox.setText(messageText);
+            messageBox.setText("");
+        }
+    }
+
     private KeyListener enterSendListener()
     {
         return new KeyListener() {
             public void keyPressed(KeyEvent e) { 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String t = messageBox.getText();
-                    if (t.length() != 0) {
-                        String messageText = chatBox.getText();
-                        messageText += t + "\n";
-                        chatBox.setText(messageText);
-                        messageBox.setText("");
-                    }
+                    sendText();
                 }
             }
             public void keyReleased(KeyEvent e) { }
             public void keyTyped(KeyEvent e) { }
-        };
-    }
-
-    private ActionListener sendButtonListener()
-    {
-        return (e) -> {
-            String t = messageBox.getText();
-            if (t.length() != 0) {
-                String messageText = chatBox.getText();
-                messageText += t + "\n";
-                chatBox.setText(messageText);
-                messageBox.setText("");
-            }
         };
     }
 
