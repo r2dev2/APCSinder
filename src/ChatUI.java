@@ -1,7 +1,6 @@
-package chatUI;
-
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.event.*;
 
 public class ChatUI extends JFrame{
     private JScrollPane chatBoxScroll;
@@ -21,13 +20,26 @@ public class ChatUI extends JFrame{
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
 
-        send.addActionListener(new SendButtonMessageListener(messageBox, chatBox));
+        send.addActionListener(sendButtonListener());
         //Can't find a way to implement an enter listener
 
         add(send, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
         setVisible(true);
+    }
+
+    private ActionListener sendButtonListener()
+    {
+        return (e) -> {
+            String t = messageBox.getText();
+            if (t.length() != 0) {
+                String messageText = chatBox.getText();
+                messageText += t + "\n";
+                chatBox.setText(messageText);
+                messageBox.setText("");
+            }
+        };
     }
 
     private void setFeel() {

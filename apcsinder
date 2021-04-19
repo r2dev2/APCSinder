@@ -18,6 +18,9 @@ case $1 in
 	server)
 		cd bin && java Server
 		;;
+	chatui)
+		cd bin && java ChatUI
+		;;
 	-h|--help|help)
 		echo $hjelp | sed 's/\\n/\n/g' | sed 's/\\t/\t/g'
 		;;

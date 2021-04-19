@@ -1,4 +1,9 @@
 #!/bin/bash
 
+function failure() {
+	rm -f *.class
+	exit 1
+}
+
 mkdir -p bin
-cd src && javac *.java && mv *.class ../bin || rm -f *.class
+cd src && javac *.java && mv *.class ../bin || failure
