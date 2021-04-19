@@ -21,12 +21,22 @@ public class ChatUI extends JFrame{
         chatBoxScroll = new JScrollPane(chatBox);
 
         send.addActionListener(sendButtonListener());
-        //Can't find a way to implement an enter listener
+        chatBox.addKeyListener(enterSendListener());
 
         add(send, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
         setVisible(true);
+    }
+
+    private KeyListener enterSendListener()
+    {
+        // TODO @Justin
+        return new KeyListener() {
+            public void keyPressed(KeyEvent e) { }
+            public void keyReleased(KeyEvent e) { }
+            public void keyTyped(KeyEvent e) { }
+        };
     }
 
     private ActionListener sendButtonListener()
