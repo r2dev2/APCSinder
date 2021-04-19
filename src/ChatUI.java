@@ -8,7 +8,8 @@ public class ChatUI extends JFrame{
     private JTextField messageBox;
     private JButton send;
 
-    public ChatUI() {
+    public ChatUI()
+    {
         setTitle("APCSinder Chat");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -42,8 +43,10 @@ public class ChatUI extends JFrame{
 
     private KeyListener enterSendListener()
     {
-        return new KeyListener() {
-            public void keyPressed(KeyEvent e) { 
+        return new KeyListener()
+        {
+            public void keyPressed(KeyEvent e)
+            { 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     sendText();
                 }
@@ -53,7 +56,8 @@ public class ChatUI extends JFrame{
         };
     }
 
-    private void setFeel() {
+    private void setFeel()
+    {
         try {
             UIManager.setLookAndFeel (
                     "javax.swing.plaf.nimbus.NimbusLookAndFeel"
@@ -63,14 +67,16 @@ public class ChatUI extends JFrame{
         }
     }
 
-    private JTextArea getText() {
+    private JTextArea getText()
+    {
         JTextArea t = new JTextArea();
         t.setEditable(false);
         t.setLineWrap(true);
         return t;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         ChatUI ui = new ChatUI();
     }
 }

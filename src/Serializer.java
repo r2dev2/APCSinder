@@ -6,14 +6,16 @@ import java.util.*;
  * Because in the "high level language" of java, one must write 20 lines and
  * create 3 objects to serialize a godamn object.
  */
-public class Serializer {
+public class Serializer
+{
     /**
      * Serializes an object.
      *
      * @param obj the object to serialize
      * @return the base64 encoded serialization of the object.
      */
-    public static String serialize(Serializable obj) {
+    public static String serialize(Serializable obj)
+    {
         ByteArrayOutputStream obs = null;
         ObjectOutputStream oos = null;
         try {
@@ -42,7 +44,8 @@ public class Serializer {
      * @param serialized the base64 encoded serialization of an object.
      * @return the deserialized object
      */
-    public static <T> T deserialize(String serialized) {
+    public static <T> T deserialize(String serialized)
+    {
         byte[] bytes = Base64.getDecoder().decode(serialized);
         ByteArrayInputStream ibs = null;
         ObjectInputStream ios = null;
@@ -68,7 +71,8 @@ public class Serializer {
         }
     }
 
-    private interface Callable {
+    private interface Callable
+    {
         public void run() throws Exception;
     }
 
@@ -77,7 +81,8 @@ public class Serializer {
      * 
      * @param c the stuff to suppress
      */
-    private static void suppress(Callable c) {
+    private static void suppress(Callable c)
+    {
         try {
             c.run();
         }
