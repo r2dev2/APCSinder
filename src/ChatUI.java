@@ -1,19 +1,16 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.*;
-//ronak sucks
-public class ChatUI extends JFrame{
+
+public class ChatUI extends JPanel{
     private JScrollPane chatBoxScroll;
     private JTextArea chatBox;
     private JTextField messageBox;
     private JButton send;
 
-    public ChatUI()
+    public ChatUI(boolean t)
     {
-        setTitle("APCSinder Chat");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setSize(1000, 600);
         setFeel();
 
         messageBox = new JTextField(1);
@@ -22,12 +19,21 @@ public class ChatUI extends JFrame{
         chatBoxScroll = new JScrollPane(chatBox);
 
         send.addActionListener(sendButtonListener());
-        messageBox.addKeyListener(e -> sendText());
+        messageBox.addKeyListener(enterSendListener());
 
         add(send, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
-        setVisible(true);
+        setVisible(t);
+    }
+
+    private ActionListener sendButtonListener() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                sendText();
+            }
+        };
     }
 
     private void sendText()
@@ -46,7 +52,7 @@ public class ChatUI extends JFrame{
         return new KeyListener()
         {
             public void keyPressed(KeyEvent e)
-            { 
+            {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     sendText();
                 }
@@ -73,10 +79,5 @@ public class ChatUI extends JFrame{
         t.setEditable(false);
         t.setLineWrap(true);
         return t;
-    }
-
-    public static void main(String[] args)
-    {
-        ChatUI ui = new ChatUI();
     }
 }
