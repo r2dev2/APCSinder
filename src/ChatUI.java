@@ -7,6 +7,7 @@ public class ChatUI extends JPanel{
     private JTextArea chatBox;
     private JTextField messageBox;
     private JButton send;
+    private StringBuilder sb = new StringBuilder();
 
     public ChatUI(boolean t)
     {
@@ -40,9 +41,8 @@ public class ChatUI extends JPanel{
     {
         String t = messageBox.getText();
         if (t.length() != 0) {
-            String messageText = chatBox.getText();
-            messageText += t + "\n";
-            chatBox.setText(messageText);
+            sb.append(t + "\n");
+            chatBox.setText(sb.toString());
             messageBox.setText("");
         }
     }
