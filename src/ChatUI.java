@@ -8,7 +8,6 @@ public class ChatUI extends JPanel{
     private JTextField messageBox;
     private JButton send;
     private StringBuilder sb = new StringBuilder();
-    private ExitBar exit;
     private JButton exitButton;
 
     public ChatUI(boolean t)
@@ -20,7 +19,7 @@ public class ChatUI extends JPanel{
         send = new JButton("Send");
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
-        exit = new ExitBar();
+        ExitBar exit = new ExitBar();
         exitButton = exit.getExitButton(); //currently does nothing
 
         send.addActionListener(e -> sendText());
