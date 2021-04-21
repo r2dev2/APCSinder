@@ -19,22 +19,13 @@ public class ChatUI extends JPanel{
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
 
-        send.addActionListener(sendButtonListener());
+        send.addActionListener(e -> sendText());
         messageBox.addKeyListener(enterSendListener());
 
         add(send, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
         setVisible(t);
-    }
-
-    private ActionListener sendButtonListener() {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                sendText();
-            }
-        };
     }
 
     private void sendText()
