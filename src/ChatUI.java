@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.*;
 
 public class ChatUI extends JPanel{
@@ -8,6 +8,8 @@ public class ChatUI extends JPanel{
     private JTextField messageBox;
     private JButton send;
     private StringBuilder sb = new StringBuilder();
+    private ExitBar exit;
+    private JButton exitButton;
 
     public ChatUI(boolean t)
     {
@@ -18,6 +20,8 @@ public class ChatUI extends JPanel{
         send = new JButton("Send");
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
+        exit = new ExitBar();
+        exitButton = exit.getExitButton(); //currently does nothing
 
         send.addActionListener(e -> sendText());
         messageBox.addKeyListener(enterSendListener());
@@ -25,6 +29,7 @@ public class ChatUI extends JPanel{
         add(send, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
+        add(exit, BorderLayout.NORTH);
         setVisible(t);
     }
 
@@ -70,5 +75,21 @@ public class ChatUI extends JPanel{
         t.setEditable(false);
         t.setLineWrap(true);
         return t;
+    }
+
+    private class ExitBar extends JPanel {
+        private JButton exitButton;
+
+        public ExitBar() {
+            setFeel();
+            setLayout(new GridLayout(0, 9));
+            exitButton = new JButton("Exit");
+
+            add(exitButton);
+        }
+
+        public JButton getExitButton() {
+            return exitButton;
+        }
     }
 }
