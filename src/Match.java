@@ -8,9 +8,25 @@ public class Match implements Serializable
 
     public Match(String firstUser, String secondUser, float score)
     {
-        this.firstUser = firstUser;
-        this.secondUser = secondUser;
+        if (firstUser.compareTo(secondUser) < 0) {
+            this.firstUser = firstUser;
+            this.secondUser = secondUser;
+        }
+        else {
+            this.firstUser = secondUser;
+            this.secondUser = firstUser;
+        }
         this.score = score;
+    }
+
+    public int hashCode()
+    {
+        return firstUser.hashCode() ^ secondUser.hashCode();
+    }
+
+    public boolean equals(Match other)
+    {
+        return firstUser.equals(other.firstUser) && secondUser.equals(other.secondUser);
     }
 
     public String toString()
