@@ -13,4 +13,9 @@ public class User implements Serializable
     {
         return String.format("User(%s)", username);
     }
+
+    public boolean equals(User other)
+    {
+        return username.equals(other.username);
+    }
 }
