@@ -6,7 +6,7 @@ public class ChatUI extends JPanel{
     private JScrollPane chatBoxScroll;
     private JTextArea chatBox;
     private JTextField messageBox;
-    private JButton send;
+    private JButton sendButton;
     private StringBuilder sb = new StringBuilder();
     private JButton exitButton;
 
@@ -16,16 +16,16 @@ public class ChatUI extends JPanel{
         setFeel();
 
         messageBox = new JTextField(1);
-        send = new JButton("Send");
+        sendButton = new JButton("Send");
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
         ExitBar exit = new ExitBar();
         exitButton = exit.getExitButton(); //currently does nothing
 
-        send.addActionListener(e -> sendText());
+        sendButton.addActionListener(e -> sendText());
         messageBox.addKeyListener(enterSendListener());
 
-        add(send, BorderLayout.EAST);
+        add(sendButton, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
         add(exit, BorderLayout.NORTH);
