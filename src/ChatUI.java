@@ -9,9 +9,11 @@ public class ChatUI extends JPanel{
     private JButton sendButton;
     private StringBuilder sb = new StringBuilder();
     private JButton exitButton;
+    private User user;
 
-    public ChatUI(boolean t)
+    public ChatUI(boolean t, User u)
     {
+        user = u;
         setLayout(new BorderLayout());
         setFeel();
 
@@ -36,7 +38,7 @@ public class ChatUI extends JPanel{
     {
         String t = messageBox.getText();
         if (t.length() != 0) {
-            sb.append(t + "\n");
+            sb.append(user.username + ": " + t + "\n");
             chatBox.setText(sb.toString());
             messageBox.setText("");
         }
