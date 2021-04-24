@@ -77,18 +77,18 @@ public class ChatUI extends JPanel{
     }
 
     private class ExitBar extends JPanel {
-        private JButton exitButton;
+        private JButton exit;
 
         public ExitBar() {
             setFeel();
             setLayout(new GridLayout(0, 9));
-            exitButton = new JButton("Exit");
+            exit = new JButton("Exit");
 
-            add(exitButton);
+            add(exit);
         }
 
         public JButton getExitButton() {
-            return exitButton;
+            return exit;
         }
     }
 }
