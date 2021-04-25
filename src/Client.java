@@ -16,7 +16,7 @@ public class Client
         j.setSize(1000, 600);
         j.setTitle("APCSinder Chat");
         j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        j.add(new ChatUI(true));
+        j.add(new ChatUI(true, new User("bruh")));
         j.setVisible(true);
     }
 }
