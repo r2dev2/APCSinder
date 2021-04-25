@@ -10,16 +10,16 @@ import javax.swing.JFrame;
  */
 public class AppContainer extends JFrame
 {
-    private User user;
+    private String username;
     private ChatUI chat;
     //implement matching UI.
 
-    public AppContainer(User user) {
-        this.user = user;
+    public AppContainer(String username) {
+        this.username = username;
         setSize(1000, 600);
-        setTitle("APCSinder chat - " + user.toString());
+        setTitle("APCSinder chat - " + username);
 
-        chat = new ChatUI(true, user); //visible
+        chat = new ChatUI(true, username); //visible
 
         add(chat);
         setVisible(true);

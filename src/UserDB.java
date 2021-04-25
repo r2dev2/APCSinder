@@ -7,10 +7,12 @@ import java.util.HashSet;
 public class UserDB
 {
     private String filename;
-    // Map user -> password
-    private HashMap<User, String> passwords;
-    // Map user -> token
-    private HashMap<User, String> loggedIn;
+    // Map username -> password
+    private HashMap<String, String> passwords;
+    // Map username -> token
+    private HashMap<String, String> loggedIn;
+    // Map username -> User
+    private HashMap<String, User> users;
 
     /**
      * Constructor.
@@ -25,10 +27,10 @@ public class UserDB
     /**
      * Logs in a user.
      *
-     * @param user the user to log in
+     * @param username the username of the user to log in
      * @param password the user's password
      */
-    public LoginResult login(User user, String password)
+    public LoginResult login(String username, String password)
     {
         // TODO
         return null;
@@ -37,10 +39,10 @@ public class UserDB
     /**
      * Checks if the user is logged in with the token.
      *
-     * @param user the user
+     * @param username the username
      * @param token the token
      */
-    public boolean authenticate(User user, String token)
+    public boolean authenticate(String username, String token)
     {
         return false;
     }

@@ -7,19 +7,19 @@ import java.util.HashMap;
 public class Network
 {
     private String url;
-    private User user;
+    private String username;
     private LoginResult loginInfo;
 
     /**
      * Constructor.
      *
      * @param url the url of the server
-     * @param user the user to login
+     * @param username the user to login
      */
-    public Network(String url, User user)
+    public Network(String url, String username)
     {
         this.url = url;
-        this.user = user;
+        this.username = username;
         this.loginInfo = null;
     }
 
