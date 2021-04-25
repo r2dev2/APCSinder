@@ -46,9 +46,9 @@ public class User implements Serializable
      * String that represents a Myers-Briggs personality. Determined by adding up
      * numbers from personalityScores:
      * 
-     * personalityType.charAt(0) == 'E' if personalityScores[0] + personalityScores[1] > 10,
+     * personalityType.charAt(0) == 'E' if personalityScores[0] + personalityScores[1] <= 10,
      * 'I' otherwise
-     * personalityType.charAt(1) == 'S' if personalityScores[2] + personalityScores[3] > 10,
+     * personalityType.charAt(1) == 'S' if personalityScores[2] + personalityScores[3] <= 10,
      * 'N' otherwise
      *      …and so on.
      * 
@@ -61,9 +61,39 @@ public class User implements Serializable
      */
     public String personalityType;
 
-    public User(String username)
+    public User(String username, int[] personalityScores)
     {
         this.username = username;
+        this.personalityScores = personalityScores;
+        
+        // sorry this conversion is quite brute force, trigger warning
+        StringBuffer personType = new StringBuffer();
+        if (personalityScores[0] + personalityScores[1] <= 10) {
+            personType.append("E");
+        } 
+        else {
+            personType.append("I");
+        }
+        if (personalityScores[2] + personalityScores[3] <= 10) {
+            personType.append("S");
+        }
+        else {
+            personType.append("N"); 
+        }
+        if (personalityScores[4] + personalityScores[5] <= 10) {
+            personType.append("T")
+        }
+        else {
+            personType.append("F");
+        }
+        if (personalityScores[6] + personalityScores[7] <= 10]) {
+            personType.append("J");
+        }
+        else {
+            personType.append("P");
+        }
+        
+        personalityType = personType.toString();
     }
 
     public String toString()
