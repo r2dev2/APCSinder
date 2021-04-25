@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * Serializes stuff sanely.
  * Because in the "high level language" of java, one must write 20 lines and
- * create 3 objects to serialize a godamn object.
+ * create 3 objects to serialize a goddamn object.
  */
 public class Serializer
 {
