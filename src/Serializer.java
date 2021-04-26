@@ -39,7 +39,7 @@ public class Serializer
     }
 
     /**
-     * Deserializes and object.
+     * Deserializes an object.
      *
      * @param serialized the base64 encoded serialization of an object.
      * @return the deserialized object
