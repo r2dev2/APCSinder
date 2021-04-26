@@ -12,11 +12,7 @@ public class Client
         System.out.println(s);
         System.out.println(user);
 
-        JFrame j = new JFrame();
-        j.setSize(1000, 600);
-        j.setTitle("APCSinder Chat");
-        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        j.add(new ChatUI(true, "bruh"));
-        j.setVisible(true);
+        AppContainer a = new AppContainer(user.username);
+        a.setVisible(true);
     }
 }
