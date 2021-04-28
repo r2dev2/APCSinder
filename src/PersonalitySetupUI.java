@@ -132,10 +132,6 @@ public class PersonalitySetupUI extends JPanel
         container.personalityToMatching();
     }
 
-    public void toggleVisible(boolean visible) {
-        setVisible(visible);
-    }
-
     private void setFeel()
     {
         try {

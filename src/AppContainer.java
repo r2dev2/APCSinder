@@ -8,41 +8,38 @@ import javax.swing.JFrame;
  *  @author Justin Chang
  *  @version Apr 24, 2021
  */
-public class AppContainer
+public class AppContainer extends JFrame
 {
     private String username;
     private ChatUI chat;
     private PersonalitySetupUI personality;
-    private JFrame personalityFrame;
     //implement matching UI.
 
     public AppContainer(String username) {
-        this.username = username;
-        personalityFrame = new JFrame();
-        personalityFrame.setSize(800, 400);
-        personalityFrame.setTitle("APCSinder setup - " + username);
+        setSize(800, 400);
+        setTitle("APCSinder setup - " + username);
 
         personality = new PersonalitySetupUI(username, true, this); //visible
         chat = new ChatUI(username, false, this); //invisible
 
-        personality.add(chat);
-        personalityFrame.add(personality);
-        personalityFrame.setVisible(true);
+        add(chat);
+        add(personality);
+        setVisible(true);
     }
 
     public void personalityToMatching() {
-        personality.toggleVisible(false);
+        personality.setVisible(false);
         //make matching ui visible
         //TODO when matching ui is done
     }
 
     public void matchingToChat() {
         //make matching ui invisible
-        chat.toggleVisible(true);
+        chat.setVisible(true);
     }
 
     public void chatToMatching() {
-        chat.toggleVisible(false);
+        chat.setVisible(false);
         //make matching ui visible;
     }
 }

@@ -82,10 +82,6 @@ public class ChatUI extends JPanel{
         return t;
     }
 
-    public void toggleVisible(boolean visible) {
-        setVisible(visible);
-    }
-
     private class ExitBar extends JPanel {
         private JButton exit;
 
