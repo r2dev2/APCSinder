@@ -25,13 +25,15 @@ public class PersonalitySetupUI extends JPanel
     private JSlider slider;
     private JLabel answerLabel;
     private JButton nextButton;
+    private AppContainer container;
 
     //~ Constructors ..........................................................
-    public PersonalitySetupUI(String name) {
+    public PersonalitySetupUI(String name, boolean visible, AppContainer a) {
         username = name;
         test = new PersonalityTest(name);
-        setLayout(new GridBagLayout());
+        container = a;
 
+        setLayout(new GridBagLayout());
         setFeel();
 
         welcome = new JLabel("<html><p>Welcome to APCSinder! Please take a quick personality"
@@ -46,6 +48,7 @@ public class PersonalitySetupUI extends JPanel
         constraint.gridwidth = 2;
         add(welcome, constraint);
 
+        setVisible(visible);
         start();
     }
 
@@ -126,8 +129,11 @@ public class PersonalitySetupUI extends JPanel
     }
 
     public void finish() {
-        Window win = SwingUtilities.getWindowAncestor(this);
-        win.dispose();
+        container.personalityToMatching();
+    }
+
+    public void toggleVisible(boolean visible) {
+        setVisible(visible);
     }
 
     private void setFeel()

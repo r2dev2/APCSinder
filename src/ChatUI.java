@@ -10,10 +10,13 @@ public class ChatUI extends JPanel{
     private StringBuilder sb = new StringBuilder();
     private JButton exitButton;
     private String username;
+    private AppContainer container;
 
-    public ChatUI(boolean t, String u)
+    public ChatUI(String u, boolean visible, AppContainer a)
     {
         username = u;
+        container = a;
+
         setLayout(new BorderLayout());
         setFeel();
 
@@ -26,12 +29,13 @@ public class ChatUI extends JPanel{
 
         sendButton.addActionListener(e -> sendText());
         messageBox.addKeyListener(enterSendListener());
+        exitButton.addActionListener(e -> container.chatToMatching());
 
         add(sendButton, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
         add(exit, BorderLayout.NORTH);
-        setVisible(t);
+        setVisible(visible);
     }
 
     private void sendText()
@@ -76,6 +80,10 @@ public class ChatUI extends JPanel{
         t.setEditable(false);
         t.setLineWrap(true);
         return t;
+    }
+
+    public void toggleVisible(boolean visible) {
+        setVisible(visible);
     }
 
     private class ExitBar extends JPanel {

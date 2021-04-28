@@ -22,11 +22,27 @@ public class AppContainer
         personalityFrame.setSize(800, 400);
         personalityFrame.setTitle("APCSinder setup - " + username);
 
-        personality = new PersonalitySetupUI(username);
-        //chat = new ChatUI(true, username); //visible
-        //add(chat);
+        personality = new PersonalitySetupUI(username, true, this); //visible
+        chat = new ChatUI(username, false, this); //invisible
+
+        personality.add(chat);
         personalityFrame.add(personality);
         personalityFrame.setVisible(true);
     }
-    //TODO finish
+
+    public void personalityToMatching() {
+        personality.toggleVisible(false);
+        //make matching ui visible
+        //TODO when matching ui is done
+    }
+
+    public void matchingToChat() {
+        //make matching ui invisible
+        chat.toggleVisible(true);
+    }
+
+    public void chatToMatching() {
+        chat.toggleVisible(false);
+        //make matching ui visible;
+    }
 }
