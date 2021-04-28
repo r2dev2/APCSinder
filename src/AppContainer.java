@@ -19,7 +19,7 @@ public class AppContainer
     public AppContainer(String username) {
         this.username = username;
         personalityFrame = new JFrame();
-        personalityFrame.setSize(1000, 600);
+        personalityFrame.setSize(800, 400);
         personalityFrame.setTitle("APCSinder setup - " + username);
 
         personality = new PersonalitySetupUI(username);

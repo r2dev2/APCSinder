@@ -16,29 +16,30 @@ public class PersonalityTest {
         " spontaneous and flexible (10)?", // J/P
         "Would you rather have your life be more structured and have a sense of control (0), or do" +
         " you prefer to be more easygoing and go with the flow (10)?"}; // J/P;
-    private String currentQuestion;
+    private int[] answers;
     private int index = 0;
     public PersonalityTest(String name) {
         username = name;
-    }
-
-    public void startTest() {
-        currentQuestion = questions[index];
+        answers = new int[8];
     }
 
     public String getQuestion() {
-        return currentQuestion;
+        return questions[index];
     }
 
-    public nextQuestion() {
-        //TODO
+    public boolean hasNextQuestion() {
+        return index < 7;
+    }
+
+    public void answerQuestion(int answer) {
+        answers[index] = answer;
+    }
+
+    public void nextQuestion() {
+        index++;
     }
 
     public finishTest() {
-        //TODO
-    }
-
-    private answerQuestion() {
         //TODO
     }
 
