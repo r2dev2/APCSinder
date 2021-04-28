@@ -8,21 +8,25 @@ import javax.swing.JFrame;
  *  @author Justin Chang
  *  @version Apr 24, 2021
  */
-public class AppContainer extends JFrame
+public class AppContainer
 {
     private String username;
     private ChatUI chat;
+    private PersonalitySetupUI personality;
+    private JFrame personalityFrame;
     //implement matching UI.
 
     public AppContainer(String username) {
         this.username = username;
-        setSize(1000, 600);
-        setTitle("APCSinder chat - " + username);
+        personalityFrame = new JFrame();
+        personalityFrame.setSize(1000, 600);
+        personalityFrame.setTitle("APCSinder setup - " + username);
 
-        chat = new ChatUI(true, username); //visible
-
-        add(chat);
-        setVisible(true);
+        personality = new PersonalitySetupUI(username);
+        //chat = new ChatUI(true, username); //visible
+        //add(chat);
+        personalityFrame.add(personality);
+        personalityFrame.setVisible(true);
     }
     //TODO finish
 }
