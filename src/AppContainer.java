@@ -19,8 +19,8 @@ public class AppContainer extends JFrame
         setSize(800, 400);
         setTitle("APCSinder setup - " + username);
 
-        personality = new PersonalitySetupUI(username, true, this); //visible
-        chat = new ChatUI(username, false, this); //invisible
+        personality = new PersonalitySetupUI(username, this); //visible
+        chat = new ChatUI(username, this); //invisible
 
         add(chat);
         add(personality);

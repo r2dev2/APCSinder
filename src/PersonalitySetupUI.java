@@ -39,7 +39,7 @@ public class PersonalitySetupUI extends JPanel
      * @param visible   true if UI is visible, false otherwise
      * @param a  a reference to the AppContainer that uses this class.
      */
-    public PersonalitySetupUI(String name, boolean visible, AppContainer a) {
+    public PersonalitySetupUI(String name, AppContainer a) {
         username = name;
         test = new PersonalityTest(name);
         container = a;
@@ -47,7 +47,6 @@ public class PersonalitySetupUI extends JPanel
         setLayout(new GridBagLayout());
         setFeel();
 
-        setVisible(visible);
         start();
     }
 

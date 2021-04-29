@@ -12,7 +12,7 @@ public class ChatUI extends JPanel{
     private String username;
     private AppContainer container;
 
-    public ChatUI(String u, boolean visible, AppContainer a)
+    public ChatUI(String u, AppContainer a)
     {
         username = u;
         container = a;
@@ -35,7 +35,6 @@ public class ChatUI extends JPanel{
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
         add(exit, BorderLayout.NORTH);
-        setVisible(visible);
     }
 
     private void sendText()
