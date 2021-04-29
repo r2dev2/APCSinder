@@ -1,3 +1,4 @@
+import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 /**
@@ -13,33 +14,35 @@ public class AppContainer extends JFrame
     private String username;
     private ChatUI chat;
     private PersonalitySetupUI personality;
+    private CardLayout c;
     //implement matching UI.
 
     public AppContainer(String username) {
+        c = new CardLayout();
+
         setSize(800, 400);
+        setLayout(c);
         setTitle("APCSinder setup - " + username);
 
         personality = new PersonalitySetupUI(username, this); //visible
         chat = new ChatUI(username, this); //invisible
 
-        add(chat);
         add(personality);
+        //add matching ui HERE in between personality and chat
+        add(chat);
         setVisible(true);
     }
 
     public void personalityToMatching() {
-        personality.setVisible(false);
-        //make matching ui visible
-        //TODO when matching ui is done
+        c.next(getContentPane());
     }
 
     public void matchingToChat() {
-        //make matching ui invisible
-        chat.setVisible(true);
+        c.last(getContentPane());
     }
 
     public void chatToMatching() {
-        chat.setVisible(false);
-        //make matching ui visible;
+        //should only be called from the chat UI.
+        c.previous(getContentPane());
     }
 }
