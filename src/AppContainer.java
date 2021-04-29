@@ -2,9 +2,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 /**
- *  Write a one-sentence summary of your class here.
- *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
+ *  An AppContainer class is a class that holds the UIs and implements swapping functionality.
  *
  *  @author Justin Chang
  *  @version Apr 24, 2021
@@ -17,6 +15,10 @@ public class AppContainer extends JFrame
     private CardLayout c;
     //implement matching UI.
 
+    /**
+     * Create a new AppContainer object.
+     * @param username the username of the user
+     */
     public AppContainer(String username) {
         c = new CardLayout();
 
@@ -33,14 +35,23 @@ public class AppContainer extends JFrame
         setVisible(true);
     }
 
+    /**
+     * Swaps from the personality UI to the matching UI.
+     */
     public void personalityToMatching() {
         c.next(getContentPane());
     }
 
+    /**
+     * Swaps from the matching UI to the chat UI.
+     */
     public void matchingToChat() {
         c.last(getContentPane());
     }
 
+    /**
+     * Swaps from the chat UI to the matching UI.
+     */
     public void chatToMatching() {
         //should only be called from the chat UI.
         c.previous(getContentPane());

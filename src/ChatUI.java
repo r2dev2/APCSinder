@@ -2,6 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ *  A ChatUI is a class that allows two matched people to talk to each other.
+ *
+ *  @author Justin Chang
+ *  @version Apr 29, 2021
+ */
 public class ChatUI extends JPanel{
     private JScrollPane chatBoxScroll;
     private JTextArea chatBox;
@@ -12,6 +18,11 @@ public class ChatUI extends JPanel{
     private String username;
     private AppContainer container;
 
+    /**
+     * Create a new ChatUI object.
+     * @param u the username of the user
+     * @param a the app container to interact with
+     */
     public ChatUI(String u, AppContainer a)
     {
         username = u;
@@ -37,6 +48,9 @@ public class ChatUI extends JPanel{
         add(exit, BorderLayout.NORTH);
     }
 
+    /**
+     * Clears the message box and sends a message if there is a message to send.
+     */
     private void sendText()
     {
         String t = messageBox.getText();
@@ -47,6 +61,10 @@ public class ChatUI extends JPanel{
         }
     }
 
+    /**
+     * Returns a new KeyListener that sends a message if enter is pressed.
+     * @return a KeyListener that sends a message if enter is pressed.
+     */
     private KeyListener enterSendListener()
     {
         return new KeyListener()
@@ -62,6 +80,9 @@ public class ChatUI extends JPanel{
         };
     }
 
+    /**
+     * Sets the feel of the container.
+     */
     private void setFeel()
     {
         try {
@@ -73,6 +94,10 @@ public class ChatUI extends JPanel{
         }
     }
 
+    /**
+     * Returns the message area.
+     * @return a JTextArea that displays all the chats.
+     */
     private JTextArea getText()
     {
         JTextArea t = new JTextArea();
@@ -81,9 +106,18 @@ public class ChatUI extends JPanel{
         return t;
     }
 
+    /**
+     *  An ExitBar is a class that just contains an exit button that spans the top-left.
+     *
+     *  @author Justin Chang
+     *  @version Apr 29, 2021
+     */
     private class ExitBar extends JPanel {
         private JButton exit;
 
+        /**
+         * Create a new ExitBar object.
+         */
         public ExitBar() {
             setFeel();
             setLayout(new GridLayout(0, 9));
@@ -92,6 +126,10 @@ public class ChatUI extends JPanel{
             add(exit);
         }
 
+        /**
+         * Returns the exit button.
+         * @return a JButton that is the exit button.
+         */
         public JButton getExitButton() {
             return exit;
         }
