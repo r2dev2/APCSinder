@@ -8,7 +8,8 @@ import java.awt.event.*;
  *  @author Justin Chang
  *  @version Apr 29, 2021
  */
-public class ChatUI extends JPanel{
+public class ChatUI extends JPanel
+{
     private JScrollPane chatBoxScroll;
     private JTextArea chatBox;
     private JTextField messageBox;
@@ -112,13 +113,15 @@ public class ChatUI extends JPanel{
      *  @author Justin Chang
      *  @version Apr 29, 2021
      */
-    private class ExitBar extends JPanel {
+    private class ExitBar extends JPanel
+    {
         private JButton exit;
 
         /**
          * Create a new ExitBar object.
          */
-        public ExitBar() {
+        public ExitBar()
+        {
             setFeel();
             setLayout(new GridLayout(0, 9));
             exit = new JButton("Exit");
@@ -130,7 +133,8 @@ public class ChatUI extends JPanel{
          * Returns the exit button.
          * @return a JButton that is the exit button.
          */
-        public JButton getExitButton() {
+        public JButton getExitButton()
+        {
             return exit;
         }
     }

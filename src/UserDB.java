@@ -48,11 +48,13 @@ public class UserDB
     }
 
     /**
-     * Returns the User with a given username
+     * Returns the User with a given username.
+     *
      * @param username the username
      * @return User for the username
      */
-    public User getUser(String username) {
+    public User getUser(String username)
+    {
         return users.get(username);
     }
 

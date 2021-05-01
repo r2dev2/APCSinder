@@ -1,4 +1,5 @@
-public class PersonalityTest {
+public class PersonalityTest
+{
     private String username;
     private final String[] questions = {"Do you like spending time in large groups, where you get more energy (0),"
         + " or do you get more energy recharging by yourself, preferring social interactions to"
@@ -19,28 +20,34 @@ public class PersonalityTest {
     private int[] answers;
     private int index = 0;
 
-    public PersonalityTest(String name) {
+    public PersonalityTest(String name)
+    {
         username = name;
         answers = new int[8];
     }
 
-    public String getQuestion() {
+    public String getQuestion()
+    {
         return questions[index];
     }
 
-    public boolean hasNextQuestion() {
+    public boolean hasNextQuestion()
+    {
         return index < 7;
     }
 
-    public void answerQuestion(int answer) {
+    public void answerQuestion(int answer)
+    {
         answers[index] = answer;
     }
 
-    public void nextQuestion() {
+    public void nextQuestion()
+    {
         index++;
     }
 
-    public void finishTest() {
+    public void finishTest()
+    {
         String personalityType = calculate();
         // TODO send type to User
     }
@@ -59,7 +66,8 @@ public class PersonalityTest {
      * ENTJ + ISTP
      * ISFP + ESFP
      */
-    private String calculate() {
+    private String calculate()
+    {
         //TODO algorithm needs fixing
         // sorry this conversion is quite brute force, trigger warning
         StringBuffer personType = new StringBuffer();

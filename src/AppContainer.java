@@ -19,7 +19,8 @@ public class AppContainer extends JFrame
      * Create a new AppContainer object.
      * @param username the username of the user
      */
-    public AppContainer(String username) {
+    public AppContainer(String username)
+    {
         c = new CardLayout();
 
         setSize(800, 400);
@@ -38,21 +39,24 @@ public class AppContainer extends JFrame
     /**
      * Swaps from the personality UI to the matching UI.
      */
-    public void personalityToMatching() {
+    public void personalityToMatching()
+    {
         c.next(getContentPane());
     }
 
     /**
      * Swaps from the matching UI to the chat UI.
      */
-    public void matchingToChat() {
+    public void matchingToChat()
+    {
         c.last(getContentPane());
     }
 
     /**
      * Swaps from the chat UI to the matching UI.
      */
-    public void chatToMatching() {
+    public void chatToMatching()
+    {
         //should only be called from the chat UI.
         c.previous(getContentPane());
     }

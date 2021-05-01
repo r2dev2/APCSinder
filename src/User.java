@@ -31,15 +31,18 @@ public class User implements Serializable
         return username.equals(other.username);
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
-    public String getPersonalityType() {
+    public String getPersonalityType()
+    {
         return personalityType;
     }
 
-    public void setPersonalityType(String type) {
+    public void setPersonalityType(String type)
+    {
         personalityType = type;
     }
 }

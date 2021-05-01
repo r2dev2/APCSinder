@@ -39,7 +39,8 @@ public class PersonalitySetupUI extends JPanel
      * @param visible   true if UI is visible, false otherwise
      * @param a  a reference to the AppContainer that uses this class.
      */
-    public PersonalitySetupUI(String name, AppContainer a) {
+    public PersonalitySetupUI(String name, AppContainer a)
+    {
         username = name;
         test = new PersonalityTest(name);
         container = a;
@@ -56,11 +57,13 @@ public class PersonalitySetupUI extends JPanel
      *  @author Kevin Li
      *  @version May 1, 2021
      */
-    private class SliderListener implements ChangeListener {
+    private class SliderListener implements ChangeListener
+    {
         /**
          * Checks for a state change and changes the displayed text accordingly.
          */
-        public void stateChanged(ChangeEvent e) {
+        public void stateChanged(ChangeEvent e)
+        {
             JSlider source = (JSlider)e.getSource();
             answerLabel.setText("Your answer is: " + source.getValue());
         }
@@ -72,12 +75,14 @@ public class PersonalitySetupUI extends JPanel
      *  @author Kevin Li
      *  @version May 1, 2021
      */
-    private class NextButtonListener implements ActionListener {
+    private class NextButtonListener implements ActionListener
+    {
         /**
          * Go to the next question on button press, or exit the personality setup
          * UI when the question set is done.
          */
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e)
+        {
             if (test.hasNextQuestion()) {
                 next();
             }
@@ -93,7 +98,8 @@ public class PersonalitySetupUI extends JPanel
      * bottom left, and the next button on the bottom right.
      *
      */
-    public void start() {
+    public void start()
+    {
         welcome = new JLabel("<html><p>Welcome to APCSinder! Please take a quick personality"
             + " test before you can start matching.\nWe will ask you a series of 8 questions where"
             + " you will rate yourself on a scale of 0 to 10 on how close you identify with a"
@@ -154,7 +160,8 @@ public class PersonalitySetupUI extends JPanel
     /**
      * Refreshes the contents on the screen for the next question.
      */
-    public void next() {
+    public void next()
+    {
         test.answerQuestion(slider.getValue());
         test.nextQuestion();
         question.setText("<html><p>" + test.getQuestion() + "</p></html>");
@@ -170,7 +177,8 @@ public class PersonalitySetupUI extends JPanel
      * Closes up the personality setup and proceeds with matching (which is specified by
      * another class).
      */
-    public void finish() {
+    public void finish()
+    {
         test.answerQuestion(slider.getValue());
         test.finishTest();
         container.personalityToMatching();
