@@ -50,14 +50,33 @@ public class PersonalitySetupUI extends JPanel
         start();
     }
 
+    /**
+     *  The Slider Listener displays the value shown on the slider.
+     *
+     *  @author Kevin Li
+     *  @version May 1, 2021
+     */
     private class SliderListener implements ChangeListener {
+        /**
+         * Checks for a state change and changes the displayed text accordingly.
+         */
         public void stateChanged(ChangeEvent e) {
             JSlider source = (JSlider)e.getSource();
             answerLabel.setText("Your answer is: " + source.getValue());
         }
     }
 
+    /**
+     *  The NextButtonListener class goes to the next slide when the "next" button is called.
+     *
+     *  @author Kevin Li
+     *  @version May 1, 2021
+     */
     private class NextButtonListener implements ActionListener {
+        /**
+         * Go to the next question on button press, or exit the personality setup
+         * UI when the question set is done.
+         */
         public void actionPerformed(ActionEvent e) {
             if (test.hasNextQuestion()) {
                 next();
@@ -155,6 +174,9 @@ public class PersonalitySetupUI extends JPanel
         container.personalityToMatching();
     }
 
+    /**
+     * Sets the feel of the app container.
+     */
     private void setFeel()
     {
         try {
