@@ -47,6 +47,15 @@ public class UserDB
         return false;
     }
 
+    /**
+     * Returns the User with a given username
+     * @param username the username
+     * @return User for the username
+     */
+    public User getUser(String username) {
+        return users.get(username);
+    }
+
     private void load()
     {
         // TODO
