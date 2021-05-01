@@ -14,7 +14,7 @@ public class User implements Serializable
      * ENTJ + ISTP
      * ISFP + ESFP
      */
-    private String personalityType;
+    private String personalityType; //TODO finish setup
 
     public User(String username)
     {

@@ -14,6 +14,6 @@ public class Client
 
         User user = new User("bruh");
 
-        AppContainer a = new AppContainer(user.getUsername());
+        AppContainer a = new AppContainer(user.getUsername()); //I changed this from user.username
     }
 }

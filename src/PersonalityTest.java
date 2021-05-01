@@ -42,7 +42,7 @@ public class PersonalityTest {
 
     public void finishTest() {
         String personalityType = calculate();
-        //TODO send type to User
+        // TODO send type to User
     }
 
     /**

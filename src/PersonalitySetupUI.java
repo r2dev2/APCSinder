@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class PersonalitySetupUI extends JPanel
 {
-    //~ Fields ................................................................
+    // Fields ................................................................
     private String username;
     private PersonalityTest test;
     /**
@@ -30,7 +30,7 @@ public class PersonalitySetupUI extends JPanel
     private JButton nextButton;
     private AppContainer container;
 
-    //~ Constructors ..........................................................
+    // Constructors ..........................................................
     /**
      * Create a new PersonalitySetupUI object.
      * Sets up instance variables and basic layout accordingly, then starts up the
@@ -86,7 +86,7 @@ public class PersonalitySetupUI extends JPanel
             }
         }
     }
-    //~Public  Methods ........................................................
+    //Public  Methods ........................................................
     /**
      * Sets up the main components of the UI: a welcome message at the top, then the
      * question on the left, a slider on the right, a label with the current response on the
