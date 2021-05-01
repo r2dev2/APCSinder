@@ -12,8 +12,8 @@ public class Client
         //System.out.println(s);
         //System.out.println(user);
 
-        User user = new User("bruh");
+        User user = new User("bruh", "ISTJ");
 
-        AppContainer a = new AppContainer(user.getUsername()); //I changed this from user.username
+        AppContainer a = new AppContainer(user.username);
     }
 }

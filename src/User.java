@@ -1,8 +1,11 @@
 import java.io.Serializable;
 
+/**
+ * An immutable representation of a user to be used in the database and for communication.
+ */
 public class User implements Serializable
 {
-    private final String username;
+    public final String username;
     /**
      * String that represents a Myers-Briggs personality. Determined by adding up
      * numbers from PersonalityTest:
@@ -14,11 +17,12 @@ public class User implements Serializable
      * ENTJ + ISTP
      * ISFP + ESFP
      */
-    private String personalityType; //TODO finish setup
+    public final String personalityType; //TODO finish setup
 
-    public User(String username)
+    public User(String username, String personalityType)
     {
         this.username = username;
+        this.personalityType = personalityType;
     }
 
     public String toString()
@@ -29,20 +33,5 @@ public class User implements Serializable
     public boolean equals(User other)
     {
         return username.equals(other.username);
-    }
-
-    public String getUsername()
-    {
-        return username;
-    }
-
-    public String getPersonalityType()
-    {
-        return personalityType;
-    }
-
-    public void setPersonalityType(String type)
-    {
-        personalityType = type;
     }
 }
