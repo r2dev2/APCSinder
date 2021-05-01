@@ -18,6 +18,7 @@ public class PersonalityTest {
         " you prefer to be more easygoing and go with the flow (10)?"}; // J/P;
     private int[] answers;
     private int index = 0;
+
     public PersonalityTest(String name) {
         username = name;
         answers = new int[8];
@@ -40,7 +41,8 @@ public class PersonalityTest {
     }
 
     public void finishTest() {
-        //TODO
+        String personalityType = calculate();
+        //TODO send type to User
     }
 
     /**

@@ -171,6 +171,8 @@ public class PersonalitySetupUI extends JPanel
      * another class).
      */
     public void finish() {
+        test.answerQuestion(slider.getValue());
+        test.finishTest();
         container.personalityToMatching();
     }
 

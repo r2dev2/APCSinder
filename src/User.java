@@ -2,7 +2,7 @@ import java.io.Serializable;
 
 public class User implements Serializable
 {
-    public final String username;
+    private final String username;
     /**
      * String that represents a Myers-Briggs personality. Determined by adding up
      * numbers from PersonalityTest:
@@ -14,7 +14,7 @@ public class User implements Serializable
      * ENTJ + ISTP
      * ISFP + ESFP
      */
-    public String personalityType;
+    private String personalityType;
 
     public User(String username)
     {
@@ -29,5 +29,17 @@ public class User implements Serializable
     public boolean equals(User other)
     {
         return username.equals(other.username);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPersonalityType() {
+        return personalityType;
+    }
+
+    public void setPersonalityType(String type) {
+        personalityType = type;
     }
 }
