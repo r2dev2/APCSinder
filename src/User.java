@@ -17,12 +17,17 @@ public class User implements Serializable
      * ENTJ + ISTP
      * ISFP + ESFP
      */
-    public final String personalityType; //TODO finish setup
+    private final PersonalityType personality; //TODO finish setup
 
-    public User(String username, String personalityType)
+    public User(String username, PersonalityType personality)
     {
         this.username = username;
-        this.personalityType = personalityType;
+        this.personality = personality;
+    }
+
+    public PersonalityType getPreferredType()
+    {
+        return personality.getPreferredType();
     }
 
     public String toString()

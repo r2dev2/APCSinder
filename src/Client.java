@@ -12,7 +12,7 @@ public class Client
         //System.out.println(s);
         //System.out.println(user);
 
-        User user = new User("bruh", "ISTJ");
+        User user = new User("bruh", new PersonalityType(true, true, true, true));
 
         AppContainer a = new AppContainer(user.username);
     }

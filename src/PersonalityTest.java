@@ -48,7 +48,7 @@ public class PersonalityTest
 
     public void finishTest()
     {
-        String personalityType = calculate();
+        PersonalityType personality = calculate();
         // TODO send type to User
     }
 
@@ -66,37 +66,19 @@ public class PersonalityTest
      * ENTJ + ISTP
      * ISFP + ESFP
      */
-    private String calculate()
+    private PersonalityType calculate()
     {
         //TODO algorithm needs fixing
         // sorry this conversion is quite brute force, trigger warning
-        StringBuffer personType = new StringBuffer();
-        if (answers[0] + answers[1] <= 10) {
-            personType.append("E");
-        }
-        else {
-            personType.append("I");
-        }
-        if (answers[2] + answers[3] <= 10) {
-            personType.append("S");
-        }
-        else {
-            personType.append("N");
-        }
-        if (answers[4] + answers[5] <= 10) {
-            personType.append("T");
-        }
-        else {
-            personType.append("F");
-        }
-        if (answers[6] + answers[7] <= 10) {
-            personType.append("J");
-        }
-        else {
-            personType.append("P");
-        }
-
-        return personType.toString();
+        
+        return new PersonalityType(
+            sumLessThan(0, 1, 10), sumLessThan(2, 3, 10),
+            sumLessThan(4, 5, 10), sumLessThan(6, 7, 10)
+        );
     }
 
+    private boolean sumLessThan(int i, int j, int target)
+    {
+        return answers[i] + answers[j] <= target;
+    }
 }
