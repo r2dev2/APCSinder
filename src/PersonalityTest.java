@@ -68,9 +68,6 @@ public class PersonalityTest
      */
     private PersonalityType calculate()
     {
-        //TODO algorithm needs fixing
-        // sorry this conversion is quite brute force, trigger warning
-        
         return new PersonalityType(
             sumLessThan(0, 1, 10), sumLessThan(2, 3, 10),
             sumLessThan(4, 5, 10), sumLessThan(6, 7, 10)

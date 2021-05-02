@@ -39,6 +39,7 @@ public class Network
         public void onEvent(T m);
     }
 
+
     /**
      * Subscribe to new matches.
      *
@@ -55,6 +56,16 @@ public class Network
      */
     public void subscribeMessage(EventListener<Message> onMessage)
     {
+    }
+
+    /**
+     * Sets the personality type for a particular user.
+     *
+     * @param username  the username
+     * @param type  PersonalityType to set to
+     */
+    public void setPersonalityType(String username, PersonalityType type) {
+        //TODO
     }
 
     /**
