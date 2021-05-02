@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class PersonalityType
 {
     private final String type;
-    private final static Map<String, String> preferredType =
+    private final static Map<String, String[]> preferredType =
         generatePreferredMap();
 
     public PersonalityType(boolean isE, boolean isS, boolean isT, boolean isJ)
@@ -29,9 +29,14 @@ public class PersonalityType
         this.type = type;
     }
 
-    public PersonalityType getPreferredType()
+    public PersonalityType[] getPreferredType()
     {
-        return new PersonalityType(preferredType.getOrDefault(type, type));
+        String[] stringTypes = preferredType.get(type);
+        PersonalityType[] preferredTypes = new PersonalityType[stringTypes.length];
+        for (int i = 0; i < stringTypes.length; i++) {
+            preferredTypes[i] = new PersonalityType(stringTypes[i]);
+        }
+        return preferredTypes;
     }
 
     public int hashCode()
@@ -49,16 +54,22 @@ public class PersonalityType
         return type;
     }
 
-    private static Map<String, String> generatePreferredMap()
+    private static Map<String, String[]> generatePreferredMap()
     {
-        Map<String, String> preferred = new HashMap<String, String>();
-        String[][] matches = {
-            {"ISTJ", "ESTP"}, {"INTP", "INTJ"}, {"ENFP", "INFJ"},
-            {"ENTJ", "INFJ"}, {"ISFP", "ESFP"}
+        Map<String, String[]> preferred = new HashMap<String, String[]>();
+        String[] types = {
+            "INFP", "ENFP", "INFJ", "ENFJ",
+            "INTJ", "ENTJ", "INTP", "ENTP",
+            "ISFP", "ESFP", "ISTP", "ESTP",
+            "ISFJ", "ESFJ", "ISTJ", "ESTJ"};
+        String[][] respectiveMatches = {
+            {"ENFJ", "ENTJ"}, {"INFJ", "INTJ"}, {"ENFP", "ENTP"}, {"ENFJ", "ISFP"},
+            {"ENFP", "ENTP"}, {"INFP", "INTP"}, {"ENTJ", "ESTJ"}, {"INFJ", "INTJ"},
+            {"ENFJ", "ESFJ", "ESTJ"}, {"ISFJ", "ISTJ"}, {"ESFJ", "ESTJ"}, {"ISFJ", "ISTJ"},
+            {"ESFP", "ESTP"}, {"ISFP", "ISTP"}, {"ESFP", "ESTP"}, {"INTP", "ISFP", "ISTP"}
         };
-        for (String[] types: matches) {
-            preferred.put(types[0], types[1]);
-            preferred.put(types[1], types[0]);
+        for (int i = 0; i < types.length; i++) {
+            preferred.put(types[i], respectiveMatches[i]);
         }
         return preferred;
     }
