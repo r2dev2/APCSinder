@@ -29,7 +29,7 @@ public class PersonalityType
         this.type = type;
     }
 
-    public PersonalityType[] getPreferredType()
+    public PersonalityType[] getPreferredTypes()
     {
         String[] stringTypes = preferredType.get(type);
         PersonalityType[] preferredTypes = new PersonalityType[stringTypes.length];

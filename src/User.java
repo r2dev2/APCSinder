@@ -25,9 +25,9 @@ public class User implements Serializable
         this.personality = personality;
     }
 
-    public PersonalityType getPreferredType()
+    public PersonalityType[] getPreferredTypes()
     {
-        return personality.getPreferredType();
+        return personality.getPreferredTypes();
     }
 
     public String toString()
