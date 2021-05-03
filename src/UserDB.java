@@ -63,7 +63,7 @@ public class UserDB
     /**
      * Returns the list of usernames for a given personality type.
      *
-     * @param type  the personality type
+     * @param type the personality type
      * @return String array of matching usernames
      */
     public String[] getUserPersonalities(PersonalityType type) {
