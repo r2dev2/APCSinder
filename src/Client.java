@@ -13,7 +13,7 @@ public class Client
         //System.out.println(user);
 
         User user = new User("Setup", new PersonalityType(true, true, true, true));
-        Network n = new Network("", "bruh");
+        Network n = new Network();
 
         AppContainer a = new AppContainer(user.username, n);
     }
