@@ -13,6 +13,8 @@ public class UserDB
     private HashMap<String, String> loggedIn;
     // Map username -> User
     private HashMap<String, User> users;
+    // Map PersonalityType -> array of usernames
+    private HashMap<PersonalityType, String[]> userPersonalities;
 
     /**
      * Constructor.
@@ -56,6 +58,16 @@ public class UserDB
     public User getUser(String username)
     {
         return users.get(username);
+    }
+
+    /**
+     * Returns the list of usernames for a given personality type.
+     *
+     * @param type  the personality type
+     * @return String array of matching usernames
+     */
+    public String[] getUserPersonalities(PersonalityType type) {
+        return userPersonalities.get(type);
     }
 
     private void load()
