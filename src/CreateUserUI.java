@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *  Write a one-sentence summary of your class here.
+ *  Write a one-sentence summary of your class here
  *  Follow it with additional details about its purpose, what abstraction
  *  it represents, and how to use it.
  *
