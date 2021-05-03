@@ -59,13 +59,17 @@ public class Network
     }
 
     /**
-     * Sets the personality type for a particular user.
+     * Creates a user.
+     * The user will not be able to be changed once created
      *
-     * @param username  the username
-     * @param type  PersonalityType to set to
+     * @param user the user to create
+     * @param password the user's password
+     * @return whether the user was created or not
      */
-    public void setPersonalityType(String username, PersonalityType type) {
+    public boolean createUser(User user, String password)
+    {
         //TODO
+        return false;
     }
 
     /**
