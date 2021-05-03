@@ -8,7 +8,7 @@ public class Network
 {
     private String url;
     private String username;
-    private LoginResult loginInfo;
+    private String token;
 
     /**
      * Constructor.
@@ -16,20 +16,31 @@ public class Network
      * @param url the url of the server
      * @param username the user to login
      */
-    public Network(String url, String username)
+    public Network(String url)
     {
         this.url = url;
-        this.username = username;
-        this.loginInfo = null;
+        this.username = null;
+        this.token = null;
+    }
+
+    /**
+     * Default constructor.
+     * Defaults to using the replit server
+     */
+    public Network()
+    {
+        this("https://apcsinder.r2dev2bb8.repl.co");
     }
 
     /**
      * Logs in the user to the server.
+     * The username and login token are stored.
      *
+     * @param username the user's username
      * @param password the user's password
      * @return the result of the login
      */
-    public LoginResult login(String password)
+    public LoginResult login(String username, String password)
     {
         return null;
     }
