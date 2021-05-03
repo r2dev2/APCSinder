@@ -91,4 +91,13 @@ public class Network
     {
         return null;
     }
+
+    /**
+     * Sends a message.
+     *
+     * @param msg the message to send
+     */
+    public void sendMessage(Message msg)
+    {
+    }
 }
