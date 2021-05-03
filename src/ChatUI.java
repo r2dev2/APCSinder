@@ -46,7 +46,7 @@ public class ChatUI extends JPanel
         add(sendButton, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
-        add(exit, BorderLayout.NORTH);
+        add(exit, BorderLayout.WEST);
     }
 
     /**
@@ -123,7 +123,7 @@ public class ChatUI extends JPanel
         public ExitBar()
         {
             setFeel();
-            setLayout(new GridLayout(0, 9));
+            setLayout(new GridLayout(9, 0));
             exit = new JButton("Exit");
 
             add(exit);
