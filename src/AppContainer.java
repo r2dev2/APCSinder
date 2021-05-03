@@ -10,8 +10,10 @@ import javax.swing.JFrame;
 public class AppContainer extends JFrame
 {
     private String username;
+    private String password;
     private ChatUI chat;
     private PersonalitySetupUI personality;
+    private CreateUserUI userSetup;
     private CardLayout c;
     //implement matching UI.
 
@@ -25,11 +27,13 @@ public class AppContainer extends JFrame
 
         setSize(800, 400);
         setLayout(c);
-        setTitle("APCSinder setup - " + username);
+        setTitle("APCSinder - " + username);
 
+        userSetup = new CreateUserUI(this);
         personality = new PersonalitySetupUI(username, this); //visible
         chat = new ChatUI(username, this); //invisible
 
+        add(userSetup);
         add(personality);
         //add matching ui HERE in between personality and chat
         add(chat);
@@ -59,5 +63,10 @@ public class AppContainer extends JFrame
     {
         //should only be called from the chat UI.
         c.previous(getContentPane());
+    }
+
+    public void completeSetup(String name, String pwd) {
+        username = name;
+        password = pwd;
     }
 }

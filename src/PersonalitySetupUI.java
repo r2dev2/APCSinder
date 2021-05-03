@@ -19,10 +19,11 @@ public class PersonalitySetupUI extends JPanel
     // Fields ................................................................
     private String username;
     private PersonalityTest test;
+
     /**
      * Used to set up the formatting for each component of the JPanel.
      */
-    GridBagConstraints constraint = new GridBagConstraints();
+    private GridBagConstraints constraint = new GridBagConstraints();
     private JLabel welcome;
     private JLabel question;
     private JSlider slider;
@@ -185,7 +186,7 @@ public class PersonalitySetupUI extends JPanel
     }
 
     /**
-     * Sets the feel of the app container.
+     * Sets the feel of the UI.
      */
     private void setFeel()
     {
