@@ -44,9 +44,9 @@ public class PersonalityType
         return type.hashCode();
     }
 
-    public boolean equals(Object other)
+    public boolean equals(PersonalityType other)
     {
-        return type.equals(other);
+        return type.equals(other.type);
     }
 
     public String toString()

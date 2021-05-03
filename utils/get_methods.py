@@ -8,7 +8,8 @@ def do_stuff(fn):
         file = fin.read()
 
     method_re = re.compile(
-        r"(public [^\W]+ [^\W]+[^\n]+)"
+        r"(public [^\n]+)"
+        # r"(public [^\W]+ [^\W]+[^\n]+)"
     )
 
     print("Properties and methods of", fn)
