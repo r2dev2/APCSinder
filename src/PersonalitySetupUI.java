@@ -19,6 +19,7 @@ public class PersonalitySetupUI extends JPanel
     // Fields ................................................................
     private String username;
     private PersonalityTest test;
+    private Network network;
 
     /**
      * Used to set up the formatting for each component of the JPanel.
@@ -36,15 +37,16 @@ public class PersonalitySetupUI extends JPanel
      * Create a new PersonalitySetupUI object.
      * Sets up instance variables and basic layout accordingly, then starts up the
      * rest of the UI.
-     * @param name  User name
-     * @param visible   true if UI is visible, false otherwise
-     * @param a  a reference to the AppContainer that uses this class.
+     * @param name User name
+     * @param a a reference to the AppContainer that uses this class
+     * @param network the network to connect to
      */
-    public PersonalitySetupUI(String name, AppContainer a)
+    public PersonalitySetupUI(String name, AppContainer a, Network network)
     {
         username = name;
         test = new PersonalityTest(name);
         container = a;
+        this.network = network;
 
         setLayout(new GridBagLayout());
         setFeel();

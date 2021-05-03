@@ -11,5 +11,13 @@ import java.awt.*;
  */
 public class MatchingUI extends JPanel
 {
+    private Network network;
 
+    /**
+     * Create a new MatchingUI object.
+     * @param network the network to connect to
+     */
+    public MatchingUI(Network network) { //add other stuff as needed
+        this.network = network;
+    }
 }

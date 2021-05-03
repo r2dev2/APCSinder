@@ -18,16 +18,19 @@ public class ChatUI extends JPanel
     private JButton exitButton;
     private String username;
     private AppContainer container;
+    private Network network;
 
     /**
      * Create a new ChatUI object.
      * @param u the username of the user
      * @param a the app container to interact with
+     * @param network the network to connect to
      */
-    public ChatUI(String u, AppContainer a)
+    public ChatUI(String u, AppContainer a, Network network)
     {
         username = u;
         container = a;
+        this.network = network;
 
         setLayout(new BorderLayout());
         setFeel();

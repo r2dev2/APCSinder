@@ -20,8 +20,9 @@ public class AppContainer extends JFrame
     /**
      * Create a new AppContainer object.
      * @param username the username of the user
+     * @param n the network to connect to
      */
-    public AppContainer(String username)
+    public AppContainer(String username, Network network)
     {
         c = new CardLayout();
 
@@ -30,8 +31,8 @@ public class AppContainer extends JFrame
         setTitle("APCSinder - " + username);
 
         userSetup = new CreateUserUI(this);
-        personality = new PersonalitySetupUI(username, this); //visible
-        chat = new ChatUI(username, this); //invisible
+        personality = new PersonalitySetupUI(username, this, network);
+        chat = new ChatUI(username, this, network);
 
         add(userSetup);
         add(personality);
