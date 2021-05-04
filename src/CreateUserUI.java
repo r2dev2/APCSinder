@@ -85,28 +85,11 @@ public class CreateUserUI extends JPanel
         constraint.insets = new Insets(20, 20, 20, 20);
         constraint.weightx = 0.1;
         constraint.gridwidth = 1;
-        nextButton.addActionListener(new NextButtonListener());
-        add(nextButton, constraint);
-    }
-
-    /**
-     *  The NextButtonListener class goes to the next slide (Personality Test)
-     *  when the "next" button is called, and creates the User by finishing setup.
-     *
-     *  @author Kevin Li
-     *  @version May 1, 2021
-     */
-    private class NextButtonListener implements ActionListener
-    {
-        /**
-         * Go to the next question on button press, or exit the personality setup
-         * UI when the question set is done.
-         */
-        public void actionPerformed(ActionEvent e)
-        {
+        nextButton.addActionListener(e -> {
             container.completeSetup(userInput.getText(), pwdInput.getText());
             container.personalityToMatching();
-        }
+        });
+        add(nextButton, constraint);
     }
 
     /**

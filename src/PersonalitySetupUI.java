@@ -53,47 +53,7 @@ public class PersonalitySetupUI extends JPanel
 
         start();
     }
-
-    /**
-     *  The Slider Listener displays the value shown on the slider.
-     *
-     *  @author Kevin Li
-     *  @version May 1, 2021
-     */
-    private class SliderListener implements ChangeListener
-    {
-        /**
-         * Checks for a state change and changes the displayed text accordingly.
-         */
-        public void stateChanged(ChangeEvent e)
-        {
-            JSlider source = (JSlider)e.getSource();
-            answerLabel.setText("Your answer is: " + source.getValue());
-        }
-    }
-
-    /**
-     *  The NextButtonListener class goes to the next slide when the "next" button is called.
-     *
-     *  @author Kevin Li
-     *  @version May 1, 2021
-     */
-    private class NextButtonListener implements ActionListener
-    {
-        /**
-         * Go to the next question on button press, or exit the personality setup
-         * UI when the question set is done.
-         */
-        public void actionPerformed(ActionEvent e)
-        {
-            if (test.hasNextQuestion()) {
-                next();
-            }
-            else {
-                finish();
-            }
-        }
-    }
+    
     //Public  Methods ........................................................
     /**
      * Sets up the main components of the UI: a welcome message at the top, then the
@@ -136,7 +96,10 @@ public class PersonalitySetupUI extends JPanel
         slider.setPaintLabels(true);
         slider.setMajorTickSpacing(5);
         slider.setMinorTickSpacing(1);
-        slider.addChangeListener(new SliderListener());
+        slider.addChangeListener(e -> {
+            JSlider source = (JSlider) e.getSource();
+            answerLabel.setText("Your answer is: " + source.getValue());
+        });
         add(slider, constraint);
 
         answerLabel = new JLabel();
@@ -156,7 +119,14 @@ public class PersonalitySetupUI extends JPanel
         constraint.insets = new Insets(10, 10, 10, 10);
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;
-        nextButton.addActionListener(new NextButtonListener());
+        nextButton.addActionListener(e -> {
+            if (test.hasNextQuestion()) {
+                next();
+            }
+            else {
+                finish();
+            }
+        });
         add(nextButton, constraint);
     }
 
