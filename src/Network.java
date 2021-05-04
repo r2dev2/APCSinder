@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.net.http.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.io.*;
 
 /**
  * Networking for client.
@@ -9,6 +13,7 @@ public class Network
     private String url;
     private String username;
     private String token;
+    private HttpClient client;
 
     /**
      * Constructor.
@@ -21,6 +26,7 @@ public class Network
         this.url = url;
         this.username = null;
         this.token = null;
+        this.client = HttpClient.newBuilder().build();
     }
 
     /**
@@ -49,7 +55,6 @@ public class Network
     {
         public void onEvent(T m);
     }
-
 
     /**
      * Subscribe to new matches.
@@ -108,7 +113,39 @@ public class Network
      *
      * @param msg the message to send
      */
-    public void sendMessage(Message msg)
+    public void sendMessage(Message msg) throws IOException, InterruptedException
     {
+        String serialized = Serializer.serialize(msg);
+        HttpRequest req = HttpRequest.newBuilder()
+            .uri(endpoint("/bruh"))
+            .POST(HttpRequest.BodyPublishers.ofString(serialized))
+            .build();
+        client.sendAsync(req, HttpResponse.BodyHandlers.ofString());
+    }
+
+    /**
+     * Get the uri for an endpoint.
+     * This overrides uri's built in validation so make sure it's a valid endpoint.
+     * @param end the endpoint
+     * @return the uri for the endpoint
+     */
+    private URI endpoint(String end)
+    {
+        try {
+            return new URI(url + end);
+        }
+        catch (URISyntaxException e) {
+            System.err.printf("Invalid endpoint for url: '%s', end: '%s'\n", url, end);
+            System.exit(1);
+            return null;
+        }
+    }
+
+    /**
+     * Testing grounds for how to do this class.
+     */
+    public void playground() throws IOException, InterruptedException
+    {
+        sendMessage(new Message("Hello there", "Kenobi", "Skywalker", 10));
     }
 }
