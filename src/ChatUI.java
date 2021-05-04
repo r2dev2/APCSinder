@@ -16,6 +16,7 @@ public class ChatUI extends JPanel
     private JButton sendButton;
     private StringBuilder sb = new StringBuilder();
     private JButton exitButton;
+    private JList<String> users; //change data type later if necessary
     private String username;
     private AppContainer container;
     private Network network;
@@ -40,7 +41,8 @@ public class ChatUI extends JPanel
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
         ExitBar exit = new ExitBar();
-        exitButton = exit.getExitButton(); //currently does nothing
+        exitButton = exit.getExitButton();
+        users = exit.getUsers();
 
         sendButton.addActionListener(e -> sendText());
         messageBox.addKeyListener(enterSendListener());
@@ -119,6 +121,8 @@ public class ChatUI extends JPanel
     private class ExitBar extends JPanel
     {
         private JButton exit;
+        private JList<String> list;
+        private GridBagConstraints constraint = new GridBagConstraints();
 
         /**
          * Create a new ExitBar object.
@@ -126,10 +130,30 @@ public class ChatUI extends JPanel
         public ExitBar()
         {
             setFeel();
-            setLayout(new GridLayout(9, 0));
+            setLayout(new GridBagLayout());
             exit = new JButton("Exit");
 
-            add(exit);
+            String[] data = {"one", "two", "three", "four"};
+            list = new JList<String>(data); //just test
+
+            constraint.fill = GridBagConstraints.BOTH;
+            constraint.gridx = 0;
+            constraint.gridy = 0;
+            constraint.insets = new Insets(5, 5, 5, 5);
+            constraint.weightx = 0.5;
+            constraint.gridwidth = 1;
+            constraint.gridheight = 1;
+            add(exit, constraint);
+
+            constraint.fill = GridBagConstraints.BOTH;
+            constraint.gridx = 0;
+            constraint.gridy = 1;
+            constraint.insets = new Insets(5, 5, 5, 5);
+            constraint.weightx = 0.2;
+            constraint.weighty = 0.9;
+            constraint.gridwidth = 1;
+            constraint.gridheight = 9;
+            add(list, constraint);
         }
 
         /**
@@ -139,6 +163,15 @@ public class ChatUI extends JPanel
         public JButton getExitButton()
         {
             return exit;
+        }
+
+        /**
+         * Returns the menu of users
+         * @return the menu of users
+         */
+        public JList<String> getUsers()
+        {
+            return list;
         }
     }
 }
