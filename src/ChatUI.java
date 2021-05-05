@@ -3,6 +3,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -19,6 +20,7 @@ public class ChatUI extends JPanel
     private JButton sendButton;
     private StringBuilder sb = new StringBuilder();
     private JButton exitButton;
+    private String recipient = null;
     private JList<String> users; //change data type later if necessary
     private String username;
     private AppContainer container;
@@ -47,7 +49,16 @@ public class ChatUI extends JPanel
         exitButton = exit.getExitButton();
         users = exit.getUsers();
 
-        sendButton.addActionListener(e -> sendText());
+        sendButton.addActionListener(e -> {
+            try
+            {
+                sendText();
+            }
+            catch (IOException | InterruptedException e1)
+            {
+                e1.printStackTrace();
+            }
+        });
         messageBox.addKeyListener(enterSendListener());
         exitButton.addActionListener(e -> container.chatToMatching());
         users.addListSelectionListener(chooseUser());
@@ -60,14 +71,20 @@ public class ChatUI extends JPanel
 
     /**
      * Clears the message box and sends a message if there is a message to send.
+     * @throws InterruptedException
+     * @throws IOException
      */
-    private void sendText()
+    private void sendText() throws IOException, InterruptedException
     {
         String t = messageBox.getText();
-        if (t.length() != 0) {
-            sb.append(username + ": " + t + "\n");
+        if (t.length() != 0 && recipient != null) {
+            Message m = new Message(t, username, recipient);
+
+            sb.append(m.toString() + "\n");
             chatBox.setText(sb.toString());
             messageBox.setText("");
+
+            network.sendMessage(m);
         }
     }
 
@@ -105,7 +122,14 @@ public class ChatUI extends JPanel
             public void keyPressed(KeyEvent e)
             {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    sendText();
+                    try
+                    {
+                        sendText();
+                    }
+                    catch (IOException | InterruptedException e1)
+                    {
+                        e1.printStackTrace();
+                    }
                 }
             }
             public void keyReleased(KeyEvent e) { }

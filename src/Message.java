@@ -2,12 +2,30 @@ import java.io.Serializable;
 
 public class Message implements Serializable, Comparable<Message>
 {
+    /**
+     * The message
+     */
     public final String msg;
+    /**
+     * The person sending the message
+     */
     public final String sender;
+    /**
+     * The person receiving the message
+     */
     public final String receiver;
-    // Unix time of message
+    /**
+     * Unix timestamp
+     */
     public final long timestamp;
 
+    /**
+     * Create a new Message object.
+     * @param msg the message to send
+     * @param sender the person sending the message
+     * @param receiver the person receiving the message
+     * @param timestamp the timestamp of the message
+     */
     public Message(String msg, String sender, String receiver, long timestamp)
     {
         this.msg = msg;
@@ -16,6 +34,12 @@ public class Message implements Serializable, Comparable<Message>
         this.timestamp = timestamp;
     }
 
+    /**
+     * Create a new Message object.
+     * @param msg the message to send
+     * @param sender the person sending the message
+     * @param receiver the person receiving the message
+     */
     public Message(String msg, String sender, String receiver)
     {
         this(msg, sender, receiver, System.currentTimeMillis() / 1000L);
