@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.UUID;
 
 public class LoginResult implements Serializable
 {
@@ -13,6 +14,6 @@ public class LoginResult implements Serializable
 
     private static String generateToken()
     {
-        return "token";
+        return UUID.randomUUID().toString();
     }
 }

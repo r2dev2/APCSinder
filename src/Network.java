@@ -57,7 +57,9 @@ public class Network
         LoginResult res = Serializer.deserialize(r.body());
         if (res != null && res.success) {
             token = res.token;
+            this.username = username;
         }
+        System.out.println("Token: " + token);
         return res;
     }
 
