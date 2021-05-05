@@ -7,10 +7,11 @@ public class Client
     public static void main(String[] args) throws Exception
     {
         System.out.println("Client program");
-        //String s = Serializer.serialize(new User("bruh"));
-        //User user = Serializer.deserialize(s);
-        //System.out.println(s);
-        //System.out.println(user);
+        String s = Serializer.serialize(new User("bruh",
+                new PersonalityType(true, true, true, true)));
+        User usr = Serializer.deserialize(s);
+        System.out.println(s);
+        System.out.println(usr);
 
         User user = new User("Setup", new PersonalityType(true, true, true, true));
         // Network n = new Network();

@@ -1,7 +1,8 @@
 import java.util.Map;
 import java.util.HashMap;
+import java.io.Serializable;
 
-public class PersonalityType
+public class PersonalityType implements Serializable
 {
     private final String type;
     private final static Map<String, String[]> preferredType =
