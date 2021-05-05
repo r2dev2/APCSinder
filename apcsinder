@@ -25,6 +25,6 @@ case $1 in
 		echo $hjelp | sed 's/\\n/\n/g' | sed 's/\\t/\t/g'
 		;;
 	''|client)
-		cd bin && java Client
+		cd bin && java Client ${@:2}
 		;;
 esac

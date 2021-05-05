@@ -117,7 +117,7 @@ public class Network
     {
         String serialized = Serializer.serialize(msg);
         HttpRequest req = HttpRequest.newBuilder()
-            .uri(endpoint("/bruh"))
+            .uri(endpoint("/message"))
             .POST(HttpRequest.BodyPublishers.ofString(serialized))
             .build();
         client.sendAsync(req, HttpResponse.BodyHandlers.ofString());
