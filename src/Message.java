@@ -6,14 +6,19 @@ public class Message implements Serializable, Comparable<Message>
     public final String sender;
     public final String receiver;
     // Unix time of message
-    public final int timestamp;
+    public final long timestamp;
 
-    public Message(String msg, String sender, String receiver, int timestamp)
+    public Message(String msg, String sender, String receiver, long timestamp)
     {
         this.msg = msg;
         this.sender = sender;
         this.receiver = receiver;
         this.timestamp = timestamp;
+    }
+
+    public Message(String msg, String sender, String receiver)
+    {
+        this(msg, sender, receiver, System.currentTimeMillis() / 1000L);
     }
 
     public String toString()

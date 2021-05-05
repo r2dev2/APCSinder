@@ -158,7 +158,7 @@ public class Network
      */
     public void playground() throws IOException, InterruptedException
     {
-        sendMessage(new Message("Hello there", "Kenobi", "Skywalker", 10));
+        sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
         login("bruh", "moment");
     }
 }
