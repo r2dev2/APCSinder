@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -48,6 +50,7 @@ public class ChatUI extends JPanel
         sendButton.addActionListener(e -> sendText());
         messageBox.addKeyListener(enterSendListener());
         exitButton.addActionListener(e -> container.chatToMatching());
+        users.addListSelectionListener(chooseUser());
 
         add(sendButton, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
@@ -66,6 +69,29 @@ public class ChatUI extends JPanel
             chatBox.setText(sb.toString());
             messageBox.setText("");
         }
+    }
+
+    /**
+     * Returns a ListSelectionListener that loads chats.
+     * @return ListSelctionListener that loads chats.
+     */
+    private ListSelectionListener chooseUser()
+    {
+        return new ListSelectionListener()
+        {
+            public void valueChanged(ListSelectionEvent e)
+            {
+                String user = users.getSelectedValue();
+
+                sb = new StringBuilder();
+                ArrayList<Message> messages = network.getMessages().get(user);
+                for (Message m: messages) {
+                    sb.append(m.sender + ": " + m.msg + "\n");
+                }
+                chatBox.setText(sb.toString());
+                messageBox.setText("");
+            }
+        };
     }
 
     /**
