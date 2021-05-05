@@ -49,7 +49,7 @@ public class AppContainer extends JFrame
         username = name;
         password = pwd;
         setTitle("APCSinder - " + username);
-        personality = new PersonalitySetupUI(username, this, n);
+        personality = new PersonalitySetupUI(username, this, n, password);
         chat = new ChatUI(username, this, n);
 
         add(personality);

@@ -40,11 +40,12 @@ public class PersonalitySetupUI extends JPanel
      * @param name User name
      * @param a a reference to the AppContainer that uses this class
      * @param network the network to connect to
+     * @param password user's password
      */
-    public PersonalitySetupUI(String name, AppContainer a, Network network)
+    public PersonalitySetupUI(String name, AppContainer a, Network network, String password)
     {
         username = name;
-        test = new PersonalityTest(name);
+        test = new PersonalityTest(name, network, password);
         container = a;
         this.network = network;
 
@@ -53,7 +54,7 @@ public class PersonalitySetupUI extends JPanel
 
         start();
     }
-    
+
     //Public  Methods ........................................................
     /**
      * Sets up the main components of the UI: a welcome message at the top, then the

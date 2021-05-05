@@ -20,11 +20,14 @@ public class PersonalityTest
     private int[] answers;
     private int index = 0;
     private PersonalityType personality;
+    private Network n;
+    private String password;
 
-    public PersonalityTest(String name)
+    public PersonalityTest(String name, Network network, String password)
     {
         username = name;
         answers = new int[8];
+        n = network;
     }
 
     public String getQuestion()
@@ -50,7 +53,8 @@ public class PersonalityTest
     public void finishTest()
     {
         personality = calculate();
-        // TODO send type to User
+        User newUser = new User(username, personality);
+        n.createUser(newUser, password);
     }
 
     public PersonalityType getPersonality()
