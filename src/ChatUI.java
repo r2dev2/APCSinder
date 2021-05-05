@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 /**
  *  A ChatUI is a class that allows two matched people to talk to each other.
@@ -133,8 +134,7 @@ public class ChatUI extends JPanel
             setLayout(new GridBagLayout());
             exit = new JButton("Exit");
 
-            String[] data = {"one", "two", "three", "four"};
-            list = new JList<String>(data); //just test
+            list = new JList<String>(createUserList());
 
             constraint.fill = GridBagConstraints.BOTH;
             constraint.gridx = 0;
@@ -154,6 +154,11 @@ public class ChatUI extends JPanel
             constraint.gridwidth = 1;
             constraint.gridheight = 9;
             add(list, constraint);
+        }
+
+        public Vector<String> createUserList() {
+            Set<String> s = network.getMessages().keySet();
+            return new Vector<String>(s);
         }
 
         /**
