@@ -13,6 +13,12 @@ public class Client
         System.out.println(s);
         System.out.println(usr);
 
+        System.out.println("Login success: " + Serializer.serialize(
+                    new LoginResult(true)));
+        System.out.println("Login failure: " + Serializer.serialize(
+                    new LoginResult(false)));
+
+
         User user = new User("Setup", new PersonalityType(true, true, true, true));
         // Network n = new Network();
         // AppContainer a = new AppContainer(user.username, n);

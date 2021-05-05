@@ -46,10 +46,11 @@ public class Serializer
      */
     public static <T> T deserialize(String serialized)
     {
-        byte[] bytes = Base64.getDecoder().decode(serialized);
+        byte[] bytes = null;
         ByteArrayInputStream ibs = null;
         ObjectInputStream ios = null;
         try {
+            bytes = Base64.getDecoder().decode(serialized);
             ibs = new ByteArrayInputStream(bytes);
             ios = new ObjectInputStream(ibs);
             return (T) ios.readObject();
@@ -58,6 +59,9 @@ public class Serializer
             return null;
         }
         catch (ClassNotFoundException e) {
+            return null;
+        }
+        catch (IllegalArgumentException e) {
             return null;
         }
         finally {

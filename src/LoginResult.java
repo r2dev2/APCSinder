@@ -13,6 +13,6 @@ public class LoginResult implements Serializable
 
     private static String generateToken()
     {
-        return "";
+        return "token";
     }
 }

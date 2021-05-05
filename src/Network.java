@@ -46,9 +46,19 @@ public class Network
      * @param password the user's password
      * @return the result of the login
      */
-    public LoginResult login(String username, String password)
+    public LoginResult login(String username, String password) throws IOException, InterruptedException
     {
-        return null;
+        String serialized = Serializer.serialize(new LoginAttempt(username, password));
+        HttpRequest req = HttpRequest.newBuilder()
+            .uri(endpoint("/login"))
+            .POST(HttpRequest.BodyPublishers.ofString(serialized))
+            .build();
+        HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
+        LoginResult res = Serializer.deserialize(r.body());
+        if (res != null && res.success) {
+            token = res.token;
+        }
+        return res;
     }
 
     private interface EventListener<T>
@@ -147,5 +157,6 @@ public class Network
     public void playground() throws IOException, InterruptedException
     {
         sendMessage(new Message("Hello there", "Kenobi", "Skywalker", 10));
+        login("bruh", "moment");
     }
 }
