@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *  Write a one-sentence summary of your class here
@@ -25,6 +23,11 @@ public class CreateUserUI extends JPanel
     private JTextField pwdInput;
     private JButton nextButton;
 
+    /**
+     * Create a new CreateUserUI object.
+     * Starts the UI from a specified container window.
+     * @param a the container
+     */
     public CreateUserUI(AppContainer a) {
         container = a;
         setLayout(new GridBagLayout());
@@ -32,6 +35,10 @@ public class CreateUserUI extends JPanel
         start();
     }
 
+    /**
+     * Sets up the various elements of the UI (labels, text boxes,
+     * next button)
+     */
     public void start() {
         welcome = new JLabel("Create a new user");
         constraint.fill = GridBagConstraints.HORIZONTAL;
@@ -87,7 +94,7 @@ public class CreateUserUI extends JPanel
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
             container.completeSetup(userInput.getText(), pwdInput.getText());
-            container.personalityToMatching();
+            container.setupToPersonality();
         });
         add(nextButton, constraint);
     }
