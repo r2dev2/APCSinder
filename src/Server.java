@@ -24,11 +24,13 @@ public class Server
         // });
         // server.setExecutor(null);
         // server.start();
-        UserDB db = new UserDB("users.db");
-        db.createUser(new UserCreationAttempt(
-                    new User("bruh", new PersonalityType()), "moment"));
-        System.out.println(db.login("bruh", "moment"));
-        System.out.println(db.login("bruh", "moment"));
+        var mdb = new MessageDB(null);
+        mdb.subscribe("bruh", m -> {
+            System.out.println(m);
+            return false;
+        });
+        mdb.add(new Message("hello there", "bruh", "justin"));
+        mdb.add(new Message("hello there", "bruh", "justin"));
     }
 
     private static void respondSingle(HttpExchange t, String response) throws IOException

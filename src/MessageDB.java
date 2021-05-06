@@ -7,9 +7,8 @@ import java.util.HashMap;
  * @author Ronak Badhe
  * @version Sat Apr 24 15:48:52 PDT 2021
  */
-public class MessageDB
+public class MessageDB extends PersistentDB<HashMap<Match, ArrayList<Message>>>
 {
-    private String filename;
     private HashMap<Match, ArrayList<Message>> messages;
     private HashMap<String, MessageSubscriber> subscribers;
 
@@ -20,9 +19,9 @@ public class MessageDB
      */
     public MessageDB(String filename)
     {
-        this.filename = filename;
+        super(filename, new HashMap<Match, ArrayList<Message>>());
         subscribers = new HashMap<String, MessageSubscriber>();
-        load();
+        messages = load();
     }
 
     /**
@@ -32,7 +31,21 @@ public class MessageDB
      */
     public void add(Message msg)
     {
-        // TODO
+        var key = new Match(msg.sender, msg.receiver);
+        var conversation = messages.getOrDefault(key, new ArrayList<Message>());
+        conversation.add(msg);
+        messages.put(key, conversation);
+        save(messages);
+        notifyUser(msg, msg.sender);
+        notifyUser(msg, msg.receiver);
+    }
+
+    private void notifyUser(Message msg, String user)
+    {
+        if (!subscribers.containsKey(user)) return;
+        var sub = subscribers.get(user);
+        if (!sub.onMessage(msg))
+            subscribers.remove(user);
     }
 
     /**
@@ -42,8 +55,7 @@ public class MessageDB
      */
     public ArrayList<Message> get(Match match)
     {
-        // TODO
-        return null;
+        return messages.get(match);
     }
 
     /**
@@ -57,16 +69,7 @@ public class MessageDB
         subscribers.put(user, subscriber);
     }
 
-    private void load()
-    {
-    }
-
-    private void save()
-    {
-        // TODO
-    }
-
-    private interface MessageSubscriber
+    public interface MessageSubscriber
     {
         /**
          * @param m the new message

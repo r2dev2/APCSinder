@@ -34,6 +34,16 @@ public class Match implements Serializable
         return firstUser.equals(other.firstUser) && secondUser.equals(other.secondUser);
     }
 
+    public boolean equals(Object other)
+    {
+        try {
+            return equals((Match) other);
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
     public String toString()
     {
         return String.format("Match(%s, %s, %3f)", firstUser, secondUser, score);
