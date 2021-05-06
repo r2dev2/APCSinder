@@ -117,7 +117,20 @@ public class Network
      */
     public ArrayList<Match> getMatches()
     {
-        return null;
+        try {
+            HttpRequest req = HttpRequest.newBuilder()
+                .uri(endpoint("/matches"))
+                .setHeader("Token", token)
+                .GET()
+                .build();
+            HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
+            ArrayList<Match> res = Serializer.deserialize(r.body());
+            res.hashCode();
+            return res;
+        }
+        catch (IOException | InterruptedException | NullPointerException e) {
+            return new ArrayList<Match>();
+        }
     }
 
     /**
@@ -136,12 +149,10 @@ public class Network
             HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
 
             HashMap<String, ArrayList<Message>> res = Serializer.deserialize(r.body());
-            if (res == null) {
-                return new HashMap<String, ArrayList<Message>>();
-            }
+            res.hashCode();
             return res;
         }
-        catch (IOException | InterruptedException e) {
+        catch (IOException | InterruptedException | NullPointerException e) {
             return new HashMap<String, ArrayList<Message>>();
         }
     }
@@ -185,9 +196,10 @@ public class Network
      */
     public void playground() throws IOException, InterruptedException
     {
+        createUser(new User("bruh", new PersonalityType(false, false, false, false)), "moment");
         login("bruh", "moment");
         sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
         getMessages();
-        createUser(new User("Hey", new PersonalityType(false, false, false, false)), "password");
+        getMatches();
     }
 }

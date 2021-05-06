@@ -19,6 +19,11 @@ public class Match implements Serializable
         this.score = score;
     }
 
+    public Match(String firstUser, String secondUser)
+    {
+        this(firstUser, secondUser, 5);
+    }
+
     public int hashCode()
     {
         return firstUser.hashCode() ^ secondUser.hashCode();
