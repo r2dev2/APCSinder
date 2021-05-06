@@ -117,7 +117,23 @@ public class Network
      */
     public HashMap<String, ArrayList<Message>> getMessages()
     {
-        return null;
+        try {
+            HttpRequest req = HttpRequest.newBuilder()
+                .uri(endpoint("/messages"))
+                .setHeader("Token", token)
+                .GET()
+                .build();
+            HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
+
+            HashMap<String, ArrayList<Message>> res = Serializer.deserialize(r.body());
+            if (res == null) {
+                return new HashMap<String, ArrayList<Message>>();
+            }
+            return res;
+        }
+        catch (IOException | InterruptedException e) {
+            return new HashMap<String, ArrayList<Message>>();
+        }
     }
 
     /**
@@ -130,6 +146,7 @@ public class Network
         String serialized = Serializer.serialize(msg);
         HttpRequest req = HttpRequest.newBuilder()
             .uri(endpoint("/message"))
+            .setHeader("Token", token)
             .POST(HttpRequest.BodyPublishers.ofString(serialized))
             .build();
         client.sendAsync(req, HttpResponse.BodyHandlers.ofString());
@@ -158,7 +175,8 @@ public class Network
      */
     public void playground() throws IOException, InterruptedException
     {
-        sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
         login("bruh", "moment");
+        sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
+        getMessages();
     }
 }

@@ -16,6 +16,7 @@ app = Flask(__name__)
 def endpoint(end, value="alyoo there"):
     def _():
         print(end, request.get_data())
+        print(request.headers)
         return value
     _.__name__ = end
     app.route(end, methods=["GET", "POST"])(_)
@@ -24,6 +25,7 @@ def endpoint(end, value="alyoo there"):
 endpoint("/bruh")
 endpoint("/message")
 endpoint("/login", "rO0ABXNyAAtMb2dpblJlc3VsdHxBa652qMl8AgACWgAHc3VjY2Vzc0wABXRva2VudAASTGphdmEvbGFuZy9TdHJpbmc7eHABdAAkNTAzY2VkN2UtYTIzZS00MGZhLTg4YWQtYjIzZDJmNzU4ZTdh");
+endpoint("/messages", "rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwACRgAKbG9hZEZhY3RvckkACXRocmVzaG9sZHhwP0AAAAAAAAx3CAAAABAAAAABdAAGSnVzdGluc3IAE2phdmEudXRpbC5BcnJheUxpc3R4gdIdmcdhnQMAAUkABHNpemV4cAAAAAB3BAAAAAB4eA==")
 
 @app.route("/")
 def index():
