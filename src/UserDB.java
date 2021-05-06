@@ -5,9 +5,8 @@ import java.nio.file.*;
 /**
  * A persistent database for user authentication.
  */
-public class UserDB
+public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
 {
-    private String filename;
     // Map username -> user record
     private HashMap<String, UserRecord> users;
     // Map username -> token
@@ -22,10 +21,11 @@ public class UserDB
      */
     public UserDB(String filename)
     {
-        this.filename = filename;
+        super(filename, new HashMap<String, UserRecord>());
         userPersonalities = new HashMap<PersonalityType, List<String>>();
         loggedIn = new HashMap<String, String>();
-        load();
+        users = load();
+        loadPersonalityIndex();
     }
 
     /**
@@ -69,7 +69,7 @@ public class UserDB
         users.put(newUser.user.username,
                   new UserRecord(newUser.user, newUser.password));
         addUserToPersonalityIndex(newUser.user.username);
-        save();
+        save(users);
         return true;
     }
 
@@ -94,21 +94,6 @@ public class UserDB
         return userPersonalities.get(type);
     }
 
-    private void load()
-    {
-        try {
-            String contents = Files.readString(Path.of(filename));
-            users = Serializer.deserialize(contents);
-            users.hashCode();
-            loadPersonalityIndex();
-        }
-        catch (IOException | NullPointerException e) {
-            if (users == null) {
-                users = new HashMap<String, UserRecord>();
-            }
-        }
-    }
-
     private void loadPersonalityIndex()
     {
         users.keySet().forEach(this::addUserToPersonalityIndex);
@@ -124,18 +109,7 @@ public class UserDB
         userPersonalities.put(personality, usernames);
     }
 
-    private void save()
-    {
-        try {
-            String serialized = Serializer.serialize(users);
-            Files.write(Paths.get(filename), serialized.getBytes(), StandardOpenOption.CREATE);
-        }
-        catch (IOException | NullPointerException e) {
-            return;
-        }
-    }
-
-    private static class UserRecord implements Serializable
+    public static class UserRecord implements Serializable
     {
         public String password;
         public User user;

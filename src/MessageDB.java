@@ -21,6 +21,8 @@ public class MessageDB
     public MessageDB(String filename)
     {
         this.filename = filename;
+        subscribers = new HashMap<String, MessageSubscriber>();
+        load();
     }
 
     /**
@@ -57,7 +59,6 @@ public class MessageDB
 
     private void load()
     {
-        // TODO
     }
 
     private void save()
