@@ -76,6 +76,7 @@ public class Network
      */
     public void subscribeMatches(EventListener<Match> onMatch)
     {
+        subscribeEvent(onMatch, "/listenmatches");
     }
 
     /**
@@ -83,9 +84,9 @@ public class Network
      *
      * @param onMessage the callback for when a new chat message is sent
      */
-    public void subscribeMessage(EventListener<Message> m)
+    public void subscribeMessage(EventListener<Message> onMessage)
     {
-        subscribeEvent(m, "/listenmessages");
+        subscribeEvent(onMessage, "/listenmessages");
     }
 
     public <T> void subscribeEvent(EventListener<T> onEvent, String end) {
@@ -228,6 +229,7 @@ public class Network
         sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
         getMessages();
         getMatches();
-        subscribeMessage(m -> System.out.println("" + m));
+        subscribeMessage(System.out::println);
+        subscribeMatches(System.out::println);
     }
 }
