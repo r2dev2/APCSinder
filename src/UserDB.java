@@ -38,8 +38,7 @@ public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
     {
         var record = users.getOrDefault(username,
                 new UserRecord(null, "\n" + password));
-        var result = new LoginResult(password.equals(record.password) &&
-                !loggedIn.containsKey(username));
+        var result = new LoginResult(password.equals(record.password));
         if (result.success) {
             loggedIn.put(username, result.token);
         }

@@ -13,24 +13,23 @@ public class Server
     public static void main(String[] args) throws Exception
     {
         System.out.println("Starting APCSinder server");
-        // HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        // server.createContext("/test", t -> {
-        //     respondSingle(t, "Hello there\n");
-        // });
-        // server.createContext("/login", t -> {
-        //     LoginAttempt login = getRequestBody(t, null);
-        //     System.out.println(login);
-        //     respondSingle(t, new LoginResult(true));
-        // });
-        // server.setExecutor(null);
-        // server.start();
-        var mdb = new MessageDB(null);
-        mdb.subscribe("bruh", m -> {
-            System.out.println(m);
-            return false;
+        var db = new UserDB("users.db");
+        var mdb = new MessageDB("messages.db");
+
+        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+
+        server.createContext("/login", t -> {
+            LoginAttempt login = getRequestBody(t, null);
+            respondSingle(t, db.login(login.username, login.password));
         });
-        mdb.add(new Message("hello there", "bruh", "justin"));
-        mdb.add(new Message("hello there", "bruh", "justin"));
+
+        server.createContext("/createuser", t -> {
+            UserCreationAttempt attempt = getRequestBody(t, null);
+            respondSingle(t, db.createUser(attempt) ? "success" : "fail");
+        });
+
+        server.setExecutor(null);
+        server.start();
     }
 
     private static void respondSingle(HttpExchange t, String response) throws IOException
