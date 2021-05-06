@@ -96,8 +96,18 @@ public class Network
      */
     public boolean createUser(User user, String password)
     {
-        //TODO
-        return false;
+        try {
+            String serialized = Serializer.serialize(new UserCreationAttempt(user, password));
+            HttpRequest req = HttpRequest.newBuilder()
+                .uri(endpoint("/createuser"))
+                .PUT(HttpRequest.BodyPublishers.ofString(serialized))
+                .build();
+            HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
+            return r.body().equals("success");
+        }
+        catch (IOException | InterruptedException e) {
+            return false;
+        }
     }
 
     /**
@@ -178,5 +188,6 @@ public class Network
         login("bruh", "moment");
         sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
         getMessages();
+        createUser(new User("Hey", new PersonalityType(false, false, false, false)), "password");
     }
 }
