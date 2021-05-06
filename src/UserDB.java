@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.io.Serializable;
 
 /**
  * A persistent database for user authentication.
@@ -7,12 +8,10 @@ import java.util.HashSet;
 public class UserDB
 {
     private String filename;
-    // Map username -> password
-    private HashMap<String, String> passwords;
+    // Map username -> user record
+    private HashMap<String, UserRecord> users;
     // Map username -> token
     private HashMap<String, String> loggedIn;
-    // Map username -> User
-    private HashMap<String, User> users;
     // Map PersonalityType -> array of usernames
     private HashMap<PersonalityType, String[]> userPersonalities;
 
@@ -57,7 +56,7 @@ public class UserDB
      */
     public User getUser(String username)
     {
-        return users.get(username);
+        return users.get(username).user;
     }
 
     /**
@@ -78,5 +77,21 @@ public class UserDB
     private void save()
     {
         // TODO
+    }
+
+    private static class UserRecord implements Serializable
+    {
+        public String password;
+        public User user;
+        public HashSet<String> matches;
+        public HashSet<String> rejected;
+
+        public UserRecord(String password, User user)
+        {
+            this.password = password;
+            this.user = user;
+            matches = new HashSet<String>();
+            rejected = new HashSet<String>();
+        }
     }
 }

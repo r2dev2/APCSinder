@@ -7,17 +7,9 @@ public class User implements Serializable
 {
     public final String username;
     /**
-     * String that represents a Myers-Briggs personality. Determined by adding up
-     * numbers from PersonalityTest:
-     *
-     * Types that match well together:
-     * ISTJ + ESTP
-     * INTP + INTJ
-     * ENFP + INFJ
-     * ENTJ + ISTP
-     * ISFP + ESFP
+     * A Myers-Briggs personality.
      */
-    private final PersonalityType personality; //TODO finish setup
+    private final PersonalityType personality;
 
     public User(String username, PersonalityType personality)
     {

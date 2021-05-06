@@ -18,10 +18,8 @@ public class Client
         System.out.println("Login failure: " + Serializer.serialize(
                     new LoginResult(false)));
 
-
-        User user = new User("Setup", new PersonalityType(true, true, true, true));
         // Network n = new Network();
-        // AppContainer a = new AppContainer(user.username, n);
+        // AppContainer a = new AppContainer("Setup", n);
 
         String url = getServerURL(args);
         Network n = url == null
