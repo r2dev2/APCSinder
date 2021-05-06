@@ -4,6 +4,7 @@ import java.net.http.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.io.*;
+import java.util.stream.Stream;
 
 /**
  * Networking for client.
@@ -82,8 +83,37 @@ public class Network
      *
      * @param onMessage the callback for when a new chat message is sent
      */
-    public void subscribeMessage(EventListener<Message> onMessage)
+    public void subscribeMessage(EventListener<Message> m)
     {
+        subscribeEvent(m, "/listenmessages");
+    }
+
+    public <T> void subscribeEvent(EventListener<T> onEvent, String end) {
+        Thread t = new Thread(() -> {
+            try {
+                subscribeEventProcessing(onEvent, end);
+            }
+            catch (IOException | InterruptedException e) {
+                return;
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private <T> void subscribeEventProcessing(EventListener<T> onEvent, String end) throws IOException, InterruptedException
+    {
+        HttpRequest req = buildGetRequest(end);
+        HttpResponse<Stream<String>> stream = client.send(req, HttpResponse.BodyHandlers.ofLines());
+        stream
+            .body()
+            .forEach((String line) -> {
+                T m = Serializer.deserialize(line);
+                if (m == null) {
+                    return;
+                }
+                onEvent.onEvent(m);
+            });
     }
 
     /**
@@ -133,11 +163,7 @@ public class Network
     private <T> T getResource(String end, T defaultObj)
     {
         try {
-            HttpRequest req = HttpRequest.newBuilder()
-                .uri(endpoint(end))
-                .setHeader("Token", token)
-                .GET()
-                .build();
+            HttpRequest req = buildGetRequest(end);
             HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
 
             T res = Serializer.deserialize(r.body());
@@ -147,6 +173,15 @@ public class Network
         catch (IOException | InterruptedException | NullPointerException e) {
             return defaultObj;
         }
+    }
+
+    private HttpRequest buildGetRequest(String end)
+    {
+        return HttpRequest.newBuilder()
+            .uri(endpoint(end))
+            .setHeader("Token", token)
+            .GET()
+            .build();
     }
 
     /**
@@ -193,5 +228,6 @@ public class Network
         sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
         getMessages();
         getMatches();
+        subscribeMessage(m -> System.out.println("" + m));
     }
 }

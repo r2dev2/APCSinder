@@ -64,6 +64,9 @@ public class Serializer
         catch (IllegalArgumentException e) {
             return null;
         }
+        catch (ClassCastException e) {
+            return null;
+        }
         finally {
             // shh, java is a little dum and can't realize that these are final
             ByteArrayInputStream b = ibs;
