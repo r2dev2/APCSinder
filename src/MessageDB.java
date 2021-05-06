@@ -11,18 +11,16 @@ public class MessageDB
 {
     private String filename;
     private HashMap<Match, ArrayList<Message>> messages;
-    private UserDB users;
+    private HashMap<String, MessageSubscriber> subscribers;
 
     /**
      * Constructor.
      *
      * @param filename the filename to persist this messagedb to
-     * @param users the userdb to use for authentication
      */
-    public MessageDB(String filename, UserDB users)
+    public MessageDB(String filename)
     {
         this.filename = filename;
-        this.users = users;
     }
 
     /**
@@ -39,12 +37,22 @@ public class MessageDB
      * Get the messages for a particlar user pair.
      *
      * @param match the user pair
-     * @param token the login token of one of the users
      */
-    public ArrayList<Message> get(Match match, String token)
+    public ArrayList<Message> get(Match match)
     {
         // TODO
         return null;
+    }
+
+    /**
+     * Subscribe a user to new messages for the user.
+     *
+     * @param user the username
+     * @param subscriber the callback for each new message
+     */
+    public void subscribe(String user, MessageSubscriber subscriber)
+    {
+        subscribers.put(user, subscriber);
     }
 
     private void load()
@@ -55,5 +63,15 @@ public class MessageDB
     private void save()
     {
         // TODO
+    }
+
+    private interface MessageSubscriber
+    {
+        /**
+         * @param m the new message
+         *
+         * @return whether to keep subscribing
+         */
+        public boolean onMessage(Message m);
     }
 }
