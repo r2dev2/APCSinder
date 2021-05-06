@@ -10,4 +10,9 @@ public class LoginAttempt implements Serializable
         this.username = username;
         this.password = password;
     }
+
+    public String toString()
+    {
+        return String.format("LoginAttempt('%s', '%s')", username, password);
+    }
 }
