@@ -13,17 +13,20 @@ public class Server
     public static void main(String[] args) throws Exception
     {
         System.out.println("Starting APCSinder server");
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        server.createContext("/test", t -> {
-            respondSingle(t, "Hello there\n");
-        });
-        server.createContext("/login", t -> {
-            LoginAttempt login = getRequestBody(t, null);
-            System.out.println(login);
-            respondSingle(t, new LoginResult(true));
-        });
-        server.setExecutor(null);
-        server.start();
+        // HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+        // server.createContext("/test", t -> {
+        //     respondSingle(t, "Hello there\n");
+        // });
+        // server.createContext("/login", t -> {
+        //     LoginAttempt login = getRequestBody(t, null);
+        //     System.out.println(login);
+        //     respondSingle(t, new LoginResult(true));
+        // });
+        // server.setExecutor(null);
+        // server.start();
+        UserDB db = new UserDB("users.db");
+        db.createUser(new UserCreationAttempt(
+                    new User("bruh", new PersonalityType()), "moment"));
     }
 
     private static void respondSingle(HttpExchange t, String response) throws IOException

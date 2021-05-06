@@ -9,7 +9,7 @@ public class User implements Serializable
     /**
      * A Myers-Briggs personality.
      */
-    private final PersonalityType personality;
+    public final PersonalityType personality;
 
     public User(String username, PersonalityType personality)
     {

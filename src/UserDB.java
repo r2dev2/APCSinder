@@ -1,7 +1,6 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.io.Serializable;
+import java.util.*;
+import java.io.*;
+import java.nio.file.*;
 
 /**
  * A persistent database for user authentication.
@@ -24,6 +23,8 @@ public class UserDB
     public UserDB(String filename)
     {
         this.filename = filename;
+        userPersonalities = new HashMap<PersonalityType, List<String>>();
+        load();
     }
 
     /**
@@ -50,6 +51,22 @@ public class UserDB
     }
 
     /**
+     * Creates a new user.
+     *
+     * @param newUser the information for the new user
+     * @return whether the user was created
+     */
+    public boolean createUser(UserCreationAttempt newUser)
+    {
+        if (users.containsKey(newUser.user.username)) return false;
+        users.put(newUser.user.username,
+                  new UserRecord(newUser.user, newUser.password));
+        addUserToPersonalityIndex(newUser.user.username);
+        save();
+        return true;
+    }
+
+    /**
      * Returns the User with a given username.
      *
      * @param username the username
@@ -72,12 +89,43 @@ public class UserDB
 
     private void load()
     {
-        // TODO
+        try {
+            String contents = Files.readString(Path.of(filename));
+            users = Serializer.deserialize(contents);
+            users.hashCode();
+            loadPersonalityIndex();
+        }
+        catch (IOException | NullPointerException e) {
+            if (users == null) {
+                users = new HashMap<String, UserRecord>();
+            }
+        }
+    }
+
+    private void loadPersonalityIndex()
+    {
+        users.keySet().forEach(this::addUserToPersonalityIndex);
+    }
+
+    private void addUserToPersonalityIndex(String username)
+    {
+        PersonalityType personality = users.get(username).user.personality;
+        List<String> usernames = userPersonalities.getOrDefault(
+            personality, new ArrayList<String>()
+        );
+        usernames.add(username);
+        userPersonalities.put(personality, usernames);
     }
 
     private void save()
     {
-        // TODO
+        try {
+            String serialized = Serializer.serialize(users);
+            Files.write(Paths.get(filename), serialized.getBytes(), StandardOpenOption.CREATE);
+        }
+        catch (IOException e) {
+            return;
+        }
     }
 
     private static class UserRecord implements Serializable
@@ -87,10 +135,10 @@ public class UserDB
         public HashSet<String> matches;
         public HashSet<String> rejected;
 
-        public UserRecord(String password, User user)
+        public UserRecord(User user, String password)
         {
-            this.password = password;
             this.user = user;
+            this.password = password;
             matches = new HashSet<String>();
             rejected = new HashSet<String>();
         }

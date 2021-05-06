@@ -18,6 +18,11 @@ public class PersonalityType implements Serializable
         );
     }
 
+    public PersonalityType()
+    {
+        this(false, false, false, false);
+    }
+
     /**
      * String constructor.
      *
