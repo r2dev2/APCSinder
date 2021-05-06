@@ -24,6 +24,7 @@ public class UserDB
     {
         this.filename = filename;
         userPersonalities = new HashMap<PersonalityType, List<String>>();
+        loggedIn = new HashMap<String, String>();
         load();
     }
 
@@ -35,8 +36,14 @@ public class UserDB
      */
     public LoginResult login(String username, String password)
     {
-        // TODO
-        return null;
+        var record = users.getOrDefault(username,
+                new UserRecord(null, "\n" + password));
+        var result = new LoginResult(password.equals(record.password) &&
+                !loggedIn.containsKey(username));
+        if (result.success) {
+            loggedIn.put(username, result.token);
+        }
+        return result;
     }
 
     /**
@@ -47,7 +54,7 @@ public class UserDB
      */
     public boolean authenticate(String username, String token)
     {
-        return false;
+        return loggedIn.getOrDefault(username, "\n" + token).equals(token);
     }
 
     /**
@@ -109,8 +116,8 @@ public class UserDB
 
     private void addUserToPersonalityIndex(String username)
     {
-        PersonalityType personality = users.get(username).user.personality;
-        List<String> usernames = userPersonalities.getOrDefault(
+        var personality = users.get(username).user.personality;
+        var usernames = userPersonalities.getOrDefault(
             personality, new ArrayList<String>()
         );
         usernames.add(username);
@@ -123,7 +130,7 @@ public class UserDB
             String serialized = Serializer.serialize(users);
             Files.write(Paths.get(filename), serialized.getBytes(), StandardOpenOption.CREATE);
         }
-        catch (IOException e) {
+        catch (IOException | NullPointerException e) {
             return;
         }
     }

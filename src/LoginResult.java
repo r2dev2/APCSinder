@@ -12,6 +12,11 @@ public class LoginResult implements Serializable
         this.success = success;
     }
 
+    public String toString()
+    {
+        return String.format("LoginResult(%s, '%s')", success, token);
+    }
+
     private static String generateToken()
     {
         return UUID.randomUUID().toString();

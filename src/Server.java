@@ -27,6 +27,8 @@ public class Server
         UserDB db = new UserDB("users.db");
         db.createUser(new UserCreationAttempt(
                     new User("bruh", new PersonalityType()), "moment"));
+        System.out.println(db.login("bruh", "moment"));
+        System.out.println(db.login("bruh", "moment"));
     }
 
     private static void respondSingle(HttpExchange t, String response) throws IOException
