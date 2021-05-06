@@ -206,9 +206,17 @@ public class ChatUI extends JPanel
             add(list, constraint);
         }
 
+        /**
+         * Creates the list of users, empty Vector if no users.
+         * @return a Vector<String> of Users
+         */
         public Vector<String> createUserList() {
-            Set<String> s = network.getMessages().keySet();
-            return new Vector<String>(s);
+            if (network.getMessages() != null)
+            {
+                Set<String> s = network.getMessages().keySet();
+                return new Vector<String>(s);
+            }
+            return new Vector<String>();
         }
 
         /**
