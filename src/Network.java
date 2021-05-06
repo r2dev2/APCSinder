@@ -117,20 +117,7 @@ public class Network
      */
     public ArrayList<Match> getMatches()
     {
-        try {
-            HttpRequest req = HttpRequest.newBuilder()
-                .uri(endpoint("/matches"))
-                .setHeader("Token", token)
-                .GET()
-                .build();
-            HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
-            ArrayList<Match> res = Serializer.deserialize(r.body());
-            res.hashCode();
-            return res;
-        }
-        catch (IOException | InterruptedException | NullPointerException e) {
-            return new ArrayList<Match>();
-        }
+        return getResource("/matches", new ArrayList<Match>());
     }
 
     /**
@@ -140,20 +127,25 @@ public class Network
      */
     public HashMap<String, ArrayList<Message>> getMessages()
     {
+        return getResource("/messages", new HashMap<String, ArrayList<Message>>());
+    }
+
+    private <T> T getResource(String end, T defaultObj)
+    {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                .uri(endpoint("/messages"))
+                .uri(endpoint(end))
                 .setHeader("Token", token)
                 .GET()
                 .build();
             HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
 
-            HashMap<String, ArrayList<Message>> res = Serializer.deserialize(r.body());
+            T res = Serializer.deserialize(r.body());
             res.hashCode();
             return res;
         }
         catch (IOException | InterruptedException | NullPointerException e) {
-            return new HashMap<String, ArrayList<Message>>();
+            return defaultObj;
         }
     }
 
