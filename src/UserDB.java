@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.io.Serializable;
 
 /**
@@ -13,7 +14,7 @@ public class UserDB
     // Map username -> token
     private HashMap<String, String> loggedIn;
     // Map PersonalityType -> array of usernames
-    private HashMap<PersonalityType, String[]> userPersonalities;
+    private HashMap<PersonalityType, List<String>> userPersonalities;
 
     /**
      * Constructor.
@@ -65,7 +66,7 @@ public class UserDB
      * @param type the personality type
      * @return String array of matching usernames
      */
-    public String[] getUserPersonalities(PersonalityType type) {
+    public List<String> getUserPersonalities(PersonalityType type) {
         return userPersonalities.get(type);
     }
 
