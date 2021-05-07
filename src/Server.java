@@ -28,6 +28,11 @@ public class Server
             respondSingle(t, db.createUser(attempt) ? "success" : "fail");
         });
 
+        server.createContext("/message", t -> {
+            mdb.add(getRequestBody(t, null));
+            respondSingle(t, "success");
+        });
+
         server.setExecutor(null);
         server.start();
     }
