@@ -3,7 +3,7 @@ import java.io.*;
 import java.nio.file.*;
 
 /**
- * A persistent database for user authentication.
+ * A persistent database for user authentication and matching.
  */
 public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
 {
@@ -13,6 +13,8 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
     private HashMap<String, String> loggedIn;
     // Map PersonalityType -> array of usernames
     private HashMap<PersonalityType, List<String>> userPersonalities;
+
+    private MatchingDB mdb;
 
     /**
      * Constructor.
@@ -26,6 +28,7 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
         loggedIn = new HashMap<String, String>();
         users = load();
         loadPersonalityIndex();
+        mdb = new MatchingDB(filename == null ? null : filename + ".pot.db");
     }
 
     /**
@@ -68,8 +71,19 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
         users.put(newUser.user.username,
                   new UserRecord(newUser.user, newUser.password));
         addUserToPersonalityIndex(newUser.user.username);
+        addNewUserPotentialMatches(newUser.user);
         save(users);
         return true;
+    }
+
+    private void addNewUserPotentialMatches(User user)
+    {
+        for (PersonalityType p: user.getPreferredTypes()) {
+            for (String other: userPersonalities.getOrDefault(p, new ArrayList<>())) {
+                if (other.equals(user.username)) continue;
+                mdb.addPotential(user.username, other);
+            }
+        }
     }
 
     public boolean createMatch(Match m)
@@ -77,14 +91,28 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
         var first = getUser(m.firstUser);
         var second = getUser(m.secondUser);
         if (first.rejected.contains(second) || second.rejected.contains(first)) return false;
+        mdb.removePotential(m);
         matchWith(first, m.secondUser);
         matchWith(second, m.firstUser);
         return true;
     }
 
+    public void subscribePotentialMatches(String id, BaseDB.Subscriber<Match> subscriber)
+    {
+        mdb.subscribe(id, subscriber);
+    }
+
     private void matchWith(UserRecord first, String second)
     {
+        var firstUsername = first.user.username;
         first.matches.add(second);
+        notifySubscriber(new Match(firstUsername, second), firstUsername);
+    }
+
+    public void reject(String user, String other)
+    {
+        mdb.removePotential(user, other);
+        getUser(user).rejected.add(other);
     }
 
     /**
