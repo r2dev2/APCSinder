@@ -9,7 +9,7 @@ public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
 {
     // Map username -> user record
     private HashMap<String, UserRecord> users;
-    // Map username -> token
+    // Map token -> username
     private HashMap<String, String> loggedIn;
     // Map PersonalityType -> array of usernames
     private HashMap<PersonalityType, List<String>> userPersonalities;
@@ -40,7 +40,7 @@ public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
                 new UserRecord(null, "\n" + password));
         var result = new LoginResult(password.equals(record.password));
         if (result.success) {
-            loggedIn.put(username, result.token);
+            loggedIn.put(result.token, username);
         }
         return result;
     }
@@ -53,7 +53,7 @@ public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
      */
     public boolean authenticate(String username, String token)
     {
-        return loggedIn.getOrDefault(username, "\n" + token).equals(token);
+        return loggedIn.getOrDefault(token, "\n" + username).equals(username);
     }
 
     /**
@@ -78,9 +78,20 @@ public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
      * @param username the username
      * @return User for the username
      */
-    public User getUser(String username)
+    public UserRecord getUser(String username)
     {
-        return users.get(username).user;
+        return users.get(username);
+    }
+
+    /**
+     * Returns the username linked to a token.
+     *
+     * @param token the token
+     * @return the username of the token
+     */
+    public String getUsername(String token)
+    {
+        return loggedIn.getOrDefault(token, null);
     }
 
     /**

@@ -226,7 +226,7 @@ public class Network
     {
         createUser(new User("bruh", new PersonalityType(false, false, false, false)), "moment");
         login("bruh", "moment");
-        sendMessage(new Message("Hello there", "Kenobi", "Skywalker"));
+        sendMessage(new Message("Hello there", "bruh", "Justin"));
         getMessages();
         getMatches();
         subscribeMessage(System.out::println);

@@ -3,10 +3,13 @@ import java.io.Serializable;
 import java.io.OutputStream;
 import java.io.*;
 import java.util.stream.*;
+import java.util.*;
 import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.HttpPrincipal;
+import com.sun.net.httpserver.Authenticator;
 
 public class Server
 {
@@ -29,8 +32,44 @@ public class Server
         });
 
         server.createContext("/message", t -> {
-            mdb.add(getRequestBody(t, null));
+            Message msg = getRequestBody(t, null);
+            var token = getToken(t);
+            if (!db.authenticate(msg.sender, token)) {
+                respondSingle(t, "Not authenticated");
+                return;
+            }
+            mdb.add(msg);
             respondSingle(t, "success");
+        });
+
+        server.createContext("/messages", t -> {
+            var token = getToken(t);
+            var username = db.getUsername(token);
+            if (username == null) {
+                respondSingle(t, "Not authenticated");
+                return;
+            }
+            var record = db.getUser(username);
+            var messages = new HashMap<String, ArrayList<Message>>();
+            for (String other: record.matches) {
+                messages.put(other, mdb.get(new Match(username, other)));
+            }
+            respondSingle(t, messages);
+        });
+
+        server.createContext("/matches", t -> {
+            var token = getToken(t);
+            var username = db.getUsername(token);
+            if (username == null) {
+                respondSingle(t, "Not authenticated");
+                return;
+            }
+            var record = db.getUser(username);
+            var matches = new ArrayList<Match>();
+            for (String other: record.matches) {
+                matches.add(new Match(username, other));
+            }
+            respondSingle(t, matches);
         });
 
         server.setExecutor(null);
@@ -65,5 +104,11 @@ public class Server
             return defaultObj;
         }
         return obj;
+    }
+
+    private static String getToken(HttpExchange t)
+    {
+        // Throw npe when no token
+        return t.getRequestHeaders().getOrDefault("Token", null).get(0);
     }
 }
