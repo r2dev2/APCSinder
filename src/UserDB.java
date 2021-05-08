@@ -72,6 +72,21 @@ public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
         return true;
     }
 
+    public boolean createMatch(Match m)
+    {
+        var first = getUser(m.firstUser);
+        var second = getUser(m.secondUser);
+        if (first.rejected.contains(second) || second.rejected.contains(first)) return false;
+        matchWith(first, m.secondUser);
+        matchWith(second, m.firstUser);
+        return true;
+    }
+
+    private void matchWith(UserRecord first, String second)
+    {
+        first.matches.add(second);
+    }
+
     /**
      * Returns the User with a given username.
      *
