@@ -5,7 +5,7 @@ import java.nio.file.*;
 /**
  * A persistent database for user authentication.
  */
-public class UserDB extends PersistentDB<HashMap<String, UserDB.UserRecord>>
+public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
 {
     // Map username -> user record
     private HashMap<String, UserRecord> users;

@@ -7,10 +7,9 @@ import java.util.HashMap;
  * @author Ronak Badhe
  * @version Sat Apr 24 15:48:52 PDT 2021
  */
-public class MessageDB extends PersistentDB<HashMap<Match, ArrayList<Message>>>
+public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Message>
 {
     private HashMap<Match, ArrayList<Message>> messages;
-    private HashMap<String, MessageSubscriber> subscribers;
 
     /**
      * Constructor.
@@ -20,7 +19,6 @@ public class MessageDB extends PersistentDB<HashMap<Match, ArrayList<Message>>>
     public MessageDB(String filename)
     {
         super(filename, new HashMap<Match, ArrayList<Message>>());
-        subscribers = new HashMap<String, MessageSubscriber>();
         messages = load();
     }
 
@@ -36,16 +34,8 @@ public class MessageDB extends PersistentDB<HashMap<Match, ArrayList<Message>>>
         conversation.add(msg);
         messages.put(key, conversation);
         save(messages);
-        notifyUser(msg, msg.sender);
-        notifyUser(msg, msg.receiver);
-    }
-
-    private void notifyUser(Message msg, String user)
-    {
-        if (!subscribers.containsKey(user)) return;
-        var sub = subscribers.get(user);
-        if (!sub.onMessage(msg))
-            subscribers.remove(user);
+        notifySubscriber(msg, msg.sender);
+        notifySubscriber(msg, msg.receiver);
     }
 
     /**
@@ -56,26 +46,5 @@ public class MessageDB extends PersistentDB<HashMap<Match, ArrayList<Message>>>
     public ArrayList<Message> get(Match match)
     {
         return messages.get(match);
-    }
-
-    /**
-     * Subscribe a user to new messages for the user.
-     *
-     * @param user the username
-     * @param subscriber the callback for each new message
-     */
-    public void subscribe(String user, MessageSubscriber subscriber)
-    {
-        subscribers.put(user, subscriber);
-    }
-
-    public interface MessageSubscriber
-    {
-        /**
-         * @param m the new message
-         *
-         * @return whether to keep subscribing
-         */
-        public boolean onMessage(Message m);
     }
 }
