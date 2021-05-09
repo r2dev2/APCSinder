@@ -18,7 +18,7 @@ public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Messag
      */
     public MessageDB(String filename)
     {
-        super(filename, new HashMap<Match, ArrayList<Message>>());
+        super(filename, new HashMap<>());
         messages = load();
     }
 
@@ -29,11 +29,21 @@ public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Messag
      */
     public void add(Message msg)
     {
+        addMsgToConversation(msg);
+        save(messages);
+        notifyOfMessage(msg);
+    }
+
+    private void addMsgToConversation(Message msg)
+    {
         var key = new Match(msg.sender, msg.receiver);
-        var conversation = messages.getOrDefault(key, new ArrayList<Message>());
+        var conversation = messages.getOrDefault(key, new ArrayList<>());
         conversation.add(msg);
         messages.put(key, conversation);
-        save(messages);
+    }
+
+    private void notifyOfMessage(Message msg)
+    {
         notifySubscriber(msg, msg.sender);
         notifySubscriber(msg, msg.receiver);
     }

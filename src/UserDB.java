@@ -5,7 +5,7 @@ import java.nio.file.*;
 /**
  * A persistent database for user authentication and matching.
  */
-public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
+public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
 {
     // Map username -> user record
     private HashMap<String, UserRecord> users;
@@ -23,9 +23,9 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
      */
     public UserDB(String filename)
     {
-        super(filename, new HashMap<String, UserRecord>());
-        userPersonalities = new HashMap<PersonalityType, List<String>>();
-        loggedIn = new HashMap<String, String>();
+        super(filename, new HashMap<>());
+        userPersonalities = new HashMap<>();
+        loggedIn = new HashMap<>();
         users = load();
         loadPersonalityIndex();
         mdb = new MatchingDB(filename == null ? null : filename + ".pot.db");
@@ -42,10 +42,15 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
         var record = users.getOrDefault(username,
                 new UserRecord(null, "\n" + password));
         var result = new LoginResult(password.equals(record.password));
-        if (result.success) {
-            loggedIn.put(result.token, username);
-        }
+        registerTokenIfSuccess(result, username);
         return result;
+    }
+
+    private void registerTokenIfSuccess(LoginResult res, String username)
+    {
+        if (res.success) {
+            loggedIn.put(res.token, username);
+        }
     }
 
     /**
@@ -68,12 +73,16 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
     public boolean createUser(UserCreationAttempt newUser)
     {
         if (users.containsKey(newUser.user.username)) return false;
-        users.put(newUser.user.username,
-                  new UserRecord(newUser.user, newUser.password));
+        addUserToRecord(newUser.user, newUser.password);
         addUserToPersonalityIndex(newUser.user.username);
         addNewUserPotentialMatches(newUser.user);
         save(users);
         return true;
+    }
+
+    private void addUserToRecord(User user, String password)
+    {
+        users.put(user.username, new UserRecord(user, password));
     }
 
     private void addNewUserPotentialMatches(User user)
@@ -90,11 +99,15 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
     {
         var first = getUser(m.firstUser);
         var second = getUser(m.secondUser);
-        if (first.rejected.contains(second) || second.rejected.contains(first)) return false;
+        if (oneRejectedOther(first, second)) return false;
         mdb.removePotential(m);
-        matchWith(first, m.secondUser);
-        matchWith(second, m.firstUser);
+        matchWith(first, second);
         return true;
+    }
+
+    private boolean oneRejectedOther(UserRecord first, UserRecord second)
+    {
+        return first.hasRejected(second) || second.hasRejected(first);
     }
 
     public void subscribePotentialMatches(String id, BaseDB.Subscriber<Match> subscriber)
@@ -107,6 +120,12 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
         var firstUsername = first.user.username;
         first.matches.add(second);
         notifySubscriber(new Match(firstUsername, second), firstUsername);
+    }
+
+    private void matchWith(UserRecord first, UserRecord second)
+    {
+        matchWith(first, second.user.username);
+        matchWith(second, first.user.username);
     }
 
     public void reject(String user, String other)
@@ -124,6 +143,11 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
     public UserRecord getUser(String username)
     {
         return users.get(username);
+    }
+
+    public Set<String> getMatches(String username)
+    {
+        return users.get(username).matches;
     }
 
     /**
@@ -155,26 +179,8 @@ public class UserDB extends BaseDB<HashMap<String, UserDB.UserRecord>, Match>
     private void addUserToPersonalityIndex(String username)
     {
         var personality = users.get(username).user.personality;
-        var usernames = userPersonalities.getOrDefault(
-            personality, new ArrayList<String>()
-        );
+        var usernames = userPersonalities.getOrDefault(personality, new ArrayList<>());
         usernames.add(username);
         userPersonalities.put(personality, usernames);
-    }
-
-    public static class UserRecord implements Serializable
-    {
-        public String password;
-        public User user;
-        public HashSet<String> matches;
-        public HashSet<String> rejected;
-
-        public UserRecord(User user, String password)
-        {
-            this.user = user;
-            this.password = password;
-            matches = new HashSet<String>();
-            rejected = new HashSet<String>();
-        }
     }
 }

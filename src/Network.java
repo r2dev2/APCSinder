@@ -192,12 +192,28 @@ public class Network
      */
     public void sendMessage(Message msg) throws IOException, InterruptedException
     {
-        String serialized = Serializer.serialize(msg);
-        HttpRequest req = HttpRequest.newBuilder()
-            .uri(endpoint("/message"))
-            .setHeader("Token", token)
-            .POST(HttpRequest.BodyPublishers.ofString(serialized))
-            .build();
+        postObjectAsync("/message", msg);
+    }
+
+    private HttpRequest buildPostRequest(String end, Serializable obj)
+    {
+        String serialized = Serializer.serialize(obj);
+        var builder = HttpRequest.newBuilder()
+            .uri(endpoint(end))
+            .POST(HttpRequest.BodyPublishers.ofString(serialized));
+
+        return addTokenIfExists(builder).build();
+    }
+
+    private HttpRequest.Builder addTokenIfExists(HttpRequest.Builder builder)
+    {
+        if (token == null) return builder;
+        return builder.setHeader("Token", token);
+    }
+
+    private void postObjectAsync(String end, Serializable obj) throws IOException, InterruptedException
+    {
+        var req = buildPostRequest(end, obj);
         client.sendAsync(req, HttpResponse.BodyHandlers.ofString());
     }
 

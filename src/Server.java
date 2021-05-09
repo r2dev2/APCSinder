@@ -1,6 +1,3 @@
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.OutputStream;
 import java.io.*;
 import java.util.stream.*;
 import java.util.*;
@@ -15,7 +12,7 @@ public class Server
 {
     public static void main(String[] args) throws Exception
     {
-        System.out.println("Starting APCSinder server");
+        System.out.println("Starting APCSinder server at http://localhost:8000.");
         var db = new UserDB("users.db");
         var mdb = new MessageDB("messages.db");
 
@@ -34,46 +31,42 @@ public class Server
         server.createContext("/message", t -> {
             Message msg = getRequestBody(t, null);
             var token = getToken(t);
-            if (!db.authenticate(msg.sender, token)) {
-                respondSingle(t, "Not authenticated");
-                return;
-            }
+            denyIf(!db.authenticate(msg.sender, token), t);
             mdb.add(msg);
             respondSingle(t, "success");
         });
 
         server.createContext("/messages", t -> {
-            var token = getToken(t);
-            var username = db.getUsername(token);
-            if (username == null) {
-                respondSingle(t, "Not authenticated");
-                return;
-            }
-            var record = db.getUser(username);
-            var messages = new HashMap<String, ArrayList<Message>>();
-            for (String other: record.matches) {
-                messages.put(other, mdb.get(new Match(username, other)));
-            }
-            respondSingle(t, messages);
+            var username = db.getUsername(getToken(t));
+            denyIf(username == null, t);
+            respondSingle(t, getMessages(username, db.getMatches(username), mdb));
         });
 
         server.createContext("/matches", t -> {
-            var token = getToken(t);
-            var username = db.getUsername(token);
-            if (username == null) {
-                respondSingle(t, "Not authenticated");
-                return;
-            }
-            var record = db.getUser(username);
-            var matches = new ArrayList<Match>();
-            for (String other: record.matches) {
-                matches.add(new Match(username, other));
-            }
-            respondSingle(t, matches);
+            var username = db.getUsername(getToken(t));
+            denyIf(username == null, t);
+            respondSingle(t, db.getUser(username).getMatches());
         });
 
         server.setExecutor(null);
         server.start();
+    }
+
+    private static HashMap<String, ArrayList<Message>>
+        getMessages(String username, Iterable<String> matches, MessageDB mdb)
+    {
+        var messages = new HashMap<String, ArrayList<Message>>();
+        for (var other: matches) {
+            messages.put(other, mdb.get(new Match(username, other)));
+        }
+        return messages;
+    }
+
+    private static void denyIf(boolean condition, HttpExchange t) throws IOException
+    {
+        if (!condition) return;
+        respondSingle(t, "Not authenticated");
+        throw new SecurityException("Not authenticated");
     }
 
     private static void respondSingle(HttpExchange t, String response) throws IOException
@@ -100,10 +93,7 @@ public class Server
     {
         String body = getRequestBody(t);
         T obj = Serializer.deserialize(body);
-        if (obj == null) {
-            return defaultObj;
-        }
-        return obj;
+        return obj != null ? obj : defaultObj;
     }
 
     private static String getToken(HttpExchange t)
