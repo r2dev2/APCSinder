@@ -73,19 +73,15 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return true;
     }
 
-    public boolean createMatch(Match m)
-    {
-        var first = getUser(m.firstUser);
-        var second = getUser(m.secondUser);
-        if (oneRejectedOther(first, second)) return false;
-        mdb.removePotential(m);
-        matchWith(first, second);
-        return true;
-    }
-
     public void subscribePotentialMatches(String id, BaseDB.Subscriber<Match> subscriber)
     {
         mdb.subscribe(id, subscriber);
+    }
+
+    public void accept(String user, String other)
+    {
+        getUser(user).acceptUser(other);
+        createMatch(new Match(user, other));
     }
 
     public void reject(String user, String other)
@@ -176,6 +172,11 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return first.hasRejected(second) || second.hasRejected(first);
     }
 
+    private boolean bothAcceptedEachOther(UserRecord first, UserRecord second)
+    {
+        return first.hasAccepted(second) && second.hasAccepted(first);
+    }
+
     private void matchWith(UserRecord first, String second)
     {
         var firstUsername = first.user.username;
@@ -187,5 +188,16 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
     {
         matchWith(first, second.user.username);
         matchWith(second, first.user.username);
+    }
+
+    private boolean createMatch(Match m)
+    {
+        var first = getUser(m.firstUser);
+        var second = getUser(m.secondUser);
+        if (oneRejectedOther(first, second)) return false;
+        if (!bothAcceptedEachOther(first, second)) return false;
+        mdb.removePotential(m);
+        matchWith(first, second);
+        return true;
     }
 }

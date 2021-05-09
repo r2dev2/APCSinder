@@ -6,6 +6,7 @@ public class UserRecord implements Serializable
     public String password;
     public User user;
     public HashSet<String> matches;
+    public HashSet<String> accepted;
     public HashSet<String> rejected;
 
     public UserRecord(User user, String password)
@@ -14,6 +15,7 @@ public class UserRecord implements Serializable
         this.password = password;
         this.matches = new HashSet<>();
         this.rejected = new HashSet<>();
+        this.accepted = new HashSet<>();
     }
 
     public ArrayList<Match> getMatches()
@@ -29,5 +31,15 @@ public class UserRecord implements Serializable
     public boolean hasRejected(UserRecord other)
     {
         return rejected.contains(other.user.username);
+    }
+
+    public boolean hasAccepted(UserRecord other)
+    {
+        return accepted.contains(other.user.username);
+    }
+
+    public void acceptUser(String user)
+    {
+        accepted.add(user);
     }
 }
