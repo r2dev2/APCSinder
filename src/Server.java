@@ -44,20 +44,29 @@ public class Server
 
         server.createContext("/potentialmatches", handleGet(db, db::getPotentialMatches));
 
-        server.createContext("/acceptmatch", t -> {
-            Match match = getRequestBody(t, null);
-            var username = db.getUsername(getToken(t));
-            denyIf(!match.hasUser(username), t);
-            db.accept(username, match.otherUser(username));
-            respondSingle(t, "success");
-        });
+        server.createContext("/acceptmatch", handleAcceptReject(true, db);
+        server.createContext("/rejectmatch", handleAcceptReject(false, db);
 
         server.setExecutor(null);
         server.start();
     }
 
+    private static HttpHandler handleAcceptReject(boolean accept, UserDB db)
+    {
+        return t -> {
+            Match match = getRequestBody(t, null);
+            var username = db.getUsername(getToken(t));
+            denyIf(!match.hasUser(username), t);
+            if (accept)
+                db.accept(username, match.otherUser(username));
+            else
+                db.reject(username, match.otherUser(username));
+            respondSingle(t, "success");
+        };
+    }
+
     private static HttpHandler handleGet(
-            UserDB db, Function<String, Serializable> resourceGetter) throws IOException
+            UserDB db, Function<String, Serializable> resourceGetter)
     {
         return t -> {
             var username = db.getUsername(getToken(t));
