@@ -37,6 +37,7 @@ public abstract class BaseDB<T, E>
         try {
             String contents = Files.readString(Path.of(filename));
             obj = Serializer.deserialize(contents);
+            // Throw npe if obj is null
             obj.hashCode();
             return obj;
         }

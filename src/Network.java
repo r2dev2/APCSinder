@@ -64,10 +64,7 @@ public class Network
         return res;
     }
 
-    private interface EventListener<T>
-    {
-        public void onEvent(T m);
-    }
+    
 
     /**
      * Subscribe to new matches.
@@ -92,34 +89,6 @@ public class Network
     public void subscribeMessage(EventListener<Message> onMessage)
     {
         subscribeEvent(onMessage, "/listenmessages");
-    }
-
-    private <T> void subscribeEvent(EventListener<T> onEvent, String end) {
-        Thread t = new Thread(() -> {
-            try {
-                subscribeEventProcessing(onEvent, end);
-            }
-            catch (IOException | InterruptedException e) {
-                return;
-            }
-        });
-        t.setDaemon(true);
-        t.start();
-    }
-
-    private <T> void subscribeEventProcessing(EventListener<T> onEvent, String end) throws IOException, InterruptedException
-    {
-        HttpRequest req = buildGetRequest(end);
-        HttpResponse<Stream<String>> stream = client.send(req, HttpResponse.BodyHandlers.ofLines());
-        stream
-            .body()
-            .forEach((String line) -> {
-                T m = Serializer.deserialize(line);
-                if (m == null) {
-                    return;
-                }
-                onEvent.onEvent(m);
-            });
     }
 
     /**
@@ -171,6 +140,74 @@ public class Network
         return getResource("/messages", new HashMap<String, ArrayList<Message>>());
     }
 
+    /**
+     * Sends a message.
+     *
+     * @param msg the message to send
+     */
+    public void sendMessage(Message msg) throws IOException, InterruptedException
+    {
+        postObjectAsync("/message", msg);
+    }
+
+    public void acceptMatch(Match match) throws IOException, InterruptedException
+    {
+        postObjectAsync("/acceptmatch", match);
+    }
+
+    public void rejectMatch(Match match) throws IOException, InterruptedException
+    {
+        postObjectAsync("/rejectmatch", match);
+    }
+
+    /**
+     * Testing grounds for how to do this class.
+     */
+    public void playground() throws IOException, InterruptedException
+    {
+        createUser(new User("bruh", new PersonalityType()), "moment");
+        login("bruh", "moment");
+        sendMessage(new Message("Hello there", "bruh", "Justin"));
+        getMessages();
+        getMatches();
+        subscribeMessage(System.out::println);
+        subscribeMatches(System.out::println);
+    }
+
+    private interface EventListener<T>
+    {
+        public void onEvent(T m);
+    }
+
+    private <T> void subscribeEvent(EventListener<T> onEvent, String end)
+    {
+        Thread t = new Thread(() -> {
+            try {
+                subscribeEventProcessing(onEvent, end);
+            }
+            catch (IOException | InterruptedException e) {
+                return;
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private <T> void subscribeEventProcessing(EventListener<T> onEvent, String end) throws IOException, InterruptedException
+    {
+        HttpRequest req = buildGetRequest(end);
+        HttpResponse<Stream<String>> stream = client.send(req, HttpResponse.BodyHandlers.ofLines());
+        stream
+            .body()
+            .forEach((String line) -> {
+                T m = Serializer.deserialize(line);
+                if (m == null) {
+                    return;
+                }
+                onEvent.onEvent(m);
+            });
+    }
+
     private <T> T getResource(String end, T defaultObj)
     {
         try {
@@ -193,26 +230,6 @@ public class Network
             .setHeader("Token", token)
             .GET()
             .build();
-    }
-
-    /**
-     * Sends a message.
-     *
-     * @param msg the message to send
-     */
-    public void sendMessage(Message msg) throws IOException, InterruptedException
-    {
-        postObjectAsync("/message", msg);
-    }
-
-    public void acceptMatch(Match match) throws IOException, InterruptedException
-    {
-        postObjectAsync("/acceptmatch", match);
-    }
-
-    public void rejectMatch(Match match) throws IOException, InterruptedException
-    {
-        postObjectAsync("/rejectmatch", match);
     }
 
     private HttpRequest buildPostRequest(String end, Serializable obj)
@@ -253,19 +270,5 @@ public class Network
             System.exit(1);
             return null;
         }
-    }
-
-    /**
-     * Testing grounds for how to do this class.
-     */
-    public void playground() throws IOException, InterruptedException
-    {
-        createUser(new User("bruh", new PersonalityType()), "moment");
-        login("bruh", "moment");
-        sendMessage(new Message("Hello there", "bruh", "Justin"));
-        getMessages();
-        getMatches();
-        subscribeMessage(System.out::println);
-        subscribeMatches(System.out::println);
     }
 }

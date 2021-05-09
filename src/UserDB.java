@@ -46,13 +46,6 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return result;
     }
 
-    private void registerTokenIfSuccess(LoginResult res, String username)
-    {
-        if (res.success) {
-            loggedIn.put(res.token, username);
-        }
-    }
-
     /**
      * Checks if the user is logged in with the token.
      *
@@ -80,21 +73,6 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return true;
     }
 
-    private void addUserToRecord(User user, String password)
-    {
-        users.put(user.username, new UserRecord(user, password));
-    }
-
-    private void addNewUserPotentialMatches(User user)
-    {
-        for (PersonalityType p: user.getPreferredTypes()) {
-            for (String other: userPersonalities.getOrDefault(p, new ArrayList<>())) {
-                if (other.equals(user.username)) continue;
-                mdb.addPotential(user.username, other);
-            }
-        }
-    }
-
     public boolean createMatch(Match m)
     {
         var first = getUser(m.firstUser);
@@ -105,27 +83,9 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return true;
     }
 
-    private boolean oneRejectedOther(UserRecord first, UserRecord second)
-    {
-        return first.hasRejected(second) || second.hasRejected(first);
-    }
-
     public void subscribePotentialMatches(String id, BaseDB.Subscriber<Match> subscriber)
     {
         mdb.subscribe(id, subscriber);
-    }
-
-    private void matchWith(UserRecord first, String second)
-    {
-        var firstUsername = first.user.username;
-        first.matches.add(second);
-        notifySubscriber(new Match(firstUsername, second), firstUsername);
-    }
-
-    private void matchWith(UserRecord first, UserRecord second)
-    {
-        matchWith(first, second.user.username);
-        matchWith(second, first.user.username);
     }
 
     public void reject(String user, String other)
@@ -182,5 +142,45 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         var usernames = userPersonalities.getOrDefault(personality, new ArrayList<>());
         usernames.add(username);
         userPersonalities.put(personality, usernames);
+    }
+
+    private void registerTokenIfSuccess(LoginResult res, String username)
+    {
+        if (res.success) {
+            loggedIn.put(res.token, username);
+        }
+    }
+
+    private void addUserToRecord(User user, String password)
+    {
+        users.put(user.username, new UserRecord(user, password));
+    }
+
+    private void addNewUserPotentialMatches(User user)
+    {
+        for (PersonalityType p: user.getPreferredTypes()) {
+            for (String other: userPersonalities.getOrDefault(p, new ArrayList<>())) {
+                if (other.equals(user.username)) continue;
+                mdb.addPotential(user.username, other);
+            }
+        }
+    }
+
+    private boolean oneRejectedOther(UserRecord first, UserRecord second)
+    {
+        return first.hasRejected(second) || second.hasRejected(first);
+    }
+
+    private void matchWith(UserRecord first, String second)
+    {
+        var firstUsername = first.user.username;
+        first.matches.add(second);
+        notifySubscriber(new Match(firstUsername, second), firstUsername);
+    }
+
+    private void matchWith(UserRecord first, UserRecord second)
+    {
+        matchWith(first, second.user.username);
+        matchWith(second, first.user.username);
     }
 }
