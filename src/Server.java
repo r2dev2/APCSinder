@@ -44,8 +44,8 @@ public class Server
 
         server.createContext("/potentialmatches", handleGet(db, db::getPotentialMatches));
 
-        server.createContext("/acceptmatch", handleAcceptReject(true, db);
-        server.createContext("/rejectmatch", handleAcceptReject(false, db);
+        server.createContext("/acceptmatch", handleAcceptReject(true, db));
+        server.createContext("/rejectmatch", handleAcceptReject(false, db));
 
         server.setExecutor(null);
         server.start();
