@@ -1,9 +1,16 @@
-import java.io.*;
-import java.util.*;
-import javax.swing.JFrame;
-
+/**
+ *  The Client class opens up the UI frontend for the User.
+ *
+ *  @author Justin Chang
+ *  @version May 8, 2021
+ */
 public class Client
 {
+    /**
+     * Starts the client frontend.
+     * @param args an String array that contains the URL.
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception
     {
         System.out.println("Client program");
@@ -29,6 +36,11 @@ public class Client
         Thread.sleep(100);
     }
 
+    /**
+     * Returns the url.
+     * @param args the String array that contains the URL.
+     * @return the url
+     */
     private static String getServerURL(String[] args)
     {
         boolean isURL = false;
