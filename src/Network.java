@@ -79,6 +79,11 @@ public class Network
         subscribeEvent(onMatch, "/listenmatches");
     }
 
+    public void subscribePotentialMatches(EventListener<Match> onPotMatch)
+    {
+        subscribeEvent(onPotMatch, "/listenpotentialmatches");
+    }
+
     /**
      * Subscribe to new chat messages.
      *
@@ -89,7 +94,7 @@ public class Network
         subscribeEvent(onMessage, "/listenmessages");
     }
 
-    public <T> void subscribeEvent(EventListener<T> onEvent, String end) {
+    private <T> void subscribeEvent(EventListener<T> onEvent, String end) {
         Thread t = new Thread(() -> {
             try {
                 subscribeEventProcessing(onEvent, end);
@@ -151,6 +156,11 @@ public class Network
         return getResource("/matches", new ArrayList<Match>());
     }
 
+    public ArrayList<Match> getPotentialMatches()
+    {
+        return getResource("/potentialmatches", new ArrayList<Match>());
+    }
+
     /**
      * Get the messages in the user's conversations
      *
@@ -195,10 +205,20 @@ public class Network
         postObjectAsync("/message", msg);
     }
 
+    public void acceptMatch(Match match) throws IOException, InterruptedException
+    {
+        postObjectAsync("/acceptmatch", match);
+    }
+
+    public void rejectMatch(Match match) throws IOException, InterruptedException
+    {
+        postObjectAsync("/rejectmatch", match);
+    }
+
     private HttpRequest buildPostRequest(String end, Serializable obj)
     {
         String serialized = Serializer.serialize(obj);
-        var builder = HttpRequest.newBuilder()
+        var builder = HttpRequest.newBuilder(endpoint(end))
             .uri(endpoint(end))
             .POST(HttpRequest.BodyPublishers.ofString(serialized));
 
@@ -240,7 +260,7 @@ public class Network
      */
     public void playground() throws IOException, InterruptedException
     {
-        createUser(new User("bruh", new PersonalityType(false, false, false, false)), "moment");
+        createUser(new User("bruh", new PersonalityType()), "moment");
         login("bruh", "moment");
         sendMessage(new Message("Hello there", "bruh", "Justin"));
         getMessages();
