@@ -84,6 +84,16 @@ public class Match implements Serializable
         }
     }
 
+    public boolean hasUser(String user)
+    {
+        return firstUser.equals(user) || secondUser.equals(user);
+    }
+
+    public String otherUser(String user)
+    {
+        return secondUser.equals(user) ? firstUser : secondUser;
+    }
+
     /**
      * Returns a string representation of this class.
      * @return a string representation of this class in the form Match(first user, second user, score)

@@ -44,6 +44,14 @@ public class Server
 
         server.createContext("/potentialmatches", handleGet(db, db::getPotentialMatches));
 
+        server.createContext("/acceptmatch", t -> {
+            Match match = getRequestBody(t, null);
+            var username = db.getUsername(getToken(t));
+            denyIf(!match.hasUser(username), t);
+            db.accept(username, match.otherUser(username));
+            respondSingle(t, "success");
+        });
+
         server.setExecutor(null);
         server.start();
     }
