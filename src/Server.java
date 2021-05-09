@@ -38,14 +38,20 @@ public class Server
 
         server.createContext("/messages", t -> {
             var username = db.getUsername(getToken(t));
-            denyIf(username == null, t);
+            denyIfNull(username, t);
             respondSingle(t, getMessages(username, db.getMatches(username), mdb));
         });
 
         server.createContext("/matches", t -> {
             var username = db.getUsername(getToken(t));
-            denyIf(username == null, t);
+            denyIfNull(username, t);
             respondSingle(t, db.getUser(username).getMatches());
+        });
+
+        server.createContext("/potentialmatches", t -> {
+            var username = db.getUsername(getToken(t));
+            denyIfNull(username, t);
+            respondSingle(t, db.getPotentialMatches(username));
         });
 
         server.setExecutor(null);
@@ -67,6 +73,11 @@ public class Server
         if (!condition) return;
         respondSingle(t, "Not authenticated");
         throw new SecurityException("Not authenticated");
+    }
+
+    private static void denyIfNull(Object obj, HttpExchange t) throws IOException
+    {
+        denyIf(obj == null, t);
     }
 
     private static void respondSingle(HttpExchange t, String response) throws IOException

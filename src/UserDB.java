@@ -110,6 +110,11 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return users.get(username).matches;
     }
 
+    public ArrayList<String> getPotentialMatches(String username)
+    {
+        return mdb.getPotential(username);
+    }
+
     /**
      * Returns the username linked to a token.
      *

@@ -64,8 +64,6 @@ public class Network
         return res;
     }
 
-    
-
     /**
      * Subscribe to new matches.
      *
