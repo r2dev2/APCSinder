@@ -1,12 +1,12 @@
 import java.io.*;
 import java.util.stream.*;
 import java.util.*;
+import java.util.function.Function;
 import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpPrincipal;
-import com.sun.net.httpserver.Authenticator;
+import com.sun.net.httpserver.HttpHandler;
 
 public class Server
 {
@@ -36,26 +36,26 @@ public class Server
             respondSingle(t, "success");
         });
 
-        server.createContext("/messages", t -> {
-            var username = db.getUsername(getToken(t));
-            denyIfNull(username, t);
-            respondSingle(t, getMessages(username, db.getMatches(username), mdb));
-        });
+        server.createContext("/messages", handleGet(db, username ->
+                    getMessages(username, db.getMatches(username), mdb)));
 
-        server.createContext("/matches", t -> {
-            var username = db.getUsername(getToken(t));
-            denyIfNull(username, t);
-            respondSingle(t, db.getUser(username).getMatches());
-        });
+        server.createContext("/matches", handleGet(db, username ->
+                    db.getUser(username).getMatches()));
 
-        server.createContext("/potentialmatches", t -> {
-            var username = db.getUsername(getToken(t));
-            denyIfNull(username, t);
-            respondSingle(t, db.getPotentialMatches(username));
-        });
+        server.createContext("/potentialmatches", handleGet(db, db::getPotentialMatches));
 
         server.setExecutor(null);
         server.start();
+    }
+
+    private static HttpHandler handleGet(
+            UserDB db, Function<String, Serializable> resourceGetter) throws IOException
+    {
+        return t -> {
+            var username = db.getUsername(getToken(t));
+            denyIfNull(username, t);
+            respondSingle(t, resourceGetter.apply(username));
+        };
     }
 
     private static HashMap<String, ArrayList<Message>>
