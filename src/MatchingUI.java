@@ -52,6 +52,12 @@ public class MatchingUI extends JPanel
         }
     }
 
+    /**
+     *  Creates a UI for the user to reject and accept other potential matches.
+     *
+     *  @author Justin Chang
+     *  @version May 10, 2021
+     */
     private class Matcher extends JPanel
     {
         public final JButton accept;
@@ -59,6 +65,9 @@ public class MatchingUI extends JPanel
         private JTextField userDescription;
         private JTextField name;
 
+        /**
+         * Create a new Matcher object.
+         */
         public Matcher() {
             setLayout(new BorderLayout());
 
