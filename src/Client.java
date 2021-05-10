@@ -25,8 +25,6 @@ public class Client
         System.out.println("Login failure: " + Serializer.serialize(
                     new LoginResult(false)));
 
-        // Network n = new Network();
-        // AppContainer a = new AppContainer("Setup", n);
 
         String url = getServerURL(args);
         Network n = url == null
@@ -34,7 +32,7 @@ public class Client
             : new Network(url);
         // n.playground();
         // Thread.sleep(100);
-        new AppContainer(n);
+        AppContainer a = new AppContainer(n);
     }
 
     /**
