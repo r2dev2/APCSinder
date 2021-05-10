@@ -5,6 +5,8 @@ import java.util.*;
  * Serializes stuff sanely.
  * Because in the "high level language" of java, one must write 20 lines and
  * create 3 objects to serialize a goddamn object.
+ *
+ * Edit: ok now i see why it's supposed to throw exceptions, not return null
  */
 public class Serializer
 {
@@ -44,7 +46,7 @@ public class Serializer
      * @param serialized the base64 encoded serialization of an object.
      * @return the deserialized object
      */
-    public static <T> T deserialize(String serialized)
+    public static <T extends Serializable> T deserialize(String serialized)
     {
         byte[] bytes = null;
         ByteArrayInputStream ibs = null;
@@ -55,16 +57,8 @@ public class Serializer
             ios = new ObjectInputStream(ibs);
             return (T) ios.readObject();
         }
-        catch (IOException e) {
-            return null;
-        }
-        catch (ClassNotFoundException e) {
-            return null;
-        }
-        catch (IllegalArgumentException e) {
-            return null;
-        }
-        catch (ClassCastException e) {
+        catch (IOException | ClassNotFoundException | IllegalArgumentException |
+                ClassCastException e) {
             return null;
         }
         finally {

@@ -160,7 +160,8 @@ public class Server
             .collect(Collectors.joining("\n"));
     }
 
-    private static <T> T getRequestBody(HttpExchange t, T defaultObj) throws IOException
+    private static <T extends Serializable> T getRequestBody(
+            HttpExchange t, T defaultObj) throws IOException
     {
         String body = getRequestBody(t);
         T obj = Serializer.deserialize(body);
