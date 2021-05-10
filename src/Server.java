@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.stream.*;
 import java.util.*;
-import java.util.function.Function;
+import java.util.function.*;
 import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -48,12 +48,21 @@ public class Server
 
         server.createContext("/acceptmatch", handleAcceptReject(true, db));
         server.createContext("/rejectmatch", handleAcceptReject(false, db));
+
+        server.createContext("/listenmessages", createEventStream(mdb::subscribe, db));
         
-        server.createContext("/listenmessages", t -> {
+        server.setExecutor(null);
+        server.start();
+    }
+
+    private static <T extends Serializable> HttpHandler createEventStream(
+            BiConsumer<String, BaseDB.Subscriber<T>> subscribe, UserDB db)
+    {
+        return t -> {
             var username = db.getUsername(getToken(t));
             denyIfNull(username, t);
             t.sendResponseHeaders(200, 0);
-            mdb.subscribe(username, msg -> {
+            subscribe.accept(username, msg -> {
                 try {
                     respondOne(t, msg);
                     return true;
@@ -62,10 +71,7 @@ public class Server
                     return false;
                 }
             });
-        });
-
-        server.setExecutor(null);
-        server.start();
+        };
     }
 
     private static HttpHandler handleAcceptReject(boolean accept, UserDB db)
