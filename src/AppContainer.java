@@ -2,7 +2,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 /**
- *  An AppContainer class is a class that holds the UIs and implements swapping functionality.
+ *  An AppContainer class is a class that holds the UIs and implements swapping functionality
  *
  *  @author Justin Chang
  *  @version Apr 24, 2021

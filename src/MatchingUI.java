@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class MatchingUI extends JPanel
 {
-    // Fields ................................................................
+    // Fields ...............................................................
     private String username;
     private Network network;
     private AppContainer container;

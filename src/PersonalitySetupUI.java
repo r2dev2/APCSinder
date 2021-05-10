@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class PersonalitySetupUI extends JPanel
 {
-    // Fields ...............................................................
+    // Fields ..............................................................
     private String username;
     private PersonalityTest test;
     private Network network;

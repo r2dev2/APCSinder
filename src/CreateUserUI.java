@@ -108,7 +108,7 @@ public class CreateUserUI extends JPanel
         nextButton = new JButton(" Next ");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
-        constraint.gridy = 3;
+        constraint.gridy = 4;
         constraint.insets = new Insets(20, 20, 20, 20);
         constraint.weightx = 0.1;
         constraint.gridwidth = 1;
