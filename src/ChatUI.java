@@ -167,7 +167,7 @@ public class ChatUI extends JPanel
     /**
      * Updates the user list.
      */
-    public void updatePanel() {
+    public void updateSidePanel() {
         side.updateUserList();
         revalidate();
     }
