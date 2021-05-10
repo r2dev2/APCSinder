@@ -51,7 +51,7 @@ public class AppContainer extends JFrame
         password = pwd;
         description = desc;
         setTitle("APCSinder - " + username);
-        personality = new PersonalitySetupUI(username, this, n, password);
+        personality = new PersonalitySetupUI(username, this, n, password, description);
         chat = new ChatUI(username, this, n);
 
         add(personality);

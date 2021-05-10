@@ -22,12 +22,14 @@ public class PersonalityTest
     private PersonalityType personality;
     private Network n;
     private String password;
+    private String description;
 
-    public PersonalityTest(String name, Network network, String password)
+    public PersonalityTest(String name, Network network, String password, String desc)
     {
         username = name;
         answers = new int[8];
         n = network;
+        description = desc;
     }
 
     public String getQuestion()
@@ -53,7 +55,7 @@ public class PersonalityTest
     public void finishTest()
     {
         personality = calculate();
-        User newUser = new User(username, personality);
+        User newUser = new User(username, personality, description);
         n.createUser(newUser, password);
     }
 

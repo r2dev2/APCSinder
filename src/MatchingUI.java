@@ -13,17 +13,7 @@ public class MatchingUI extends JPanel
 {
     // Fields ................................................................
     private String username;
-    private PersonalityTest test;
     private Network network;
-    /**
-     * Used to set up the formatting for each component of the JPanel.
-     */
-    private GridBagConstraints constraint = new GridBagConstraints();
-    private JLabel welcome;
-    private JLabel question;
-    private JSlider slider;
-    private JLabel answerLabel;
-    private JButton nextButton;
     private AppContainer container;
 
     /**
@@ -34,7 +24,7 @@ public class MatchingUI extends JPanel
     public MatchingUI(String name, Network network) { //add other stuff as needed
         username = name;
         this.network = network;
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
         setFeel();
     }
 

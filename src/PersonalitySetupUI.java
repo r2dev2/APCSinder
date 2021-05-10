@@ -42,12 +42,12 @@ public class PersonalitySetupUI extends JPanel
      * @param network the network to connect to
      * @param password user's password
      */
-    public PersonalitySetupUI(String name, AppContainer a, Network network, String password)
+    public PersonalitySetupUI(String name, AppContainer a, Network ntwk, String pwd, String desc)
     {
         username = name;
-        test = new PersonalityTest(name, network, password);
+        test = new PersonalityTest(name, ntwk, pwd, desc);
         container = a;
-        this.network = network;
+        this.network = ntwk;
 
         setLayout(new GridBagLayout());
         setFeel();
