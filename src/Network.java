@@ -163,7 +163,7 @@ public class Network
      */
     public void playground() throws IOException, InterruptedException
     {
-        createUser(new User("bruh", new PersonalityType()), "moment");
+        createUser(new User("bruh", new PersonalityType(), "I like turtles"), "moment");
         login("bruh", "moment");
         sendMessage(new Message("Hello there", "bruh", "Justin"));
         // createUser(new User("Justin", new PersonalityType()), "moment");
