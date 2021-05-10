@@ -12,30 +12,30 @@ import java.awt.*;
 public class MatchingUI extends JPanel
 {
     // Fields ................................................................
-    private String username;
-    private PersonalityTest test;
     private Network network;
-    /**
-     * Used to set up the formatting for each component of the JPanel.
-     */
-    private GridBagConstraints constraint = new GridBagConstraints();
-    private JLabel welcome;
-    private JLabel question;
-    private JSlider slider;
-    private JLabel answerLabel;
-    private JButton nextButton;
+    private JButton match;
     private AppContainer container;
+    private CardLayout c;
 
     /**
      * Create a new MatchingUI object.
-     * @param name User name
+     * @param container the app container to connect to.
      * @param network the network to connect to
      */
-    public MatchingUI(String name, Network network) { //add other stuff as needed
-        username = name;
+    public MatchingUI(AppContainer container, Network network) {
         this.network = network;
-        setLayout(new GridBagLayout());
+        this.container = container;
+        c = new CardLayout();
+
+        setLayout(c);
         setFeel();
+
+        match = new JButton("Match!");
+        match.setFont(new Font("Arial", Font.PLAIN, 48));
+        match.addActionListener(e -> c.next(this));
+
+        add(match);
+        add(new Matcher());
     }
 
     /**
@@ -49,6 +49,33 @@ public class MatchingUI extends JPanel
             );
         } catch (Exception e) {
             System.out.println("This is never supposed to get called");
+        }
+    }
+
+    private class Matcher extends JPanel
+    {
+        public final JButton accept;
+        public final JButton reject;
+        private JTextField userDescription;
+        private JTextField name;
+
+        public Matcher() {
+            setLayout(new BorderLayout());
+
+            accept = new JButton("Accept");
+            reject = new JButton("Reject");
+
+            userDescription = new JTextField(1);
+            userDescription.setEditable(false);
+
+            name = new JTextField(1);
+            name.setEditable(false);
+            name.setFont(new Font("Arial", Font.PLAIN, 64));
+
+            add(accept, BorderLayout.EAST);
+            add(reject, BorderLayout.WEST);
+            add(name, BorderLayout.CENTER);
+            add(userDescription, BorderLayout.SOUTH);
         }
     }
 }
