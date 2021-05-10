@@ -18,6 +18,8 @@ public class Server
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
+        server.createContext("/ping", t -> respondSingle(t, "pong"));
+
         server.createContext("/login", t -> {
             LoginAttempt login = getRequestBody(t, null);
             respondSingle(t, db.login(login.username, login.password));
@@ -46,6 +48,21 @@ public class Server
 
         server.createContext("/acceptmatch", handleAcceptReject(true, db));
         server.createContext("/rejectmatch", handleAcceptReject(false, db));
+        
+        server.createContext("/listenmessages", t -> {
+            var username = db.getUsername(getToken(t));
+            denyIfNull(username, t);
+            t.sendResponseHeaders(200, 0);
+            mdb.subscribe(username, msg -> {
+                try {
+                    respondOne(t, msg);
+                    return true;
+                }
+                catch (IOException e) {
+                    return false;
+                }
+            });
+        });
 
         server.setExecutor(null);
         server.start();
@@ -108,6 +125,23 @@ public class Server
     private static void respondSingle(HttpExchange t, Serializable obj) throws IOException
     {
         respondSingle(t, Serializer.serialize(obj));
+    }
+
+    private static void respondOne(HttpExchange t, String response) throws IOException
+    {
+        var os = t.getResponseBody();
+        os.write(response.getBytes());
+        os.flush();
+    }
+
+    private static void respondOne(HttpExchange t, Serializable obj) throws IOException
+    {
+        respondOne(t, Serializer.serialize(obj) + "\n");
+    }
+
+    private static void close(HttpExchange t) throws IOException
+    {
+        t.getResponseBody().close();
     }
 
     private static String getRequestBody(HttpExchange t)

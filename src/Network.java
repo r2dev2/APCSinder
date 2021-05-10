@@ -166,10 +166,15 @@ public class Network
         createUser(new User("bruh", new PersonalityType()), "moment");
         login("bruh", "moment");
         sendMessage(new Message("Hello there", "bruh", "Justin"));
+        // createUser(new User("Justin", new PersonalityType()), "moment");
+        // login("Justin", "moment");
+        // sendMessage(new Message("Hello there", "Justin", "bruh"));
+
         getMessages();
         getMatches();
         subscribeMessage(System.out::println);
         subscribeMatches(System.out::println);
+        Thread.sleep(100000000);
     }
 
     private interface EventListener<T>
