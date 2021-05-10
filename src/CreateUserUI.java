@@ -65,7 +65,7 @@ public class CreateUserUI extends JPanel
         constraint.gridx = 1;
         constraint.gridy = 1;
         constraint.insets = new Insets(20, 20, 20, 20);
-        constraint.weightx = 0.3;
+        constraint.weightx = 0.4;
         constraint.gridwidth = 2;
         add(userInput, constraint);
 
@@ -83,11 +83,11 @@ public class CreateUserUI extends JPanel
         constraint.gridx = 1;
         constraint.gridy = 2;
         constraint.insets = new Insets(20, 20, 20, 20);
-        constraint.weightx = 0.3;
+        constraint.weightx = 0.4;
         constraint.gridwidth = 2;
         add(pwdInput, constraint);
 
-        prompt = new JLabel("Tell us something\nabout yourself:");
+        prompt = new JLabel("<html>Tell us something<br>about yourself:</html>");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 0;
         constraint.gridy = 3;
@@ -101,7 +101,7 @@ public class CreateUserUI extends JPanel
         constraint.gridx = 1;
         constraint.gridy = 3;
         constraint.insets = new Insets(20, 20, 20, 20);
-        constraint.weightx = 0.3;
+        constraint.weightx = 0.4;
         constraint.gridwidth = 2;
         add(description, constraint);
 
