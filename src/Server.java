@@ -50,6 +50,9 @@ public class Server
         server.createContext("/rejectmatch", handleAcceptReject(false, db));
 
         server.createContext("/listenmessages", createEventStream(mdb::subscribe, db));
+        server.createContext("/listenpotentialmatches",
+                createEventStream(db::subscribePotentialMatches, db));
+        server.createContext("/listenmatches", createEventStream(db::subscribe, db));
         
         server.setExecutor(null);
         server.start();
