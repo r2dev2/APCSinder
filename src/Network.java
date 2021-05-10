@@ -8,6 +8,9 @@ import java.util.stream.Stream;
 
 /**
  * Networking for client.
+ *
+ * @author Ronak Badhe
+ * @version Mon May 10 09:01:39 PDT 2021
  */
 public class Network
 {
@@ -74,6 +77,12 @@ public class Network
         subscribeEvent(onMatch, "/listenmatches");
     }
 
+    /**
+     * Subscribe to potential matches.
+     *
+     * @param onPotMatch the callback for when a new potential match is made
+     *                   that the user must either accept or reject
+     */
     public void subscribePotentialMatches(EventListener<Match> onPotMatch)
     {
         subscribeEvent(onPotMatch, "/listenpotentialmatches");
@@ -123,6 +132,13 @@ public class Network
         return getResource("/matches", new ArrayList<Match>());
     }
 
+    /**
+     * Gets the potential matches waiting for the user.
+     * Potential matches are matches that have been recommended but need
+     * to be accepted by both users
+     *
+     * @return the potential matches
+     */
     public ArrayList<Match> getPotentialMatches()
     {
         return getResource("/potentialmatches", new ArrayList<Match>());
@@ -148,11 +164,21 @@ public class Network
         postObjectAsync("/message", msg);
     }
 
+    /**
+     * Accepts a potential match offered to the user.
+     *
+     * @param match the match to accept
+     */
     public void acceptMatch(Match match) throws IOException, InterruptedException
     {
         postObjectAsync("/acceptmatch", match);
     }
 
+    /**
+     * Rejects a potential match offered to the user.
+     *
+     * @param match the match to reject.
+     */
     public void rejectMatch(Match match) throws IOException, InterruptedException
     {
         postObjectAsync("/rejectmatch", match);
