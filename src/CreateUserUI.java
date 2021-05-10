@@ -19,8 +19,10 @@ public class CreateUserUI extends JPanel
     private JLabel welcome;
     private JLabel user;
     private JLabel pwd;
+    private JLabel prompt;
     private JTextField userInput;
     private JTextField pwdInput;
+    private JTextField description;
     private JButton nextButton;
 
     /**
@@ -85,6 +87,24 @@ public class CreateUserUI extends JPanel
         constraint.gridwidth = 2;
         add(pwdInput, constraint);
 
+        prompt = new JLabel("Tell us something\nabout yourself:");
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.gridx = 0;
+        constraint.gridy = 3;
+        constraint.insets = new Insets(20, 20, 20, 20);
+        constraint.weightx = 0.4;
+        constraint.gridwidth = 1;
+        add(prompt, constraint);
+
+        description = new JTextField();
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.gridx = 1;
+        constraint.gridy = 3;
+        constraint.insets = new Insets(20, 20, 20, 20);
+        constraint.weightx = 0.3;
+        constraint.gridwidth = 2;
+        add(description, constraint);
+
         nextButton = new JButton(" Next ");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
@@ -93,7 +113,7 @@ public class CreateUserUI extends JPanel
         constraint.weightx = 0.1;
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
-            container.completeSetup(userInput.getText(), pwdInput.getText());
+            container.completeSetup(userInput.getText(), pwdInput.getText(), description.getText());
             container.setupToPersonality();
         });
         add(nextButton, constraint);

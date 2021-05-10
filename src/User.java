@@ -10,11 +10,13 @@ public class User implements Serializable
      * A Myers-Briggs personality.
      */
     public final PersonalityType personality;
+    public final String description;
 
-    public User(String username, PersonalityType personality)
+    public User(String name, PersonalityType type, String desc)
     {
-        this.username = username;
-        this.personality = personality;
+        username = name;
+        personality = type;
+        description = desc;
     }
 
     public PersonalityType[] getPreferredTypes()

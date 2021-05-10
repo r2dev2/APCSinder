@@ -11,6 +11,7 @@ public class AppContainer extends JFrame
 {
     private String username;
     private String password;
+    private String description;
     private ChatUI chat;
     private PersonalitySetupUI personality;
     private CreateUserUI userSetup;
@@ -45,9 +46,10 @@ public class AppContainer extends JFrame
      * @param name username
      * @param pwd password
      */
-    public void completeSetup(String name, String pwd) {
+    public void completeSetup(String name, String pwd, String desc) {
         username = name;
         password = pwd;
+        description = desc;
         setTitle("APCSinder - " + username);
         personality = new PersonalitySetupUI(username, this, n, password);
         chat = new ChatUI(username, this, n);
