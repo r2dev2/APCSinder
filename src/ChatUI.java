@@ -21,7 +21,8 @@ public class ChatUI extends JPanel
     private StringBuilder sb = new StringBuilder();
     private JButton exitButton;
     private String recipient = null;
-    private JList<String> users; //change data type later if necessary
+    private JList<String> users;
+    private SideBar side;
     private String username;
     private AppContainer container;
     private Network network;
@@ -45,9 +46,9 @@ public class ChatUI extends JPanel
         sendButton = new JButton("Send");
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
-        ExitBar exit = new ExitBar();
-        exitButton = exit.getExitButton();
-        users = exit.getUsers();
+        side = new SideBar();
+        exitButton = side.getExitButton();
+        users = side.getUsers();
 
         sendButton.addActionListener(e -> {
             try
@@ -66,7 +67,7 @@ public class ChatUI extends JPanel
         add(sendButton, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
-        add(exit, BorderLayout.WEST);
+        add(side, BorderLayout.WEST);
     }
 
     /**
@@ -132,8 +133,8 @@ public class ChatUI extends JPanel
                     }
                 }
             }
-            public void keyReleased(KeyEvent e) { }
-            public void keyTyped(KeyEvent e) { }
+            public void keyReleased(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {}
         };
     }
 
@@ -164,21 +165,29 @@ public class ChatUI extends JPanel
     }
 
     /**
-     *  An ExitBar is a class that just contains an exit button that spans the top-left.
+     * Updates the user list.
+     */
+    public void updatePanel() {
+        side.updateUserList();
+        revalidate();
+    }
+
+    /**
+     *  An SideBar is a class that just contains an exit button that spans the top-left.
      *
      *  @author Justin Chang
      *  @version Apr 29, 2021
      */
-    private class ExitBar extends JPanel
+    private class SideBar extends JPanel
     {
         private JButton exit;
         private JList<String> list;
         private GridBagConstraints constraint = new GridBagConstraints();
 
         /**
-         * Create a new ExitBar object.
+         * Create a new SideBar object.
          */
-        public ExitBar()
+        public SideBar()
         {
             setFeel();
             setLayout(new GridBagLayout());
@@ -235,6 +244,18 @@ public class ChatUI extends JPanel
         public JList<String> getUsers()
         {
             return list;
+        }
+
+        /**
+         * Updates the list of users.
+         */
+        public void updateUserList() {
+            if (network.getMessages() != null)
+            {
+                Set<String> s = network.getMessages().keySet();
+                list = new JList<String>(new Vector<String>(s));
+                revalidate();
+            }
         }
     }
 }
