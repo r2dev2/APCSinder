@@ -32,8 +32,9 @@ public class Client
         Network n = url == null
             ? new Network()
             : new Network(url);
-        n.playground();
-        Thread.sleep(100);
+        // n.playground();
+        // Thread.sleep(100);
+        new AppContainer(n);
     }
 
     /**

@@ -20,10 +20,10 @@ public class AppContainer extends JFrame
 
     /**
      * Create a new AppContainer object.
-     * @param username the username of the user
-     * @param n the network to connect to
+     *
+     * @param network the network client to use
      */
-    public AppContainer(String username, Network network)
+    public AppContainer(Network network)
     {
         c = new CardLayout();
         n = network;
