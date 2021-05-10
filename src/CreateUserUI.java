@@ -4,7 +4,7 @@ import java.awt.*;
 /**
  *  Write a one-sentence summary of your class here
  *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it
+ *  it represents, and how to use it.
  *
  *  @author Kevin Li
  *  @version May 3, 2021
@@ -108,7 +108,7 @@ public class CreateUserUI extends JPanel
         nextButton = new JButton(" Next ");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
-        constraint.gridy = 4;
+        constraint.gridy = 3;
         constraint.insets = new Insets(20, 20, 20, 20);
         constraint.weightx = 0.1;
         constraint.gridwidth = 1;

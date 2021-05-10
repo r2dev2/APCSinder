@@ -43,7 +43,7 @@ public class AppContainer extends JFrame
     /**
      * Updates the name and password from CreateUserUI and refreshes the title.
      * Proceeds with opening up the next UI screens (personality, matching, chat).
-     * @param name username
+     * @param name user name
      * @param pwd password
      */
     public void completeSetup(String name, String pwd, String desc) {
