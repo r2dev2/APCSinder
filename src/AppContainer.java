@@ -80,6 +80,7 @@ public class AppContainer extends JFrame
      */
     public void matchingToChat()
     {
+        chat.updateSidePanel();
         c.last(getContentPane());
     }
 
