@@ -15,7 +15,7 @@ public class Client
     {
         System.out.println("Client program");
         String s = Serializer.serialize(new User("bruh",
-                new PersonalityType(true, true, true, true)));
+                new PersonalityType(true, true, true, true), "I like turtles"));
         User usr = Serializer.deserialize(s);
         System.out.println(s);
         System.out.println(usr);
