@@ -11,17 +11,10 @@ import java.awt.*;
  */
 public class MatchingUI extends JPanel
 {
-<<<<<<< HEAD
-    // Fields ................................................................
-=======
     // Fields ...............................................................
     private String username;
->>>>>>> branch 'master' of https://github.com/r2dev2/APCSinder.git
     private Network network;
-<<<<<<< HEAD
     private JButton match;
-=======
->>>>>>> branch 'master' of https://github.com/r2dev2/APCSinder.git
     private AppContainer container;
     private CardLayout c;
 
@@ -32,14 +25,11 @@ public class MatchingUI extends JPanel
      */
     public MatchingUI(AppContainer container, Network network) {
         this.network = network;
-<<<<<<< HEAD
         this.container = container;
         c = new CardLayout();
 
         setLayout(c);
-=======
         setLayout(new BorderLayout());
->>>>>>> branch 'master' of https://github.com/r2dev2/APCSinder.git
         setFeel();
 
         match = new JButton("Match!");
