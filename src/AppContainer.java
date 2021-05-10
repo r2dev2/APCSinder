@@ -45,6 +45,7 @@ public class AppContainer extends JFrame
      * Proceeds with opening up the next UI screens (personality, matching, chat).
      * @param name username
      * @param pwd password
+     * @param desc description
      */
     public void completeSetup(String name, String pwd, String desc) {
         username = name;

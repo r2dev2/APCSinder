@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  *  Write a one-sentence summary of your class here.
@@ -16,6 +17,7 @@ public class MatchingUI extends JPanel
     private Network network;
     private JButton match;
     private AppContainer container;
+    private Matcher matcher;
     private CardLayout c;
 
     /**
@@ -36,8 +38,10 @@ public class MatchingUI extends JPanel
         match.setFont(new Font("Arial", Font.PLAIN, 48));
         match.addActionListener(e -> c.next(this));
 
+        matcher = new Matcher();
+
         add(match);
-        add(new Matcher());
+        add(matcher);
     }
 
     /**
@@ -87,6 +91,11 @@ public class MatchingUI extends JPanel
             add(reject, BorderLayout.WEST);
             add(name, BorderLayout.CENTER);
             add(userDescription, BorderLayout.SOUTH);
+        }
+
+        private void loadMatch()
+        {
+            //TODO
         }
     }
 }
