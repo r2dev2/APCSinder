@@ -22,6 +22,11 @@ public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Messag
         messages = load();
     }
 
+    public MessageDB()
+    {
+        this(null);
+    }
+
     /**
      * Add a message to the databse.
      *

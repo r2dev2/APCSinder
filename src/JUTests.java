@@ -136,6 +136,35 @@ public class JUTests
         assertFalse(db.getPotential(second).contains(first));
     }
 
+    // MessageDB.java
+    @Test
+    public void messageDBAdd()
+    {
+        var db = new MessageDB();
+        var m = new Message("bruh", first, second);
+        db.add(m);
+        assertTrue(db.get(new Match(first, second)).contains(m));
+    }
+
+    @Test
+    public void messageDBSubscribe()
+    {
+        class State {
+            int fired = 0;
+        }
+        var state = new State();
+        var db = new MessageDB();
+        db.subscribe(first, m -> {
+            state.fired++;
+            assertEquals(m.msg, "bruh");
+            return true;
+        });
+        db.add(new Message("bruh", first, second));
+        assertEquals(state.fired, 1);
+        db.add(new Message("bruh", second, first));
+        assertEquals(state.fired, 2);
+    }
+
     public static junit.framework.Test suite()
     {
         return new JUnit4TestAdapter(JUTests.class);
