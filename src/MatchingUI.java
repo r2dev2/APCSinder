@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  *  Write a one-sentence summary of your class here.
@@ -17,14 +18,18 @@ public class MatchingUI extends JPanel
     private JButton match;
     private Matcher matcher;
     private CardLayout card;
+    private AppContainer container;
 
     /**
      * Create a new MatchingUI object.
+     * @param username the username of this user.
      * @param container the app container to connect to.
      * @param network the network to connect to
      */
-    public MatchingUI(AppContainer container, Network network) {
+    public MatchingUI(String username, AppContainer container, Network network) {
         this.network = network;
+        this.username = username;
+        this.container = container;
         card = new CardLayout();
 
         setLayout(card);
@@ -33,12 +38,25 @@ public class MatchingUI extends JPanel
         match = new JButton("Match!");
         match.setFont(new Font("Arial", Font.PLAIN, 48));
         match.addActionListener(e -> card.next(this));
-        matcher.accept.addActionListener(e -> container.matchingToChat()); //TODO finish
 
         matcher = new Matcher();
+        matcher.accept.addActionListener(e -> acceptMatch());
+
 
         add(match);
         add(matcher);
+    }
+
+    private Match findMatch() {
+        ArrayList<Match> matches = network.getMatches();
+        int index = (int)(Math.random() * matches.size());
+        matcher.loadMatch(matches.get(index));
+        return matches.remove(index);
+    }
+
+    private void acceptMatch() {
+        //network.acceptMatch()
+        container.matchingToChat();
     }
 
     /**
@@ -90,9 +108,10 @@ public class MatchingUI extends JPanel
             add(userDescription, BorderLayout.SOUTH);
         }
 
-        private void loadMatch()
+        private void loadMatch(Match m)
         {
-            //TODO
+            String personName = m.otherUser(username);
+            name.setText(personName);
         }
     }
 }

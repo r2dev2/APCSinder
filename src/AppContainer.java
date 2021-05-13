@@ -35,7 +35,6 @@ public class AppContainer extends JFrame
 
         userSetup = new CreateUserUI(this);
 
-
         add(userSetup);
         setVisible(true);
     }
