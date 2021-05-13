@@ -1,3 +1,4 @@
+import java.util.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import junit.framework.JUnit4TestAdapter;
@@ -284,6 +285,59 @@ public class JUTests
         db.reject(second, first);
         assertEquals(state.fired, 0);
         assertFalse(db.getPotentialMatches(second).contains(first));
+    }
+
+    private boolean contains(Object[] arr, Object obj)
+    {
+        for (var item: arr) {
+            if (obj.equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // PersonalityType.java
+    @Test
+    public void personalityTypeGetPreferredTypes()
+    {
+        for (int i = 0; i < 2; ++i) {
+            for (int j = 0; j < 2; ++j) {
+                for (int k = 0; k < 2; ++k) {
+                    for (int l = 0; l < 2; ++l) {
+                        var type = new PersonalityType(i == 0, j == 0,
+                                k == 0, l == 0);
+                        for (var p: type.getPreferredTypes()) {
+                            var preferred = p.getPreferredTypes();
+                            // if one type prefers the other
+                            // the other should also prefer the type
+                            var assertion = String.format(
+                                "PersonalityType %s expected to contain %s in %s",
+                                p, type, Arrays.toString(preferred)
+                            );
+                            assertTrue(assertion,
+                                    contains(preferred, type));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    public void personalityTypeHashCode()
+    {
+        assertEquals(type.hashCode(), new PersonalityType().hashCode());
+        assertNotEquals(type.hashCode(), otherType.hashCode());
+    }
+
+    @Test
+    public void personalityTypeEquals()
+    {
+        assertEquals(type, new PersonalityType());
+        assertEquals(type, (Object) new PersonalityType());
+        assertNotEquals(type, otherType);
+        assertNotEquals(type, (Object) otherType);
     }
 
     public static junit.framework.Test suite()
