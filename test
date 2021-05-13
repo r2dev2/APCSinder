@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function failure() {
+	rm -f *.class
+	exit 1
+}
+
+mkdir -p "bin/test"
+cd src && javac -cp .:$JUNIT $(ls -1 | grep \.java) && mv *.class "../bin/test" && cd "../bin/test" && java -cp .:$JUNIT JUTests || failure
