@@ -340,6 +340,32 @@ public class JUTests
         assertNotEquals(type, (Object) otherType);
     }
 
+    // PersonalityTest.java
+    @Test
+    public void personalityTestGetQuestion()
+    {
+        var test = new PersonalityTest();
+        var questions = new HashSet<String>();
+        int totalNum = 0;
+        while (test.hasNextQuestion()) {
+            questions.add(test.getQuestion());
+            test.nextQuestion();
+            totalNum++;
+        }
+        assertEquals(totalNum, questions.size());
+    }
+
+    @Test
+    public void personalityTestAnswerQuestion()
+    {
+        var test = new PersonalityTest();
+        var test2 = new PersonalityTest();
+        test.answerQuestion(10);
+        test.nextQuestion();
+        test.answerQuestion(10);
+        assertNotEquals(test.finishTest(), test2.finishTest());
+    }
+
     public static junit.framework.Test suite()
     {
         return new JUnit4TestAdapter(JUTests.class);
