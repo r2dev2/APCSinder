@@ -1,9 +1,5 @@
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *  The UI end for setting up a user's personality traits.
@@ -17,9 +13,7 @@ import java.awt.event.ActionListener;
 public class PersonalitySetupUI extends JPanel
 {
     // Fields ................................................................
-    private String username;
     private PersonalityTest test;
-    private Network network;
 
     /**
      * Used to set up the formatting for each component of the JPanel.
@@ -44,10 +38,8 @@ public class PersonalitySetupUI extends JPanel
      */
     public PersonalitySetupUI(String name, AppContainer a, Network network, String password)
     {
-        username = name;
         test = new PersonalityTest(name, network, password);
         container = a;
-        this.network = network;
 
         setLayout(new GridBagLayout());
         setFeel();
