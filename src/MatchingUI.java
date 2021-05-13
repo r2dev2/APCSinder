@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  *  Write a one-sentence summary of your class here.
@@ -26,12 +25,9 @@ public class MatchingUI extends JPanel
      * @param network the network to connect to
      */
     public MatchingUI(AppContainer container, Network network) {
-        this.network = network;
-        this.container = container;
         c = new CardLayout();
 
         setLayout(c);
-        setLayout(new BorderLayout());
         setFeel();
 
         match = new JButton("Match!");
