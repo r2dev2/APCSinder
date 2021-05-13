@@ -73,7 +73,7 @@ public class PersonalityType implements Serializable
 
     /**
      * Determines if PersonalityTypes are equal
-     * @param other other personality type
+     * @param other other personality type object
      * @return  true if they have the same type, false otherwise
      */
     public boolean equals(PersonalityType other)
