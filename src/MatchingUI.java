@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -50,15 +51,34 @@ public class MatchingUI extends JPanel
     }
 
     private void findMatch() {
+        if (match != null)
+        {
+            try
+            {
+                network.rejectMatch(match);
+            }
+            catch (IOException | InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
         ArrayList<Match> matches = network.getPotentialMatches();
         int index = (int)(Math.random() * matches.size());
         Match m = matches.remove(index);
+
         matcher.loadMatch(m);
         match = m;
     }
 
     private void acceptMatch() {
-        //network.acceptMatch()
+        try
+        {
+            network.acceptMatch(match);
+        }
+        catch (IOException | InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         container.matchingToChat();
     }
 
