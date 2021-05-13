@@ -6,4 +6,4 @@ function failure() {
 }
 
 mkdir -p "bin/test"
-cd src && javac -cp .:$JUNIT $(ls -1 | grep \.java) && mv *.class "../bin/test" && cd "../bin/test" && java -cp .:$JUNIT JUTests || failure
+cd src && javac -cp .:$JUNIT $(ls -1 | grep \.java) && mv *.class "../bin/test" && cd "../bin/test" && java -cp .:$JUNIT JUTests | grep -v at || failure
