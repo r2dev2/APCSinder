@@ -17,7 +17,7 @@ public class PersonalityType implements Serializable
 
     /**
      * Create a new PersonalityType object.
-     * @param isE   extroverted T/F
+     * @param isE   extroversion T/F
      * @param isS   sensing T/F
      * @param isT   thinking T/F
      * @param isJ   judging T/F
