@@ -10,6 +10,11 @@ public class MatchingDB extends BaseDB<HashMap<String, HashSet<String>>, Match>
         potential = load();
     }
 
+    public MatchingDB()
+    {
+        this(null);
+    }
+
     public void addPotential(String first, String second)
     {
         var pot = potential.getOrDefault(first, new HashSet<String>());

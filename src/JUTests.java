@@ -61,7 +61,6 @@ public class JUTests
     }
 
     // BaseDB.java
-
     @Test
     public void baseDBSubscribe()
     {
@@ -86,7 +85,6 @@ public class JUTests
     }
 
     // LoginResult.java
-
     @Test
     public void loginResultConstructor()
     {
@@ -116,6 +114,26 @@ public class JUTests
         Match m =
             Serializer.deserialize(Serializer.serialize(new Match("", "")));
         assertNotNull(m.firstUser);
+    }
+
+    // MatchingDB.java
+    @Test
+    public void matchingDBAddPotential()
+    {
+        var db = new MatchingDB();
+        db.addPotential(first, second);
+        assertTrue(db.getPotential(first).contains(second));
+        assertTrue(db.getPotential(second).contains(first));
+    }
+
+    @Test
+    public void matchingDBRemovePotential()
+    {
+        var db = new MatchingDB();
+        db.addPotential(first, second);
+        db.removePotential(new Match(first, second));
+        assertFalse(db.getPotential(first).contains(second));
+        assertFalse(db.getPotential(second).contains(first));
     }
 
     public static junit.framework.Test suite()
