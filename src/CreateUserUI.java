@@ -46,7 +46,7 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 0;
         constraint.gridy = 0;
-        constraint.insets = new Insets(20, 20, 20, 20);
+        constraint.insets = new Insets(20, 40, 20, 40);
         constraint.weightx = 0.5;
         constraint.gridwidth = 3;
         add(welcome, constraint);
@@ -55,7 +55,7 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 0;
         constraint.gridy = 1;
-        constraint.insets = new Insets(20, 20, 20, 20);
+        constraint.insets = new Insets(20, 40, 20, 20);
         constraint.weightx = 0.4;
         constraint.gridwidth = 1;
         add(user, constraint);
@@ -64,8 +64,8 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
         constraint.gridy = 1;
-        constraint.insets = new Insets(20, 20, 20, 20);
-        constraint.weightx = 0.4;
+        constraint.insets = new Insets(20, 20, 20, 40);
+        constraint.weightx = 0.5;
         constraint.gridwidth = 2;
         add(userInput, constraint);
 
@@ -73,7 +73,7 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 0;
         constraint.gridy = 2;
-        constraint.insets = new Insets(20, 20, 20, 20);
+        constraint.insets = new Insets(20, 40, 20, 20);
         constraint.weightx = 0.4;
         constraint.gridwidth = 1;
         add(pwd, constraint);
@@ -82,8 +82,8 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
         constraint.gridy = 2;
-        constraint.insets = new Insets(20, 20, 20, 20);
-        constraint.weightx = 0.4;
+        constraint.insets = new Insets(20, 20, 20, 40);
+        constraint.weightx = 0.5;
         constraint.gridwidth = 2;
         add(pwdInput, constraint);
 
@@ -91,7 +91,7 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 0;
         constraint.gridy = 3;
-        constraint.insets = new Insets(20, 20, 20, 20);
+        constraint.insets = new Insets(20, 40, 20, 20);
         constraint.weightx = 0.4;
         constraint.gridwidth = 1;
         add(prompt, constraint);
@@ -100,8 +100,8 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
         constraint.gridy = 3;
-        constraint.insets = new Insets(20, 20, 20, 20);
-        constraint.weightx = 0.4;
+        constraint.insets = new Insets(20, 20, 20, 40);
+        constraint.weightx = 0.5;
         constraint.gridwidth = 2;
         add(description, constraint);
 
@@ -109,8 +109,8 @@ public class CreateUserUI extends JPanel
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
         constraint.gridy = 4;
-        constraint.insets = new Insets(20, 20, 20, 20);
-        constraint.weightx = 0.1;
+        constraint.insets = new Insets(20, 40, 20, 40);
+        constraint.weightx = 0.2;
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
             container.completeSetup(userInput.getText(), pwdInput.getText(), description.getText());

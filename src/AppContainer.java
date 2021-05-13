@@ -29,7 +29,7 @@ public class AppContainer extends JFrame
         c = new CardLayout();
         n = network;
 
-        setSize(800, 400);
+        setSize(500, 400);
         setLayout(c);
         setTitle("APCSinder - " + username);
 
@@ -54,7 +54,7 @@ public class AppContainer extends JFrame
         setTitle("APCSinder - " + username);
         personality = new PersonalitySetupUI(username, this, n, password);
         chat = new ChatUI(username, this, n);
-
+        setSize(800, 400);
         add(personality);
         //add matching ui HERE in between personality and chat
         add(chat);
