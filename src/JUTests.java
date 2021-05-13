@@ -222,6 +222,70 @@ public class JUTests
         assertEquals(state.fired, 1);
     }
 
+    @Test
+    public void userDBAccept()
+    {
+        class State {
+            int fired = 0;
+        }
+        var state = new State();
+        var db = new UserDB();
+        db.createUser(new UserCreationAttempt(
+                    new User(first, type), second));
+        db.createUser(new UserCreationAttempt(
+                    new User(second, otherType), second));
+        db.subscribe(first, match -> {
+            assertTrue(match.hasUser(first));
+            state.fired++;
+            return true;
+        });
+        db.subscribe(second, match -> {
+            assertTrue(match.hasUser(second));
+            state.fired++;
+            return true;
+        });
+
+        db.accept(first, second);
+        assertEquals(state.fired, 0);
+        db.accept(first, second);
+        assertEquals(state.fired, 0);
+        db.accept(second, first);
+        assertEquals(state.fired, 2);
+        db.accept(first, second);
+        db.accept(second, first);
+        assertEquals(state.fired, 2);
+    }
+
+    @Test
+    public void userDBReject()
+    {
+        class State {
+            int fired = 0;
+        }
+        var state = new State();
+        var db = new UserDB();
+        db.createUser(new UserCreationAttempt(
+                    new User(first, type), second));
+        db.createUser(new UserCreationAttempt(
+                    new User(second, otherType), second));
+        db.subscribe(first, match -> {
+            assertTrue(match.hasUser(first));
+            state.fired++;
+            return true;
+        });
+        db.subscribe(second, match -> {
+            assertTrue(match.hasUser(second));
+            state.fired++;
+            return true;
+        });
+
+        db.accept(first, second);
+        db.accept(first, second);
+        db.reject(second, first);
+        assertEquals(state.fired, 0);
+        assertFalse(db.getPotentialMatches(second).contains(first));
+    }
+
     public static junit.framework.Test suite()
     {
         return new JUnit4TestAdapter(JUTests.class);
