@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  *  Write a one-sentence summary of your class here.
@@ -16,9 +15,8 @@ public class MatchingUI extends JPanel
     private String username;
     private Network network;
     private JButton match;
-    private AppContainer container;
     private Matcher matcher;
-    private CardLayout c;
+    private CardLayout card;
 
     /**
      * Create a new MatchingUI object.
@@ -27,16 +25,15 @@ public class MatchingUI extends JPanel
      */
     public MatchingUI(AppContainer container, Network network) {
         this.network = network;
-        this.container = container;
-        c = new CardLayout();
+        card = new CardLayout();
 
-        setLayout(c);
-        setLayout(new BorderLayout());
+        setLayout(card);
         setFeel();
 
         match = new JButton("Match!");
         match.setFont(new Font("Arial", Font.PLAIN, 48));
-        match.addActionListener(e -> c.next(this));
+        match.addActionListener(e -> card.next(this));
+        matcher.accept.addActionListener(e -> container.matchingToChat()); //TODO finish
 
         matcher = new Matcher();
 
