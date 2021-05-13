@@ -8,7 +8,6 @@
  */
 public class PersonalityTest
 {
-    private String username;
     private final String[] questions = {"Do you like spending time in large "
         + "groups, where you get more energy (0),"
         + " or do you get more energy recharging by yourself, preferring "
@@ -39,21 +38,13 @@ public class PersonalityTest
         // J/P
     private int[] answers;
     private int index = 0;
-    private PersonalityType personality;
-    private Network network;
-    private String password;
 
     /**
      * Create a new PersonalityTest object.
-     * @param name
-     * @param network
-     * @param password
      */
-    public PersonalityTest(String name, Network network, String password)
+    public PersonalityTest()
     {
-        username = name;
-        answers = new int[8];
-        this.network = network;
+        answers = new int[questions.length];
     }
 
     /**
@@ -96,11 +87,9 @@ public class PersonalityTest
      * a new User with the given name and personality. Sends this
      * User to the network to register on the server end.
      */
-    public void finishTest()
+    public PersonalityType finishTest()
     {
-        personality = calculate();
-        User newUser = new User(username, personality);
-        network.createUser(newUser, password);
+        return calculate();
     }
 
     /**

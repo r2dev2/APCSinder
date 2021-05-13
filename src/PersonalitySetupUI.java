@@ -25,6 +25,9 @@ public class PersonalitySetupUI extends JPanel
     private JLabel answerLabel;
     private JButton nextButton;
     private AppContainer container;
+    private String username;
+    private String password;
+    private Network network;
 
     // Constructors ..........................................................
     /**
@@ -38,7 +41,11 @@ public class PersonalitySetupUI extends JPanel
      */
     public PersonalitySetupUI(String name, AppContainer a, Network network, String password)
     {
-        test = new PersonalityTest(name, network, password);
+        // test = new PersonalityTest(name, network, password);
+        this.username = name;
+        this.network = network;
+        this.password = password;
+        test = new PersonalityTest();
         container = a;
 
         setLayout(new GridBagLayout());
@@ -146,7 +153,8 @@ public class PersonalitySetupUI extends JPanel
     public void finish()
     {
         test.answerQuestion(slider.getValue());
-        test.finishTest();
+        var type = test.finishTest();
+        network.createUser(new User(username, type), password);
         container.personalityToMatching();
     }
 

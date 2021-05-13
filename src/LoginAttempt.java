@@ -13,7 +13,7 @@ public class LoginAttempt implements Serializable
      */
     public final String username;
     /**
-     * The passworda associated with this login attempt
+     * The password associated with this login attempt
      */
     public final String password;
 
