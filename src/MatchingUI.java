@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -42,23 +43,46 @@ public class MatchingUI extends JPanel
 
         matcher = new Matcher();
         matcher.accept.addActionListener(e -> acceptMatch());
-        matcher.reject.addActionListener(e -> findMatch());
+        matcher.reject.addActionListener(e -> rejectMatch());
 
-        findMatch();
+        match = findMatch();
+        matcher.loadMatch(match);
+
         add(startMatch);
         add(matcher);
     }
 
-    private void findMatch() {
+    private Match findMatch() {
         ArrayList<Match> matches = network.getPotentialMatches();
         int index = (int)(Math.random() * matches.size());
         Match m = matches.remove(index);
-        matcher.loadMatch(m);
-        match = m;
+
+        return m;
+    }
+
+    private void rejectMatch() {
+        try
+        {
+            network.rejectMatch(match);
+        }
+        catch (IOException | InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
+        match = findMatch();
+        matcher.loadMatch(match);
     }
 
     private void acceptMatch() {
-        //network.acceptMatch()
+        try
+        {
+            network.acceptMatch(match);
+        }
+        catch (IOException | InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         container.matchingToChat();
     }
 
