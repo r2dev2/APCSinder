@@ -17,7 +17,7 @@ public class Match implements Serializable
      */
     public final String secondUser;
     /**
-     * TODO
+     * A score representing how well the match is (use later)
      */
     public final float score;
 
@@ -25,7 +25,7 @@ public class Match implements Serializable
      * Create a new Match object.
      * @param firstUser the first user
      * @param secondUser the second user
-     * @param score TODO
+     * @param score matching score (doesn't exist yet)
      */
     public Match(String firstUser, String secondUser, float score)
     {

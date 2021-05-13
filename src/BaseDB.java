@@ -8,7 +8,7 @@ import java.util.HashMap;
  * @author Ronak Badhe
  * @version Mon May 10 09:16:31 PDT 2021
  */
-public abstract class BaseDB<T extends Serializable, E>
+public class BaseDB<T extends Serializable, E>
 {
     private String filename;
     private T defaultVal;

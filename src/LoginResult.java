@@ -10,11 +10,11 @@ import java.util.UUID;
 public class LoginResult implements Serializable
 {
     /**
-     * Represents whether or not this login was a success
+     * Represents whether or not this login was a success.
      */
     public final boolean success;
     /**
-     * TODO
+     * A uuid login token.
      */
     public final String token;
 
@@ -37,10 +37,6 @@ public class LoginResult implements Serializable
         return String.format("LoginResult(%s, '%s')", success, token);
     }
 
-    /**
-     * TODO
-     * @return
-     */
     private static String generateToken()
     {
         return UUID.randomUUID().toString();
