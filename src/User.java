@@ -19,6 +19,11 @@ public class User implements Serializable
         description = desc;
     }
 
+    public User(String name, PersonalityType type)
+    {
+        this(name, type, "Apparently, this user prefers to keep an air of anonymity.");
+    }
+
     public PersonalityType[] getPreferredTypes()
     {
         return personality.getPreferredTypes();

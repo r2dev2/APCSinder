@@ -44,8 +44,8 @@ public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Messag
 
     private void notifyOfMessage(Message msg)
     {
-        notifySubscriber(msg, msg.sender);
-        notifySubscriber(msg, msg.receiver);
+        notifySubscriber(msg.sender, msg);
+        notifySubscriber(msg.receiver, msg);
     }
 
     /**

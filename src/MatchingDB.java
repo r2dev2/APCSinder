@@ -16,7 +16,7 @@ public class MatchingDB extends BaseDB<HashMap<String, HashSet<String>>, Match>
         if (pot.contains(second)) return;
         pot.add(second);
         potential.put(first, pot);
-        notifySubscriber(new Match(first, second), first);
+        notifySubscriber(first, new Match(first, second));
         addPotential(second, first);
         save(potential);
     }
