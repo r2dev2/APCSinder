@@ -24,8 +24,9 @@ public class Server
     public static void main(String[] args) throws Exception
     {
         System.out.println("Starting APCSinder server at http://localhost:8000.");
-        var db = new UserDB("users.db");
-        var mdb = new MessageDB("messages.db");
+        boolean inMem = Arrays.stream(args).anyMatch(a -> a.equals("--memory"));
+        var db = new UserDB(inMem ? null : "users.db");
+        var mdb = new MessageDB(inMem ? null : "messages.db");
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
