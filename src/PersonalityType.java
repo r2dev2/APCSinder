@@ -2,12 +2,26 @@ import java.util.Map;
 import java.util.HashMap;
 import java.io.Serializable;
 
+/**
+ *  Calculates and holds a Myers-Briggs personality type, as well as
+ *  a static Map to hold ideal matches for each personality type.
+ *
+ *  @author Ronak Badhe
+ *  @version May 13, 2021
+ */
 public class PersonalityType implements Serializable
 {
     private final String type;
     private final static Map<String, String[]> preferredType =
         generatePreferredMap();
 
+    /**
+     * Create a new PersonalityType object.
+     * @param isE   extroverted T/F
+     * @param isS   sensing T/F
+     * @param isT   thinking T/F
+     * @param isJ   judging T/F
+     */
     public PersonalityType(boolean isE, boolean isS, boolean isT, boolean isJ)
     {
         type = String.format("%c%c%c%c",
@@ -18,6 +32,9 @@ public class PersonalityType implements Serializable
         );
     }
 
+    /**
+     * Create a new PersonalityType object with generic personality INFP.
+     */
     public PersonalityType()
     {
         this(false, false, false, false);
@@ -35,6 +52,10 @@ public class PersonalityType implements Serializable
         this.type = type;
     }
 
+    /**
+     * Generates an array of ideally matching PersonalityTypes.
+     * @return  array of PersonalityTypes
+     */
     public PersonalityType[] getPreferredTypes()
     {
         String[] stringTypes = preferredType.get(type);
@@ -50,6 +71,11 @@ public class PersonalityType implements Serializable
         return type.hashCode();
     }
 
+    /**
+     * Determines if PersonalityTypes are equal
+     * @param other other personality type
+     * @return  true if they have the same type, false otherwise
+     */
     public boolean equals(PersonalityType other)
     {
         return type.equals(other.type);
