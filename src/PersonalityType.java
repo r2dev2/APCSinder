@@ -105,7 +105,7 @@ public class PersonalityType implements Serializable
             "ISFP", "ESFP", "ISTP", "ESTP",
             "ISFJ", "ESFJ", "ISTJ", "ESTJ"};
         String[][] respectiveMatches = {
-            {"ENFJ", "ENTJ"}, {"INFJ", "INTJ"}, {"ENFP", "ENTP"}, {"ENFJ", "ISFP"},
+            {"ENFJ", "ENTJ"}, {"INFJ", "INTJ"}, {"ENFP", "ENTP"}, {"INFP", "ISFP"},
             {"ENFP", "ENTP"}, {"INFP", "INTP"}, {"ENTJ", "ESTJ"}, {"INFJ", "INTJ"},
             {"ENFJ", "ESFJ", "ESTJ"}, {"ISFJ", "ISTJ"}, {"ESFJ", "ESTJ"}, {"ISFJ", "ISTJ"},
             {"ESFP", "ESTP"}, {"ISFP", "ISTP"}, {"ESFP", "ESTP"}, {"INTP", "ISFP", "ISTP"}
