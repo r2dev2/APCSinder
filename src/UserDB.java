@@ -34,6 +34,11 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         mdb = new MatchingDB(filename == null ? null : filename + ".pot.db");
     }
 
+    public UserDB()
+    {
+        this(null);
+    }
+
     /**
      * Logs in a user.
      *

@@ -14,6 +14,9 @@ public class JUTests
 {
     private static String first = "Justin";
     private static String second = "Kevin";
+    private static PersonalityType type = new PersonalityType();
+    private static PersonalityType otherType =
+        new PersonalityType(true, false, true, true);
 
     // Match.java
     @Test
@@ -163,6 +166,60 @@ public class JUTests
         assertEquals(state.fired, 1);
         db.add(new Message("bruh", second, first));
         assertEquals(state.fired, 2);
+    }
+
+    // UserDB.java
+    @Test
+    public void userDBCreateUser()
+    {
+        var db = new UserDB();
+        assertTrue(db.createUser(new UserCreationAttempt(
+                        new User(first, new PersonalityType()), second)));
+        assertFalse(db.createUser(new UserCreationAttempt(
+                        new User(first, new PersonalityType()), first)));
+    }
+
+    @Test
+    public void userDBLogin()
+    {
+        var db = new UserDB();
+        db.createUser(new UserCreationAttempt(
+                    new User(first, new PersonalityType()), second));
+        assertFalse(db.login(first, first).success);
+        assertFalse(db.login(second, first).success);
+        assertTrue(db.login(first, second).success);
+    }
+
+    @Test
+    public void userDBAuthenticate()
+    {
+        var db = new UserDB();
+        db.createUser(new UserCreationAttempt(
+                    new User(first, new PersonalityType()), second));
+        var token = db.login(first, second).token;
+        assertTrue(db.authenticate(first, token));
+        assertFalse(db.authenticate(second, token));
+        assertFalse(db.authenticate(first, "null"));
+        assertFalse(db.authenticate(first, null));
+    }
+
+    @Test
+    public void userDBSubscribePotentialMatches()
+    {
+        class State {
+            int fired = 0;
+        }
+        var state = new State();
+        var db = new UserDB();
+        db.createUser(new UserCreationAttempt(
+                    new User(first, type), second));
+        db.subscribePotentialMatches(first, match -> {
+            state.fired++;
+            return true;
+        });
+        db.createUser(new UserCreationAttempt(
+                    new User(second, otherType), second));
+        assertEquals(state.fired, 1);
     }
 
     public static junit.framework.Test suite()

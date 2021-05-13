@@ -81,6 +81,16 @@ public class PersonalityType implements Serializable
         return type.equals(other.type);
     }
 
+    public boolean equals(Object other)
+    {
+        try {
+            return equals((PersonalityType) other);
+        }
+        catch (ClassCastException e) {
+            return false;
+        }
+    }
+
     public String toString()
     {
         return type;
