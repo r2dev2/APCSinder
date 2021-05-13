@@ -15,10 +15,11 @@ public class MatchingUI extends JPanel
     // Fields ...............................................................
     private String username;
     private Network network;
-    private JButton match;
+    private JButton startMatch;
     private Matcher matcher;
     private CardLayout card;
     private AppContainer container;
+    private Match match;
 
     /**
      * Create a new MatchingUI object.
@@ -35,23 +36,25 @@ public class MatchingUI extends JPanel
         setLayout(card);
         setFeel();
 
-        match = new JButton("Match!");
-        match.setFont(new Font("Arial", Font.PLAIN, 48));
-        match.addActionListener(e -> card.next(this));
+        startMatch = new JButton("Match!");
+        startMatch.setFont(new Font("Arial", Font.PLAIN, 48));
+        startMatch.addActionListener(e -> card.next(this));
 
         matcher = new Matcher();
         matcher.accept.addActionListener(e -> acceptMatch());
+        matcher.reject.addActionListener(e -> findMatch());
 
-
-        add(match);
+        findMatch();
+        add(startMatch);
         add(matcher);
     }
 
-    private Match findMatch() {
+    private void findMatch() {
         ArrayList<Match> matches = network.getMatches();
         int index = (int)(Math.random() * matches.size());
-        matcher.loadMatch(matches.get(index));
-        return matches.remove(index);
+        Match m = matches.remove(index);
+        matcher.loadMatch(m);
+        match = m;
     }
 
     private void acceptMatch() {
