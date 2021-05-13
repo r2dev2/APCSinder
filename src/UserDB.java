@@ -229,6 +229,7 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         var second = getUser(m.secondUser);
         if (oneRejectedOther(first, second)) return false;
         if (!bothAcceptedEachOther(first, second)) return false;
+        if (first.hasMatched(second)) return false;
         mdb.removePotential(m);
         matchWith(first, second);
         return true;

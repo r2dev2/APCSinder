@@ -38,6 +38,11 @@ public class UserRecord implements Serializable
         return accepted.contains(other.user.username);
     }
 
+    public boolean hasMatched(UserRecord other)
+    {
+        return matches.contains(other.user.username);
+    }
+
     public void acceptUser(String user)
     {
         accepted.add(user);
