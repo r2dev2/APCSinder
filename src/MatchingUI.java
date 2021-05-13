@@ -15,9 +15,8 @@ public class MatchingUI extends JPanel
     private String username;
     private Network network;
     private JButton match;
-    private AppContainer container;
     private Matcher matcher;
-    private CardLayout c;
+    private CardLayout card;
 
     /**
      * Create a new MatchingUI object.
@@ -25,14 +24,16 @@ public class MatchingUI extends JPanel
      * @param network the network to connect to
      */
     public MatchingUI(AppContainer container, Network network) {
-        c = new CardLayout();
+        this.network = network;
+        card = new CardLayout();
 
-        setLayout(c);
+        setLayout(card);
         setFeel();
 
         match = new JButton("Match!");
         match.setFont(new Font("Arial", Font.PLAIN, 48));
-        match.addActionListener(e -> c.next(this));
+        match.addActionListener(e -> card.next(this));
+        matcher.accept.addActionListener(e -> container.matchingToChat()); //TODO finish
 
         matcher = new Matcher();
 
