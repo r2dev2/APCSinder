@@ -8,8 +8,19 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 
+/**
+ * Backend server.
+ *
+ * @author Ronak Badhe
+ * @version Mon May 10 09:25:31 PDT 2021
+ */
 public class Server
 {
+    /**
+     * Main method.
+     *
+     * @param args the cli args - not used
+     */
     public static void main(String[] args) throws Exception
     {
         System.out.println("Starting APCSinder server at http://localhost:8000.");

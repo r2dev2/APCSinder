@@ -4,6 +4,9 @@ import java.nio.file.*;
 
 /**
  * A persistent database for user authentication and matching.
+ *
+ * @author Ronak Badhe
+ * @version Mon May 10 09:16:01 PDT 2021
  */
 public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
 {
@@ -78,12 +81,24 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         mdb.subscribe(id, subscriber);
     }
 
+    /**
+     * Accept a match.
+     *
+     * @param user the user that accepted
+     * @param other the user that the person accepted
+     */
     public void accept(String user, String other)
     {
         getUser(user).acceptUser(other);
         createMatch(new Match(user, other));
     }
 
+    /**
+     * Reject a match.
+     *
+     * @param user the rejector
+     * @param other the rejectee
+     */
     public void reject(String user, String other)
     {
         mdb.removePotential(user, other);
@@ -101,11 +116,23 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return users.get(username);
     }
 
+    /**
+     * Gets a user's matches.
+     *
+     * @param username the user to get the matches of
+     * @return the matches the user has made
+     */
     public Set<String> getMatches(String username)
     {
         return users.get(username).matches;
     }
 
+    /**
+     * Gets the user's potential matches.
+     *
+     * @param username the user to get the potential matches of
+     * @return the potential matches for the user.
+     */
     public ArrayList<String> getPotentialMatches(String username)
     {
         return mdb.getPotential(username);
@@ -128,7 +155,8 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
      * @param type the personality type
      * @return String array of matching usernames
      */
-    public List<String> getUserPersonalities(PersonalityType type) {
+    public List<String> getUserPersonalities(PersonalityType type)
+    {
         return userPersonalities.get(type);
     }
 
@@ -181,7 +209,7 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
     {
         var firstUsername = first.user.username;
         first.matches.add(second);
-        notifySubscriber(new Match(firstUsername, second), firstUsername);
+        notifySubscriber(firstUsername, new Match(firstUsername, second));
     }
 
     private void matchWith(UserRecord first, UserRecord second)
