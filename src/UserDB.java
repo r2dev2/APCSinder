@@ -94,7 +94,7 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
      */
     public void accept(String user, String other)
     {
-        getUser(user).acceptUser(other);
+        getRecord(user).acceptUser(other);
         createMatch(new Match(user, other));
     }
 
@@ -107,18 +107,23 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
     public void reject(String user, String other)
     {
         mdb.removePotential(user, other);
-        getUser(user).rejected.add(other);
+        getRecord(user).rejected.add(other);
     }
 
     /**
-     * Returns the User with a given username.
+     * Returns the UserRecord with a given username.
      *
      * @param username the username
-     * @return User for the username
+     * @return UserRecord for the username
      */
-    public UserRecord getUser(String username)
+    public UserRecord getRecord(String username)
     {
         return users.get(username);
+    }
+
+    public User getUser(String username)
+    {
+        return getRecord(username).user;
     }
 
     /**
@@ -225,8 +230,8 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
 
     private boolean createMatch(Match m)
     {
-        var first = getUser(m.firstUser);
-        var second = getUser(m.secondUser);
+        var first = getRecord(m.firstUser);
+        var second = getRecord(m.secondUser);
         if (oneRejectedOther(first, second)) return false;
         if (!bothAcceptedEachOther(first, second)) return false;
         if (first.hasMatched(second)) return false;

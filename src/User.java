@@ -24,6 +24,11 @@ public class User implements Serializable
         this(name, type, "Apparently, this user prefers to keep an air of anonymity.");
     }
 
+    public User()
+    {
+        this("Not found", new PersonalityType());
+    }
+
     public PersonalityType[] getPreferredTypes()
     {
         return personality.getPreferredTypes();

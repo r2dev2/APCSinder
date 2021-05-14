@@ -54,9 +54,10 @@ public class Server
                     getMessages(username, db.getMatches(username), mdb)));
 
         server.createContext("/matches", handleGet(db, username ->
-                    db.getUser(username).getMatches()));
+                    db.getRecord(username).getMatches()));
 
         server.createContext("/potentialmatches", handleGet(db, db::getPotentialMatches));
+        server.createContext("/user", handleGet(db, db::getUser, getHeader("Data")));
 
         server.createContext("/acceptmatch", handleAcceptReject(true, db));
         server.createContext("/rejectmatch", handleAcceptReject(false, db));
@@ -104,13 +105,20 @@ public class Server
     }
 
     private static HttpHandler handleGet(
-            UserDB db, Function<String, Serializable> resourceGetter)
+        UserDB db, Function<String, Serializable> resourceGetter,
+        Function<HttpExchange, String> idGetter)
     {
         return t -> {
             var username = db.getUsername(getToken(t));
             denyIfNull(username, t);
-            respondSingle(t, resourceGetter.apply(username));
+            respondSingle(t, idGetter.andThen(resourceGetter).apply(t));
         };
+    }
+
+    private static HttpHandler handleGet(
+            UserDB db, Function<String, Serializable> resourceGetter)
+    {
+        return handleGet(db, resourceGetter, t -> db.getUsername(getToken(t)));
     }
 
     private static HashMap<String, ArrayList<Message>>
@@ -180,9 +188,14 @@ public class Server
         return obj != null ? obj : defaultObj;
     }
 
-    private static String getToken(HttpExchange t)
+    private static Function<HttpExchange, String> getHeader(String header)
     {
         // Throw npe when no token
-        return t.getRequestHeaders().getOrDefault("Token", null).get(0);
+        return t -> t.getRequestHeaders().getOrDefault(header, null).get(0);
+    }
+
+    private static String getToken(HttpExchange t)
+    {
+        return getHeader("Token").apply(t);
     }
 }

@@ -138,6 +138,12 @@ public class Network
         return getResource("/messages", new HashMap<String, ArrayList<Message>>());
     }
 
+    public User getUser(String username)
+    {
+        var req = buildGetRequestWithHeader("/user", "Username", username);
+        return getResource(req, new User());
+    }
+
     /**
      * Sends a message.
      *
@@ -211,11 +217,10 @@ public class Network
             });
     }
 
-    private <T> T getResource(String end, T defaultObj)
+    private <T> T getResource(HttpRequest req, T defaultObj)
     {
         try {
-            HttpRequest req = buildGetRequest(end);
-            HttpResponse<String> r = client.send(req, HttpResponse.BodyHandlers.ofString());
+            var r = client.send(req, HttpResponse.BodyHandlers.ofString());
 
             T res = Serializer.deserialize(r.body());
             res.hashCode();
@@ -224,6 +229,21 @@ public class Network
         catch (IOException | InterruptedException | NullPointerException e) {
             return defaultObj;
         }
+    }
+
+    private <T> T getResource(String end, T defaultObj)
+    {
+        return getResource(buildGetRequest(end), defaultObj);
+    }
+
+    private HttpRequest
+    buildGetRequestWithHeader(String end, String key, String value)
+    {
+        return HttpRequest.newBuilder()
+            .uri(endpoint(end))
+            .setHeader(key, value)
+            .GET()
+            .build();
     }
 
     private HttpRequest buildGetRequest(String end)
