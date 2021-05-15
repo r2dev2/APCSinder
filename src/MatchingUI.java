@@ -16,10 +16,8 @@ public class MatchingUI extends JPanel
     // Fields ...............................................................
     private String username;
     private Network network;
-    private JButton startMatch;
     private Matcher matcher;
     private CardLayout card;
-    private AppContainer container;
     private Match match;
 
     /**
@@ -31,24 +29,25 @@ public class MatchingUI extends JPanel
     public MatchingUI(String username, AppContainer container, Network network) {
         this.network = network;
         this.username = username;
-        this.container = container;
         card = new CardLayout();
 
         setLayout(card);
         setFeel();
 
-        startMatch = new JButton("Match!");
-        startMatch.setFont(new Font("Arial", Font.PLAIN, 48));
-        startMatch.addActionListener(e -> card.next(this));
+        prelimMatch prelim = new prelimMatch();
+
+        prelim.toMatch.addActionListener(e -> card.next(this));
+        prelim.toChat.addActionListener(e -> container.matchingToChat());
 
         matcher = new Matcher();
         matcher.accept.addActionListener(e -> acceptMatch());
         matcher.reject.addActionListener(e -> rejectMatch());
+        matcher.toChat.addActionListener(e -> container.matchingToChat());
 
         match = findMatch();
         matcher.loadMatch(match);
 
-        add(startMatch);
+        add(prelim);
         add(matcher);
     }
 
@@ -83,7 +82,6 @@ public class MatchingUI extends JPanel
         {
             e.printStackTrace();
         }
-        container.matchingToChat();
     }
 
     /**
@@ -110,6 +108,7 @@ public class MatchingUI extends JPanel
     {
         public final JButton accept;
         public final JButton reject;
+        public final JButton toChat;
         private JTextField userDescription;
         private JTextField name;
 
@@ -121,6 +120,7 @@ public class MatchingUI extends JPanel
 
             accept = new JButton("Accept");
             reject = new JButton("Reject");
+            toChat = new JButton("Go to chat");
 
             userDescription = new JTextField(1);
             userDescription.setEditable(false);
@@ -133,6 +133,7 @@ public class MatchingUI extends JPanel
             add(reject, BorderLayout.WEST);
             add(name, BorderLayout.CENTER);
             add(userDescription, BorderLayout.SOUTH);
+            add(toChat, BorderLayout.NORTH);
         }
 
         private void loadMatch(Match m)
@@ -141,6 +142,31 @@ public class MatchingUI extends JPanel
             name.setText(personName);
             User user = network.getUser(personName);
             userDescription.setText(user.description);
+        }
+    }
+
+    /**
+     *  The prelimMatch class allows the user to choose between chatting and matching.
+     *
+     *  @author Justin Chang
+     *  @version May 15, 2021
+     */
+    private class prelimMatch extends JPanel
+    {
+        public final JButton toMatch;
+        public final JButton toChat;
+
+        public prelimMatch() {
+            setLayout(new BorderLayout());
+
+            toMatch = new JButton("Match!");
+            toChat = new JButton("Chat!");
+
+            toMatch.setFont(new Font("Arial", Font.PLAIN, 48));
+            toChat.setFont(new Font("Arial", Font.PLAIN, 48));
+
+            add(toMatch, BorderLayout.WEST);
+            add(toChat, BorderLayout.EAST);
         }
     }
 }
