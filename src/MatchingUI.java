@@ -55,7 +55,7 @@ public class MatchingUI extends JPanel
     private Match findMatch() {
         ArrayList<Match> matches = network.getPotentialMatches();
         int index = (int)(Math.random() * matches.size());
-        Match m = matches.remove(index);
+        Match m = matches.get(index);
 
         return m;
     }
@@ -139,7 +139,8 @@ public class MatchingUI extends JPanel
         {
             String personName = m.otherUser(username);
             name.setText(personName);
-            //TODO finish once network has a get user method.
+            User user = network.getUser(personName);
+            userDescription.setText(user.description);
         }
     }
 }

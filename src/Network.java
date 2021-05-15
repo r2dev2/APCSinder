@@ -138,6 +138,11 @@ public class Network
         return getResource("/messages", new HashMap<String, ArrayList<Message>>());
     }
 
+    /**
+     * Place a description of your method here.
+     * @param username the username of the User
+     * @return the user associated with this username
+     */
     public User getUser(String username)
     {
         var req = buildGetRequestWithHeader("/user", "Username", username);
