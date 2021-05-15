@@ -74,6 +74,11 @@ public class Network
         subscribeEvent(onMatch, "/listenmatches");
     }
 
+    /**
+     * Subscribe to potential matches to accept or reject.
+     *
+     * @param onPotMatch the callback for when a new potential match is recommended
+     */
     public void subscribePotentialMatches(EventListener<Match> onPotMatch)
     {
         subscribeEvent(onPotMatch, "/listenpotentialmatches");
@@ -123,6 +128,11 @@ public class Network
         return getResource("/matches", new ArrayList<Match>());
     }
 
+    /**
+     * Gets the potential matches already recomended to accept or reject.
+     *
+     * @return the potential matches already recommended to the user
+     */
     public ArrayList<Match> getPotentialMatches()
     {
         return getResource("/potentialmatches", new ArrayList<Match>());
@@ -159,11 +169,21 @@ public class Network
         postObjectAsync("/message", msg);
     }
 
+    /**
+     * Accepts a recommended match.
+     *
+     * @param match the recommended match to accept
+     */
     public void acceptMatch(Match match) throws IOException, InterruptedException
     {
         postObjectAsync("/acceptmatch", match);
     }
 
+    /**
+     * Rejects a recommended match.
+     *
+     * @param match the recommended match to reject
+     */
     public void rejectMatch(Match match) throws IOException, InterruptedException
     {
         postObjectAsync("/rejectmatch", match);
