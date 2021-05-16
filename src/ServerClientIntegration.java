@@ -17,7 +17,8 @@ public class ServerClientIntegration
             new TestCase("create user", this::testCreateUser),
             new TestCase("login user", this::testUserLogin),
             new TestCase("get user info", this::testGetUser),
-            new TestCase("recommended matches", this::testPotentialMatches),
+            new TestCase("sub recommended matches", this::testPotentialMatchSubscribe),
+            new TestCase("sub matching", this::testMatchSubscribe),
         };
     }
 
@@ -29,11 +30,11 @@ public class ServerClientIntegration
         {
             beforeTest();
             if (test.success()) {
-                System.out.printf("%20s ✅\n", test.name);
+                System.out.printf("%30s ✅\n", test.name);
                 success++;
             }
             else {
-                System.out.printf("%20s ❌\n", test.name);
+                System.out.printf("%30s ❌\n", test.name);
                 fail++;
             }
         }
@@ -67,7 +68,7 @@ public class ServerClientIntegration
         return network.getUser(first).description.equals(user.description);
     }
 
-    private boolean testPotentialMatches() throws Exception
+    private boolean testPotentialMatchSubscribe() throws Exception
     {
         class State {
             int fired = 0;
@@ -76,9 +77,27 @@ public class ServerClientIntegration
         network.createUser(new User(first, type), pass);
         network.login(first, pass);
         network.subscribePotentialMatches(m -> s.fired++);
-        Thread.sleep(100);
-        network.createUser(new User(other, otherType), pass);
-        Thread.sleep(100);
+        Thread.sleep(50);
+        network2.createUser(new User(other, otherType), pass);
+        Thread.sleep(50);
+        return s.fired == 1;
+    }
+
+    private boolean testMatchSubscribe() throws Exception
+    {
+        class State {
+            int fired = 0;
+        }
+        var s = new State();
+        network.createUser(new User(first, type), pass);
+        network.login(first, pass);
+        network2.createUser(new User(other, otherType), pass);
+        network2.login(other, pass);
+        network.subscribeMatches(m -> s.fired++);
+        Thread.sleep(10);
+        network.acceptMatch(new Match(first, other));
+        network2.acceptMatch(new Match(first, other));
+        Thread.sleep(10);
         return s.fired == 1;
     }
 

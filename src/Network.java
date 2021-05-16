@@ -218,7 +218,7 @@ public class Network
             try {
                 subscribeEventProcessing(onEvent, end);
             }
-            catch (IOException | InterruptedException e) {
+            catch (UncheckedIOException | IOException | InterruptedException e) {
                 return;
             }
         });
