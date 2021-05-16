@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 
 /**
  *  An AppContainer class is a class that holds the UIs and implements swapping functionality.
+ *  The UIs are organized in the order CreateUserUI - LoginUI - PersonalitySetupUI - MatchingUI - ChatUI
  *
  *  @author Justin Chang
  *  @version Apr 24, 2021
