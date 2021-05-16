@@ -27,11 +27,10 @@ public class LoginUI extends JPanel
     private JLabel welcome;
     private JLabel user;
     private JLabel pwd;
-    private JLabel prompt;
     private JTextField userInput;
     private JTextField pwdInput;
-    private JTextField description;
     private JButton nextButton;
+    private JButton backButton;
 
     /**
      * Create a new CreateUserUI object.
@@ -97,6 +96,18 @@ public class LoginUI extends JPanel
         constraint.gridwidth = 2;
         add(pwdInput, constraint);
 
+        backButton = new JButton("Create User");
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.gridx = 1;
+        constraint.gridy = 3;
+        constraint.insets = new Insets(20, 40, 20, 40);
+        constraint.weightx = 0.2;
+        constraint.gridwidth = 1;
+        add(backButton, constraint);
+        backButton.addActionListener(e -> {
+            container.chatToMatching(); //back call
+        });
+
         nextButton = new JButton(" Login ");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
@@ -105,16 +116,19 @@ public class LoginUI extends JPanel
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
-            try
+            if (!userInput.getText().equals("") && !pwdInput.getText().equals(""))
             {
-                User u = network.getUser(userInput.getText());
-                network.login(u.username, pwdInput.getText());
-                container.completeSetup(u.username, pwdInput.getText(), u.description);
-                container.setupToPersonality(); //just a next() call
-            }
-            catch (IOException | InterruptedException e1)
-            {
-                e1.printStackTrace();
+                try
+                {
+                    User u = network.getUser(userInput.getText());
+                    network.login(u.username, pwdInput.getText());
+                    container.completeSetup(u.username, pwdInput.getText(), u.description);
+                    container.setupToPersonality(); //just a next() call
+                }
+                catch (IOException | InterruptedException e1)
+                {
+                    e1.printStackTrace();
+                }
             }
         });
         add(nextButton, constraint);
