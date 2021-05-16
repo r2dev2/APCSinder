@@ -8,8 +8,7 @@ function failure() {
 mkdir -p "bin/test"
 case $1 in
     integration)
-        ./build
-        cd bin && java ServerClientIntegration
+        ./build && cd bin && java ServerClientIntegration
         ;;
     ''|unit)
         cd src && javac -cp .:$JUNIT $(ls -1 | grep \.java) && mv *.class "../bin/test" && cd "../bin/test" && java -cp .:$JUNIT JUTests | grep -v at || failure

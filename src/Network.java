@@ -60,7 +60,6 @@ public class Network
             token = res.token;
             this.username = username;
         }
-        System.out.println("Token: " + token);
         return res;
     }
 
