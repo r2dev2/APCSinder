@@ -193,7 +193,7 @@ public class ChatUI extends JPanel
             setLayout(new GridBagLayout());
             exit = new JButton("Exit");
 
-            list = new JList<String>(createUserList());
+            list = new JList<String>();
 
             constraint.fill = GridBagConstraints.BOTH;
             constraint.gridx = 0;
@@ -213,19 +213,6 @@ public class ChatUI extends JPanel
             constraint.gridwidth = 1;
             constraint.gridheight = 9;
             add(list, constraint);
-        }
-
-        /**
-         * Creates the list of users, empty Vector if no users.
-         * @return a Vector<String> of Users
-         */
-        public Vector<String> createUserList() {
-            if (network.getMessages() != null)
-            {
-                Set<String> s = network.getMessages().keySet();
-                return new Vector<String>(s);
-            }
-            return new Vector<String>();
         }
 
         /**
