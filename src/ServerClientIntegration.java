@@ -90,14 +90,15 @@ public class ServerClientIntegration
             int fired = 0;
         }
         var s = new State();
+        var match = new Match(first, other);
         network.createUser(new User(first, type), pass);
         network.login(first, pass);
         network2.createUser(new User(other, otherType), pass);
         network2.login(other, pass);
         network.subscribeMatches(m -> s.fired++);
         Thread.sleep(10);
-        network.acceptMatch(new Match(first, other));
-        network2.acceptMatch(new Match(first, other));
+        network.acceptMatch(match);
+        network2.acceptMatch(match);
         Thread.sleep(10);
         return s.fired == 1;
     }
@@ -108,6 +109,7 @@ public class ServerClientIntegration
             int fired = 0;
         }
         var s = new State();
+        var match = new Match(first, other);
         network.createUser(new User(first, type), pass);
         network.login(first, pass);
         network2.createUser(new User(other, otherType), pass);
@@ -123,8 +125,8 @@ public class ServerClientIntegration
         network.subscribeMessage(m -> s.fired += m.msg.equals("bruh") ? 1 : 0);
         network2.subscribeMessage(m -> s.fired += m.msg.equals("bruh") ? 1 : 0);
         Thread.sleep(10);
-        network.acceptMatch(new Match(first, other));
-        network2.acceptMatch(new Match(first, other));
+        network.acceptMatch(match);
+        network2.acceptMatch(match);
         Thread.sleep(50);
         return s.fired == 2;
     }
