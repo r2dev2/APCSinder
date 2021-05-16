@@ -207,7 +207,7 @@ public class Network
         Thread.sleep(100000000);
     }
 
-    private interface EventListener<T>
+    public interface EventListener<T>
     {
         public void onEvent(T m);
     }

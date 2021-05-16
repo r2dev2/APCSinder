@@ -2,6 +2,7 @@ public class ServerClientIntegration
 {
     private Process server;
     private Network network;
+    private Network network2;
     private TestCase[] tests;
     private static String first = "Justin";
     private static String other = "Kevin";
@@ -15,6 +16,8 @@ public class ServerClientIntegration
         tests = new TestCase[] {
             new TestCase("create user", this::testCreateUser),
             new TestCase("login user", this::testUserLogin),
+            new TestCase("get user info", this::testGetUser),
+            new TestCase("recommended matches", this::testPotentialMatches),
         };
     }
 
@@ -56,7 +59,38 @@ public class ServerClientIntegration
         return network.login(first, pass).success;
     }
 
+    private boolean testGetUser() throws Exception
+    {
+        var user = new User(first, type);
+        if (!network.createUser(new User(first, type), pass)) return false;
+        if (!network.login(first, pass).success) return false;
+        return network.getUser(first).description.equals(user.description);
+    }
+
+    private boolean testPotentialMatches() throws Exception
+    {
+        class State {
+            int fired = 0;
+        }
+        var s = new State();
+        network.createUser(new User(first, type), pass);
+        network.login(first, pass);
+        network.subscribePotentialMatches(m -> s.fired++);
+        Thread.sleep(100);
+        network.createUser(new User(other, otherType), pass);
+        Thread.sleep(100);
+        return s.fired == 1;
+    }
+
     // End Test
+
+    private void getServerOut()
+    {
+        var s = new java.util.Scanner(server.getInputStream());
+        while (s.hasNextLine()) {
+            System.out.println(s.nextLine());
+        }
+    }
 
     private void restartServer() throws Exception
     {
@@ -73,6 +107,7 @@ public class ServerClientIntegration
     {
         restartServer();
         network = new Network("http://localhost:8000");
+        network2 = new Network("http://localhost:8000");
     }
 
     public static void main(String[] args) throws Exception
