@@ -51,6 +51,10 @@ public class MatchingUI extends JPanel
         add(matcher);
     }
 
+    /**
+     * Returns a random match from the list of potential matches.
+     * @return a random match from the list of potential matches.
+     */
     private Match findMatch() {
         ArrayList<Match> matches = network.getPotentialMatches();
         int index = (int)(Math.random() * matches.size());
@@ -59,6 +63,9 @@ public class MatchingUI extends JPanel
         return m;
     }
 
+    /**
+     * Rejects a potential match and finds and loads a new match.
+     */
     private void rejectMatch() {
         try
         {
@@ -73,6 +80,9 @@ public class MatchingUI extends JPanel
         matcher.loadMatch(match);
     }
 
+    /**
+     * Accepts a match.
+     */
     private void acceptMatch() {
         try
         {
@@ -136,6 +146,10 @@ public class MatchingUI extends JPanel
             add(toChat, BorderLayout.NORTH);
         }
 
+        /**
+         * Loads the match provided by the parameter and displays the other user's name and description.
+         * @param m the match to load.
+         */
         private void loadMatch(Match m)
         {
             String personName = m.otherUser(username);
@@ -156,6 +170,9 @@ public class MatchingUI extends JPanel
         public final JButton toMatch;
         public final JButton toChat;
 
+        /**
+         * Create a new prelimMatch object.
+         */
         public prelimMatch() {
             setLayout(new BorderLayout());
 

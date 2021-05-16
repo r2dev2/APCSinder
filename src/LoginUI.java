@@ -9,9 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 /**
- *  Write a one-sentence summary of your class here.
- *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
+ *  The LoginUI class creates a login UI for the user to login.
  *
  *  @author Justin Chang
  *  @version May 15, 2021
@@ -33,7 +31,7 @@ public class LoginUI extends JPanel
     private JButton backButton;
 
     /**
-     * Create a new CreateUserUI object.
+     * Create a new LoginUI object.
      * Starts the UI from a specified container window.
      * @param a the container
      * @param network the network to connect to
