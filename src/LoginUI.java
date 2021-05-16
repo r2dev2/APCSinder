@@ -1,15 +1,21 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 /**
- *  Write a one-sentence summary of your class here
+ *  Write a one-sentence summary of your class here.
  *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it
+ *  it represents, and how to use it.
  *
- *  @author Kevin Li
- *  @version May 3, 2021
+ *  @author Justin Chang
+ *  @version May 15, 2021
  */
-public class CreateUserUI extends JPanel
+public class LoginUI extends JPanel
 {
     private AppContainer container;
     /**
@@ -30,7 +36,7 @@ public class CreateUserUI extends JPanel
      * Starts the UI from a specified container window.
      * @param a the container
      */
-    public CreateUserUI(AppContainer a) {
+    public LoginUI(AppContainer a) {
         container = a;
         setLayout(new GridBagLayout());
         setFeel();
@@ -114,7 +120,7 @@ public class CreateUserUI extends JPanel
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
             container.completeSetup(userInput.getText(), pwdInput.getText(), description.getText());
-            container.setupToPersonality(); //creates the user in personalitySetupUI
+            container.setupToPersonality();
         });
         add(nextButton, constraint);
     }
