@@ -19,6 +19,7 @@ public class ServerClientIntegration
             new TestCase("get user info", this::testGetUser),
             new TestCase("sub recommended matches", this::testPotentialMatchSubscribe),
             new TestCase("sub matching", this::testMatchSubscribe),
+            new TestCase("sub messages", this::testMessageSubscribe),
         };
     }
 
@@ -99,6 +100,33 @@ public class ServerClientIntegration
         network2.acceptMatch(new Match(first, other));
         Thread.sleep(10);
         return s.fired == 1;
+    }
+
+    private boolean testMessageSubscribe() throws Exception
+    {
+        class State {
+            int fired = 0;
+        }
+        var s = new State();
+        network.createUser(new User(first, type), pass);
+        network.login(first, pass);
+        network2.createUser(new User(other, otherType), pass);
+        network2.login(other, pass);
+        network.subscribeMatches(m -> {
+            try {
+                network.sendMessage(new Message("bruh", first, other));
+            }
+            catch (Exception e) {
+                return;
+            }
+        });
+        network.subscribeMessage(m -> s.fired += m.msg.equals("bruh") ? 1 : 0);
+        network2.subscribeMessage(m -> s.fired += m.msg.equals("bruh") ? 1 : 0);
+        Thread.sleep(10);
+        network.acceptMatch(new Match(first, other));
+        network2.acceptMatch(new Match(first, other));
+        Thread.sleep(50);
+        return s.fired == 2;
     }
 
     // End Test
