@@ -24,6 +24,7 @@ public class CreateUserUI extends JPanel
     private JTextField pwdInput;
     private JTextField description;
     private JButton nextButton;
+    private JButton toLoginButton;
 
     /**
      * Create a new CreateUserUI object.
@@ -104,6 +105,18 @@ public class CreateUserUI extends JPanel
         constraint.weightx = 0.5;
         constraint.gridwidth = 2;
         add(description, constraint);
+
+        toLoginButton = new JButton(" Go To Login ");
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.gridx = 1;
+        constraint.gridy = 4;
+        constraint.insets = new Insets(20, 40, 20, 40);
+        constraint.weightx = 0.2;
+        constraint.gridwidth = 1;constraint.fill = GridBagConstraints.HORIZONTAL;
+        toLoginButton.addActionListener(e -> {
+            container.setupToPersonality(); //next call to loginUI
+        });
+        add(toLoginButton, constraint);
 
         nextButton = new JButton(" Next ");
         constraint.fill = GridBagConstraints.HORIZONTAL;

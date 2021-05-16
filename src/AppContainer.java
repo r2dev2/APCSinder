@@ -13,8 +13,10 @@ public class AppContainer extends JFrame
     private String password;
     private String description;
     private ChatUI chat;
+    private LoginUI login;
     private PersonalitySetupUI personality;
     private CreateUserUI userSetup;
+    private MatchingUI matching;
     private CardLayout c;
     private Network n;
     //implement matching UI.
@@ -34,8 +36,10 @@ public class AppContainer extends JFrame
         setTitle("APCSinder - " + username);
 
         userSetup = new CreateUserUI(this);
+        login = new LoginUI(this, n);
 
         add(userSetup);
+        add(login);
         setVisible(true);
     }
 
@@ -53,9 +57,11 @@ public class AppContainer extends JFrame
         setTitle("APCSinder - " + username);
         personality = new PersonalitySetupUI(username, this, n, password);
         chat = new ChatUI(username, this, n);
+        matching = new MatchingUI(username, this, n);
         setSize(800, 400);
+
         add(personality);
-        //add matching ui HERE in between personality and chat
+        add(matching);
         add(chat);
         setVisible(true);
     }
@@ -89,7 +95,6 @@ public class AppContainer extends JFrame
      */
     public void chatToMatching()
     {
-        //should only be called from the chat UI.
         c.previous(getContentPane());
     }
 }

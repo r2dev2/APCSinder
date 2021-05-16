@@ -1,6 +1,7 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ import javax.swing.UIManager;
 public class LoginUI extends JPanel
 {
     private AppContainer container;
+    private Network network;
     /**
      * Used to set up the formatting for each component of the JPanel.
      */
@@ -35,9 +37,11 @@ public class LoginUI extends JPanel
      * Create a new CreateUserUI object.
      * Starts the UI from a specified container window.
      * @param a the container
+     * @param network the network to connect to
      */
-    public LoginUI(AppContainer a) {
+    public LoginUI(AppContainer a, Network network) {
         container = a;
+        this.network = network;
         setLayout(new GridBagLayout());
         setFeel();
         start();
@@ -48,7 +52,7 @@ public class LoginUI extends JPanel
      * next button)
      */
     public void start() {
-        welcome = new JLabel("Create a new user");
+        welcome = new JLabel("Login");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 0;
         constraint.gridy = 0;
@@ -93,34 +97,25 @@ public class LoginUI extends JPanel
         constraint.gridwidth = 2;
         add(pwdInput, constraint);
 
-        prompt = new JLabel("<html>Tell us something<br>about yourself:</html>");
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.gridx = 0;
-        constraint.gridy = 3;
-        constraint.insets = new Insets(20, 40, 20, 20);
-        constraint.weightx = 0.4;
-        constraint.gridwidth = 1;
-        add(prompt, constraint);
-
-        description = new JTextField();
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.gridx = 1;
-        constraint.gridy = 3;
-        constraint.insets = new Insets(20, 20, 20, 40);
-        constraint.weightx = 0.5;
-        constraint.gridwidth = 2;
-        add(description, constraint);
-
-        nextButton = new JButton(" Next ");
+        nextButton = new JButton(" Login ");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
-        constraint.gridy = 4;
+        constraint.gridy = 3;
         constraint.insets = new Insets(20, 40, 20, 40);
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
-            container.completeSetup(userInput.getText(), pwdInput.getText(), description.getText());
-            container.setupToPersonality();
+            try
+            {
+                User u = network.getUser(userInput.getText());
+                network.login(u.username, pwdInput.getText());
+                container.completeSetup(u.username, pwdInput.getText(), u.description);
+                container.setupToPersonality(); //just a next() call
+            }
+            catch (IOException | InterruptedException e1)
+            {
+                e1.printStackTrace();
+            }
         });
         add(nextButton, constraint);
     }
