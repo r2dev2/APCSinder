@@ -25,6 +25,7 @@ public class ChatUI extends JPanel
     private SideBar side;
     private String username;
     private Network network;
+    private AppContainer container;
 
     /**
      * Create a new ChatUI object.
@@ -34,6 +35,7 @@ public class ChatUI extends JPanel
      */
     public ChatUI(String username, AppContainer container, Network network)
     {
+        this.container = container;
         this.username = username;
         this.network = network;
 
@@ -167,7 +169,9 @@ public class ChatUI extends JPanel
      */
     public void updateSidePanel() {
         side.updateUserList();
-        revalidate();
+        repaint();
+        container.revalidate();
+        container.repaint();
     }
 
     /**
@@ -180,6 +184,7 @@ public class ChatUI extends JPanel
     {
         private JButton exit;
         private JList<String> list;
+        private DefaultListModel<String> userList = new DefaultListModel<>();
         private GridBagConstraints constraint = new GridBagConstraints();
 
         /**
@@ -191,7 +196,7 @@ public class ChatUI extends JPanel
             setLayout(new GridBagLayout());
             exit = new JButton("Exit");
 
-            list = new JList<String>();
+            list = new JList<String>(userList);
 
             constraint.fill = GridBagConstraints.BOTH;
             constraint.gridx = 0;
@@ -236,15 +241,15 @@ public class ChatUI extends JPanel
          */
         public void updateUserList() {
             ArrayList<Match> matches = network.getMatches();
-            ArrayList<String> userList = new ArrayList<String>();
             if (matches != null)
             {
                 for (Match m: matches)
                 {
-                    userList.add(m.otherUser(username));
+                    userList.addElement(m.otherUser(username));
+                    System.out.println(m.otherUser(username));
                 }
-                list = new JList<String>(new Vector<String>(userList));
-                revalidate();
+                list = new JList<String>(userList);
+                repaint();
             }
         }
     }
