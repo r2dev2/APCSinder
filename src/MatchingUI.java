@@ -76,7 +76,7 @@ public class MatchingUI extends JPanel
     private void newMatch(Match m)
     {
         matches.add(m);
-        if (m == null) {
+        if (m != null) {
             match = m;
             matcher.loadMatch(m);
         }
