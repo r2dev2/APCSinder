@@ -116,7 +116,7 @@ public class CreateUserUI extends JPanel
         });
         add(toLoginButton, constraint);
 
-        nextButton = new JButton(" Next ");
+        nextButton = new JButton("Create User");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
         constraint.gridy = 4;
