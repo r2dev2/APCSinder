@@ -144,7 +144,11 @@ public class Network
      */
     public ArrayList<Match> getPotentialMatches()
     {
-        return getResource("/potentialmatches", new ArrayList<Match>());
+        var potMatch = new ArrayList<Match>();
+        for (var pot: getResource("/potentialmatches", new ArrayList<String>())) {
+            potMatch.add(new Match(username, pot));
+        }
+        return potMatch;
     }
 
     /**
