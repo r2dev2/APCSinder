@@ -124,7 +124,8 @@ public class LoginUI extends JPanel
                 {
                     User u = network.getUser(userInput.getText());
                     container.completeSetup(u.username, password, u.description);
-                    container.getNextWindow(); //just a next() call
+                    container.getNextWindow();
+                    container.getNextWindow(); //jumps directly to Matching
                 }
             }
             catch (IOException | InterruptedException e1)
