@@ -235,11 +235,15 @@ public class ChatUI extends JPanel
          * Updates the list of users.
          */
         public void updateUserList() {
-            HashMap<String, ArrayList<Message>> map = network.getMessages();
-            if (map != null)
+            ArrayList<Match> matches = network.getMatches();
+            ArrayList<String> userList = new ArrayList<String>();
+            if (matches != null)
             {
-                Set<String> s = map.keySet();
-                list = new JList<String>(new Vector<String>(s));
+                for (Match m: matches)
+                {
+                    userList.add(m.otherUser(username));
+                }
+                list = new JList<String>(new Vector<String>(userList));
                 revalidate();
             }
         }
