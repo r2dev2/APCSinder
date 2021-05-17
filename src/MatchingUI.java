@@ -19,6 +19,7 @@ public class MatchingUI extends JPanel
     private Matcher matcher;
     private CardLayout card;
     private Match match;
+    private ArrayList<Match> matches;
 
     /**
      * Create a new MatchingUI object.
@@ -44,6 +45,10 @@ public class MatchingUI extends JPanel
         matcher.reject.addActionListener(e -> rejectMatch());
         matcher.toChat.addActionListener(e -> container.matchingToChat());
 
+
+        matches = network.getPotentialMatches();
+        network.subscribePotentialMatches(this::newMatch);
+        
         match = findMatch();
         matcher.loadMatch(match);
 
@@ -56,7 +61,7 @@ public class MatchingUI extends JPanel
      * @return a random match from the list of potential matches.
      */
     private Match findMatch() {
-        ArrayList<Match> matches = network.getPotentialMatches();
+        // ArrayList<Match> matches = network.getPotentialMatches();
 
         if (matches.size() == 0) {
             return null;
@@ -66,6 +71,15 @@ public class MatchingUI extends JPanel
         Match m = matches.get(index);
 
         return m;
+    }
+
+    private void newMatch(Match m)
+    {
+        matches.add(m);
+        if (m == null) {
+            match = m;
+            matcher.loadMatch(m);
+        }
     }
 
     /**
