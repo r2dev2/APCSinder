@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
@@ -26,8 +27,8 @@ public class LoginUI extends JPanel
     private JLabel user;
     private JLabel pwd;
     private JTextField userInput;
-    private JTextField pwdInput;
-    private JButton nextButton;
+    private JPasswordField pwdInput;
+    private JButton loginButton;
     private JButton backButton;
 
     /**
@@ -85,7 +86,7 @@ public class LoginUI extends JPanel
         constraint.gridwidth = 1;
         add(pwd, constraint);
 
-        pwdInput = new JTextField();
+        pwdInput = new JPasswordField();
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
         constraint.gridy = 2;
@@ -103,25 +104,26 @@ public class LoginUI extends JPanel
         constraint.gridwidth = 1;
         add(backButton, constraint);
         backButton.addActionListener(e -> {
-            container.chatToMatching(); //back call
+            container.getPreviousWindow(); //back call
         });
 
-        nextButton = new JButton(" Login ");
+        loginButton = new JButton(" Login ");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 2;
         constraint.gridy = 3;
         constraint.insets = new Insets(20, 40, 20, 40);
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;
-        nextButton.addActionListener(e -> {
+        loginButton.addActionListener(e -> {
             try
             {
-                LoginResult login = network.login(userInput.getText(), pwdInput.getText());
+                String password = new String(pwdInput.getPassword());
+                LoginResult login = network.login(userInput.getText(), password);
                 if (login.success)
                 {
                     User u = network.getUser(userInput.getText());
-                    container.completeSetup(u.username, pwdInput.getText(), u.description);
-                    container.setupToPersonality(); //just a next() call
+                    container.completeSetup(u.username, password, u.description);
+                    container.getNextWindow(); //just a next() call
                 }
             }
             catch (IOException | InterruptedException e1)
@@ -130,7 +132,7 @@ public class LoginUI extends JPanel
                 e1.printStackTrace();
             }
         });
-        add(nextButton, constraint);
+        add(loginButton, constraint);
     }
 
     /**

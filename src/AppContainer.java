@@ -68,16 +68,9 @@ public class AppContainer extends JFrame
     }
 
     /**
-     * Swaps from the user setup UI to the personality UI.
+     * Gets the next window arranged in this app container.
      */
-    public void setupToPersonality()
-    {
-        c.next(getContentPane());
-    }
-    /**
-     * Swaps from the personality UI to the matching UI.
-     */
-    public void personalityToMatching()
+    public void getNextWindow()
     {
         c.next(getContentPane());
     }
@@ -92,9 +85,9 @@ public class AppContainer extends JFrame
     }
 
     /**
-     * Swaps from the chat UI to the matching UI.
+     * Gets the previous window arranged in this app container.
      */
-    public void chatToMatching()
+    public void getPreviousWindow()
     {
         c.previous(getContentPane());
     }

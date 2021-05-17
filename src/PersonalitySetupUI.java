@@ -155,7 +155,7 @@ public class PersonalitySetupUI extends JPanel
         test.answerQuestion(slider.getValue());
         var type = test.finishTest();
         network.createUser(new User(username, type), password);
-        container.personalityToMatching();
+        container.getNextWindow();
     }
 
     /**

@@ -19,7 +19,7 @@ public class CreateUserUI extends JPanel
     private JLabel pwd;
     private JLabel prompt;
     private JTextField userInput;
-    private JTextField pwdInput;
+    private JPasswordField pwdInput;
     private JTextField description;
     private JButton nextButton;
     private JButton toLoginButton;
@@ -77,7 +77,7 @@ public class CreateUserUI extends JPanel
         constraint.gridwidth = 1;
         add(pwd, constraint);
 
-        pwdInput = new JTextField();
+        pwdInput = new JPasswordField();
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
         constraint.gridy = 2;
@@ -112,7 +112,7 @@ public class CreateUserUI extends JPanel
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;constraint.fill = GridBagConstraints.HORIZONTAL;
         toLoginButton.addActionListener(e -> {
-            container.setupToPersonality(); //next call to loginUI
+            container.getNextWindow(); //next call to loginUI
         });
         add(toLoginButton, constraint);
 
@@ -124,8 +124,9 @@ public class CreateUserUI extends JPanel
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
-            container.completeSetup(userInput.getText(), pwdInput.getText(), description.getText());
-            container.setupToPersonality(); //creates the user in personalitySetupUI
+            String password = new String(pwdInput.getPassword());
+            container.completeSetup(userInput.getText(), password, description.getText());
+            container.getNextWindow(); //creates the user in personalitySetupUI
         });
         add(nextButton, constraint);
     }

@@ -61,7 +61,7 @@ public class ChatUI extends JPanel
             }
         });
         messageBox.addKeyListener(enterSendListener());
-        exitButton.addActionListener(e -> container.chatToMatching());
+        exitButton.addActionListener(e -> container.getPreviousWindow());
         users.addListSelectionListener(chooseUser());
 
         add(sendButton, BorderLayout.EAST);
