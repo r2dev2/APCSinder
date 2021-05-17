@@ -64,6 +64,16 @@ public class Network
     }
 
     /**
+     * Checks whether the user is logged in.
+     *
+     * @return whether the user is logged in
+     */
+    public boolean isLoggedIn()
+    {
+        return token != null;
+    }
+
+    /**
      * Subscribe to new matches.
      *
      * @param onMatch the callback for when a new match is found
