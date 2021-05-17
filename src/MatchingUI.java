@@ -97,6 +97,9 @@ public class MatchingUI extends JPanel
         {
             e.printStackTrace();
         }
+
+        match = findMatch();
+        matcher.loadMatch(match);
     }
 
     /**
