@@ -114,19 +114,20 @@ public class LoginUI extends JPanel
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;
         nextButton.addActionListener(e -> {
-            if (!userInput.getText().equals("") && !pwdInput.getText().equals(""))
+            try
             {
-                try
+                LoginResult login = network.login(userInput.getText(), pwdInput.getText());
+                if (login.success)
                 {
                     User u = network.getUser(userInput.getText());
-                    network.login(u.username, pwdInput.getText());
                     container.completeSetup(u.username, pwdInput.getText(), u.description);
                     container.setupToPersonality(); //just a next() call
                 }
-                catch (IOException | InterruptedException e1)
-                {
-                    e1.printStackTrace();
-                }
+            }
+            catch (IOException | InterruptedException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
         });
         add(nextButton, constraint);
