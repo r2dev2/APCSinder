@@ -63,11 +63,18 @@ public class ChatUI extends JPanel
         messageBox.addKeyListener(enterSendListener());
         exitButton.addActionListener(e -> container.getPreviousWindow());
         users.addListSelectionListener(chooseUser());
+        network.subscribeMessage(this::addMessage);
 
         add(sendButton, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
         add(messageBox, BorderLayout.SOUTH);
         add(side, BorderLayout.WEST);
+    }
+
+    private void addMessage(Message m)
+    {
+        sb.append(m.toString() + "\n");
+        chatBox.setText(sb.toString());
     }
 
     /**
@@ -102,12 +109,15 @@ public class ChatUI extends JPanel
                 String user = users.getSelectedValue();
 
                 sb = new StringBuilder();
-                ArrayList<Message> messages = network.getMessages().get(user);
-                for (Message m: messages) {
-                    sb.append(m.sender + ": " + m.msg + "\n");
+                var messages = network.getMessages().get(user);
+                if (messages != null) {
+                    for (Message m: messages) {
+                        sb.append(m.toString() + "\n");
+                    }
                 }
                 chatBox.setText(sb.toString());
                 messageBox.setText("");
+                recipient = user;
             }
         };
     }
