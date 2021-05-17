@@ -24,7 +24,6 @@ public class ChatUI extends JPanel
     private JList<String> users;
     private SideBar side;
     private String username;
-    private AppContainer container;
     private Network network;
 
     /**
@@ -36,7 +35,6 @@ public class ChatUI extends JPanel
     public ChatUI(String username, AppContainer container, Network network)
     {
         this.username = username;
-        this.container = container;
         this.network = network;
 
         setLayout(new BorderLayout());
@@ -237,9 +235,10 @@ public class ChatUI extends JPanel
          * Updates the list of users.
          */
         public void updateUserList() {
-            if (network.getMessages() != null)
+            HashMap<String, ArrayList<Message>> map = network.getMessages();
+            if (map != null)
             {
-                Set<String> s = network.getMessages().keySet();
+                Set<String> s = map.keySet();
                 list = new JList<String>(new Vector<String>(s));
                 revalidate();
             }

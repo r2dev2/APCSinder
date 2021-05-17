@@ -142,6 +142,7 @@ public class MatchingUI extends JPanel
 
             name = new JTextField(1);
             name.setEditable(false);
+            name.setHorizontalAlignment(JTextField.CENTER);
             name.setFont(new Font("Arial", Font.PLAIN, 64));
 
             add(accept, BorderLayout.EAST);
@@ -158,7 +159,7 @@ public class MatchingUI extends JPanel
         private void loadMatch(Match m)
         {
             if (m == null) {
-                name.setText("Oops…");
+                name.setText("Oops!");
                 userDescription.setText("<html><p>There aren't any matches ready for "
                     + "you yet. Maybe find some friends elsewhere?</p></html>");
                 return;
