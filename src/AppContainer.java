@@ -34,7 +34,7 @@ public class AppContainer extends JFrame
 
         setSize(500, 400);
         setLayout(c);
-        setTitle("APCSinder - " + username);
+        setTitle("APCSinder");
 
         userSetup = new CreateUserUI(this);
         login = new LoginUI(this, n);
@@ -55,7 +55,7 @@ public class AppContainer extends JFrame
         username = name;
         password = pwd;
         description = desc;
-        setTitle("APCSinder - " + username);
+        setTitle("APCSinder - " + name);
 
         if (!n.isLoggedIn()) {
             personality = new PersonalitySetupUI(username, this, n, password);
