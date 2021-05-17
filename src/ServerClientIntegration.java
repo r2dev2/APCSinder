@@ -63,8 +63,8 @@ public class ServerClientIntegration
 
     private boolean testGetUser() throws Exception
     {
-        var user = new User(first, type);
-        if (!network.createUser(new User(first, type), pass)) return false;
+        var user = new User(first, type, "hello there");
+        if (!network.createUser(user, pass)) return false;
         if (!network.login(first, pass).success) return false;
         return network.getUser(first).description.equals(user.description);
     }

@@ -57,7 +57,7 @@ public class Server
                     db.getRecord(username).getMatches()));
 
         server.createContext("/potentialmatches", handleGet(db, db::getPotentialMatches));
-        server.createContext("/user", handleGet(db, db::getUser, getHeader("Data")));
+        server.createContext("/user", handleGet(db, db::getUser, getHeader("Username")));
 
         server.createContext("/acceptmatch", handleAcceptReject(true, db));
         server.createContext("/rejectmatch", handleAcceptReject(false, db));
@@ -109,9 +109,9 @@ public class Server
         Function<HttpExchange, String> idGetter)
     {
         return t -> {
-            var username = db.getUsername(getToken(t));
+            var username = idGetter.apply(t);
             denyIfNull(username, t);
-            respondSingle(t, idGetter.andThen(resourceGetter).apply(t));
+            respondSingle(t, resourceGetter.apply(username));
         };
     }
 
