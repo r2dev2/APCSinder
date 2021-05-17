@@ -50,7 +50,8 @@ public class LoginUI extends JPanel
      * next button)
      */
     public void start() {
-        welcome = new JLabel("Login");
+        welcome = new JLabel("<html><p>Log in to your existing account. If "
+            + "you're new, click the button on the bottom left.</p></html>");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 0;
         constraint.gridy = 0;
@@ -95,7 +96,7 @@ public class LoginUI extends JPanel
         constraint.gridwidth = 2;
         add(pwdInput, constraint);
 
-        backButton = new JButton("Create User");
+        backButton = new JButton("New User?");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
         constraint.gridy = 3;
@@ -104,7 +105,7 @@ public class LoginUI extends JPanel
         constraint.gridwidth = 1;
         add(backButton, constraint);
         backButton.addActionListener(e -> {
-            container.getPreviousWindow(); //back call
+            container.getNextWindow(); //go to CreateUserUI
         });
 
         loginButton = new JButton(" Login ");

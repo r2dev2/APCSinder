@@ -142,7 +142,7 @@ public class PersonalitySetupUI extends JPanel
         slider.setValue(5);
 
         if (!test.hasNextQuestion()) {
-            nextButton.setText(" Finish ");
+            nextButton.setText("Finish User Registration");
         }
     }
 
@@ -155,6 +155,7 @@ public class PersonalitySetupUI extends JPanel
         test.answerQuestion(slider.getValue());
         var type = test.finishTest();
         network.createUser(new User(username, type), password);
+        container.restartLogin();
         container.getNextWindow();
     }
 

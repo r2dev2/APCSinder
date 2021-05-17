@@ -104,7 +104,7 @@ public class CreateUserUI extends JPanel
         constraint.gridwidth = 2;
         add(description, constraint);
 
-        toLoginButton = new JButton(" Go To Login ");
+        toLoginButton = new JButton("Existing User?");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
         constraint.gridy = 4;
@@ -112,7 +112,7 @@ public class CreateUserUI extends JPanel
         constraint.weightx = 0.2;
         constraint.gridwidth = 1;constraint.fill = GridBagConstraints.HORIZONTAL;
         toLoginButton.addActionListener(e -> {
-            container.getNextWindow(); //next call to loginUI
+            container.getPreviousWindow(); //back call to loginUI
         });
         add(toLoginButton, constraint);
 

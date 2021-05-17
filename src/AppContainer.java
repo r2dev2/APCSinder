@@ -39,8 +39,8 @@ public class AppContainer extends JFrame
         userSetup = new CreateUserUI(this);
         login = new LoginUI(this, n);
 
-        add(userSetup);
         add(login);
+        add(userSetup);
         setVisible(true);
     }
 
@@ -56,14 +56,39 @@ public class AppContainer extends JFrame
         password = pwd;
         description = desc;
         setTitle("APCSinder - " + username);
-        personality = new PersonalitySetupUI(username, this, n, password);
-        chat = new ChatUI(username, this, n);
-        matching = new MatchingUI(username, this, n);
-        setSize(800, 400);
 
-        add(personality);
-        add(matching);
-        add(chat);
+        if (!n.isLoggedIn()) {
+            personality = new PersonalitySetupUI(username, this, n, password);
+            setSize(800, 400);
+
+            add(personality);
+            setVisible(true);
+        }
+        else {
+            chat = new ChatUI(username, this, n);
+            matching = new MatchingUI(username, this, n);
+            setSize(800, 400);
+
+            add(matching);
+            add(chat);
+            setVisible(true);
+        }
+    }
+
+    /**
+     * Goes back to the login screen once the user has finished completing
+     * the personality test.
+     */
+    public void restartLogin() {
+        setSize(500, 400);
+        setLayout(c);
+        setTitle("APCSinder - " + username);
+
+        userSetup = new CreateUserUI(this);
+        login = new LoginUI(this, n);
+
+        add(login);
+        add(userSetup);
         setVisible(true);
     }
 

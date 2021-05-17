@@ -57,6 +57,11 @@ public class MatchingUI extends JPanel
      */
     private Match findMatch() {
         ArrayList<Match> matches = network.getPotentialMatches();
+
+        if (matches.size() == 0) {
+            return null;
+        }
+
         int index = (int)(Math.random() * matches.size());
         Match m = matches.get(index);
 
@@ -152,6 +157,12 @@ public class MatchingUI extends JPanel
          */
         private void loadMatch(Match m)
         {
+            if (m == null) {
+                name.setText("Oops…");
+                userDescription.setText("<html><p>There aren't any matches ready for "
+                    + "you yet. Maybe find some friends elsewhere?</p></html>");
+                return;
+            }
             String personName = m.otherUser(username);
             name.setText(personName);
             User user = network.getUser(personName);

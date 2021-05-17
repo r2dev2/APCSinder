@@ -138,7 +138,7 @@ public class Network
     }
 
     /**
-     * Gets the potential matches already recomended to accept or reject.
+     * Gets the potential matches already recommended to accept or reject.
      *
      * @return the potential matches already recommended to the user
      */
