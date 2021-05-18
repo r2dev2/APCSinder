@@ -47,8 +47,8 @@ public class ChatUI extends JPanel
         chatBox = getText();
         chatBoxScroll = new JScrollPane(chatBox);
         side = new SideBar();
-        exitButton = side.getExitButton();
-        users = side.getUsers();
+        exitButton = side.exit;
+        users = side.list;
 
         sendButton.addActionListener(e -> {
             try
@@ -192,8 +192,8 @@ public class ChatUI extends JPanel
      */
     private class SideBar extends JPanel
     {
-        private JButton exit;
-        private JList<String> list;
+        public final JButton exit;
+        public final JList<String> list;
         private DefaultListModel<String> userList = new DefaultListModel<>();
         private GridBagConstraints constraint = new GridBagConstraints();
 
@@ -207,6 +207,7 @@ public class ChatUI extends JPanel
             exit = new JButton("Exit");
 
             list = new JList<String>(userList);
+            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
             constraint.fill = GridBagConstraints.BOTH;
             constraint.gridx = 0;
@@ -229,36 +230,18 @@ public class ChatUI extends JPanel
         }
 
         /**
-         * Returns the exit button.
-         * @return a JButton that is the exit button.
-         */
-        public JButton getExitButton()
-        {
-            return exit;
-        }
-
-        /**
-         * Returns the menu of users
-         * @return the menu of users
-         */
-        public JList<String> getUsers()
-        {
-            return list;
-        }
-
-        /**
          * Updates the list of users.
          */
         public void updateUserList() {
             ArrayList<Match> matches = network.getMatches();
+            Vector<String> v = new Vector<>();
             if (matches != null)
             {
                 for (Match m: matches)
                 {
-                    userList.addElement(m.otherUser(username));
-                    System.out.println(m.otherUser(username));
+                    v.addElement(m.otherUser(username));
                 }
-                list = new JList<String>(userList);
+                list.setListData(v);
                 repaint();
             }
         }
