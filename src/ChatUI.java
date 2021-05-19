@@ -73,8 +73,11 @@ public class ChatUI extends JPanel
 
     private void addMessage(Message m)
     {
-        sb.append(m.toString() + "\n");
-        chatBox.setText(sb.toString());
+        if (m.sender.equals(recipient) || m.sender.equals(username))
+        {
+            sb.append(m.toString() + "\n");
+            chatBox.setText(sb.toString());
+        }
     }
 
     /**
