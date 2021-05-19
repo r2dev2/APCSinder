@@ -90,11 +90,7 @@ public class ChatUI extends JPanel
         String t = messageBox.getText();
         if (t.length() != 0 && recipient != null) {
             Message m = new Message(t, username, recipient);
-
-            sb.append(m.toString() + "\n");
-            chatBox.setText(sb.toString());
             messageBox.setText("");
-
             network.sendMessage(m);
         }
     }
