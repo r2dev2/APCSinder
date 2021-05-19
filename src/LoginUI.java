@@ -26,6 +26,7 @@ public class LoginUI extends JPanel
     private JLabel welcome;
     private JLabel user;
     private JLabel pwd;
+    private JLabel wrongPassword;
     private JTextField userInput;
     private JPasswordField pwdInput;
     private JButton loginButton;
@@ -96,6 +97,15 @@ public class LoginUI extends JPanel
         constraint.gridwidth = 2;
         add(pwdInput, constraint);
 
+        wrongPassword = new JLabel("");
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.gridx = 0;
+        constraint.gridy = 3;
+        constraint.insets = new Insets(20, 40, 20, 20);
+        constraint.weightx = 0.4;
+        constraint.gridwidth = 1;
+        add(wrongPassword, constraint);
+
         backButton = new JButton("New User?");
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridx = 1;
@@ -126,6 +136,9 @@ public class LoginUI extends JPanel
                     container.completeSetup(u.username, password, u.description);
                     container.getNextWindow();
                     container.getNextWindow(); //jumps directly to Matching
+                }
+                else {
+                    wrongPassword.setText("Wrong password!");
                 }
             }
             catch (IOException | InterruptedException e1)
