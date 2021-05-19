@@ -43,12 +43,11 @@ public class MatchingUI extends JPanel
         matcher = new Matcher();
         matcher.accept.addActionListener(e -> {
             acceptMatch();
-            newMatch(findMatch());
+            loadMatch();
         });
-        matcher.reject.addActionListener(e ->
-        {
+        matcher.reject.addActionListener(e -> {
             rejectMatch();
-            newMatch(findMatch());
+            loadMatch();
         });
         matcher.toChat.addActionListener(e -> container.matchingToChat());
 
@@ -56,8 +55,7 @@ public class MatchingUI extends JPanel
         matches = network.getPotentialMatches();
         network.subscribePotentialMatches(this::newMatch);
 
-        match = findMatch();
-        matcher.loadMatch(match);
+        loadMatch();
 
         add(prelim);
         add(matcher);
@@ -67,7 +65,8 @@ public class MatchingUI extends JPanel
      * Returns a random match from the list of potential matches.
      * @return a random match from the list of potential matches.
      */
-    private Match findMatch() {
+    private Match findMatch()
+    {
         // ArrayList<Match> matches = network.getPotentialMatches();
 
         if (matches.size() == 0) {
@@ -80,28 +79,36 @@ public class MatchingUI extends JPanel
         return m;
     }
 
+    private void loadMatch()
+    {
+        loadMatch(findMatch());
+    }
+
+    private void loadMatch(Match m)
+    {
+        match = m;
+        matcher.loadMatch(m);
+    }
+
+    private boolean hasLoadedMatch()
+    {
+        return match != null;
+    }
+
     /**
      * Place a description of your method here.
      * @param m
      */
     private void newMatch(Match m)
     {
-        if (m != null) {
-            if (matches.size() == 0)
-            {
-                matches.add(m);
-                match = m;
-                matcher.loadMatch(m);
-            }
-            else
-            {
-                matches.add(m);
-            }
+        matches.add(m);
+        if (!hasLoadedMatch()) {
+            loadMatch();
         }
     }
 
     /**
-     * Rejects a potential match and finds and loads a new match.
+     * Rejects the match.
      */
     private void rejectMatch() {
         try
@@ -110,15 +117,12 @@ public class MatchingUI extends JPanel
         }
         catch (IOException | InterruptedException e)
         {
-            e.printStackTrace();
+            System.err.println("Reject match failed: " + e);
         }
-
-        match = findMatch();
-        matcher.loadMatch(match);
     }
 
     /**
-     * Accepts a match.
+     * Accepts the match.
      */
     private void acceptMatch() {
         try
@@ -127,11 +131,8 @@ public class MatchingUI extends JPanel
         }
         catch (IOException | InterruptedException e)
         {
-            e.printStackTrace();
+            System.err.println("Accept match failed: " + e);
         }
-
-        match = findMatch();
-        matcher.loadMatch(match);
     }
 
     /**
