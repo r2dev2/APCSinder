@@ -41,14 +41,21 @@ public class MatchingUI extends JPanel
         prelim.toChat.addActionListener(e -> container.matchingToChat());
 
         matcher = new Matcher();
-        matcher.accept.addActionListener(e -> acceptMatch());
-        matcher.reject.addActionListener(e -> rejectMatch());
+        matcher.accept.addActionListener(e -> {
+            acceptMatch();
+            newMatch(findMatch());
+        });
+        matcher.reject.addActionListener(e ->
+        {
+            rejectMatch();
+            newMatch(findMatch());
+        });
         matcher.toChat.addActionListener(e -> container.matchingToChat());
 
 
         matches = network.getPotentialMatches();
         network.subscribePotentialMatches(this::newMatch);
-        
+
         match = findMatch();
         matcher.loadMatch(match);
 
@@ -68,14 +75,18 @@ public class MatchingUI extends JPanel
         }
 
         int index = (int)(Math.random() * matches.size());
-        Match m = matches.get(index);
+        Match m = matches.remove(index);
 
         return m;
     }
 
+    /**
+     * Place a description of your method here.
+     * @param m
+     */
     private void newMatch(Match m)
     {
-        matches.add(m);
+        //matches.add(m);
         if (m != null) {
             match = m;
             matcher.loadMatch(m);
