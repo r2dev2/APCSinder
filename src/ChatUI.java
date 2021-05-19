@@ -64,6 +64,8 @@ public class ChatUI extends JPanel
         exitButton.addActionListener(e -> container.getPreviousWindow());
         users.addListSelectionListener(chooseUser());
         network.subscribeMessage(this::addMessage);
+        // todo: make it actually add the match instead of refresh matches
+        network.subscribeMatches(m -> updateSidePanel());
 
         add(sendButton, BorderLayout.EAST);
         add(chatBoxScroll, BorderLayout.CENTER);
