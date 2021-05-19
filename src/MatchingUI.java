@@ -86,10 +86,17 @@ public class MatchingUI extends JPanel
      */
     private void newMatch(Match m)
     {
-        //matches.add(m);
         if (m != null) {
-            match = m;
-            matcher.loadMatch(m);
+            if (matches.size() == 0)
+            {
+                matches.add(m);
+                match = m;
+                matcher.loadMatch(m);
+            }
+            else
+            {
+                matches.add(m);
+            }
         }
     }
 
