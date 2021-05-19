@@ -1,2 +1,2 @@
 language = "bash"
-run = "./build && ./apcsinder server"
+run = "./apcsinder server"
