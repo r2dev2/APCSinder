@@ -58,7 +58,9 @@ public class AppContainer extends JFrame
         setTitle("APCSinder - " + name);
 
         if (!n.isLoggedIn()) {
-            personality = new PersonalitySetupUI(username, this, n, password);
+            personality = new PersonalitySetupUI(this);
+            personality.onTestFinish(type ->
+                    n.createUser(new User(name, type, desc), pwd));
             setSize(800, 400);
 
             add(personality);

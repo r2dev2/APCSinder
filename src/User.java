@@ -36,7 +36,8 @@ public class User implements Serializable
 
     public String toString()
     {
-        return String.format("User(%s)", username);
+        return String.format("User(%s, %s, %s)", username, personality,
+                description);
     }
 
     public boolean equals(User other)

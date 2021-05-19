@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.function.*;
 
 /**
  *  The UI end for setting up a user's personality traits.
@@ -25,26 +26,17 @@ public class PersonalitySetupUI extends JPanel
     private JLabel answerLabel;
     private JButton nextButton;
     private AppContainer container;
-    private String username;
-    private String password;
-    private Network network;
+    private Consumer<PersonalityType> onEnd;
 
     // Constructors ..........................................................
     /**
      * Create a new PersonalitySetupUI object.
      * Sets up instance variables and basic layout accordingly, then starts up the
      * rest of the UI.
-     * @param name User name
      * @param a a reference to the AppContainer that uses this class
-     * @param network the network to connect to
-     * @param password user's password
      */
-    public PersonalitySetupUI(String name, AppContainer a, Network network, String password)
+    public PersonalitySetupUI(AppContainer a)
     {
-        // test = new PersonalityTest(name, network, password);
-        this.username = name;
-        this.network = network;
-        this.password = password;
         test = new PersonalityTest();
         container = a;
 
@@ -52,6 +44,11 @@ public class PersonalitySetupUI extends JPanel
         setFeel();
 
         start();
+    }
+
+    public void onTestFinish(Consumer<PersonalityType> onEnd)
+    {
+        this.onEnd = onEnd;
     }
 
     //Public  Methods ........................................................
@@ -153,8 +150,7 @@ public class PersonalitySetupUI extends JPanel
     public void finish()
     {
         test.answerQuestion(slider.getValue());
-        var type = test.finishTest();
-        network.createUser(new User(username, type), password);
+        onEnd.accept(test.finishTest());
         container.restartLogin();
         container.getNextWindow();
     }
