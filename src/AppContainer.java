@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 public class AppContainer extends JFrame
 {
     private String username;
-    private String password;
-    private String description;
     private ChatUI chat;
     private LoginUI login;
     private PersonalitySetupUI personality;
@@ -53,8 +51,6 @@ public class AppContainer extends JFrame
      */
     public void completeSetup(String name, String pwd, String desc) {
         username = name;
-        password = pwd;
-        description = desc;
         setTitle("APCSinder - " + name);
 
         if (!n.isLoggedIn()) {
