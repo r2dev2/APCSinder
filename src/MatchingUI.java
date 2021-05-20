@@ -79,20 +79,22 @@ public class MatchingUI extends JPanel
         return m;
     }
 
+    /**
+     * Loads a random potential match.
+     */
     private void loadMatch()
     {
         loadMatch(findMatch());
     }
 
+    /**
+     * Loads the given match.
+     * @param m the match to load
+     */
     private void loadMatch(Match m)
     {
         match = m;
         matcher.loadMatch(m);
-    }
-
-    private boolean hasLoadedMatch()
-    {
-        return match != null;
     }
 
     /**
@@ -102,7 +104,7 @@ public class MatchingUI extends JPanel
     private void newMatch(Match m)
     {
         matches.add(m);
-        if (!hasLoadedMatch()) {
+        if (match != null) {
             loadMatch();
         }
     }
