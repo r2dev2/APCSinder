@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.*;
 
 /**
  *  Write a one-sentence summary of your class here.
@@ -109,32 +110,40 @@ public class MatchingUI extends JPanel
         }
     }
 
-    /**
-     * Rejects the match.
-     */
-    private void rejectMatch() {
-        try
-        {
-            network.rejectMatch(match);
-        }
-        catch (IOException | InterruptedException e)
-        {
-            System.err.println("Reject match failed: " + e);
-        }
+    private void runInBackground(Runnable task)
+    {
+        var thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
-    /**
-     * Accepts the match.
-     */
-    private void acceptMatch() {
-        try
-        {
-            network.acceptMatch(match);
-        }
-        catch (IOException | InterruptedException e)
-        {
-            System.err.println("Accept match failed: " + e);
-        }
+    private interface MatchOperator
+    {
+        public void accept(Match m) throws IOException, InterruptedException;
+    }
+
+    private void acceptOrRejectMatch(MatchOperator matchOp)
+    {
+        // Avoid data race by storing a ref to the match
+        Match matchRef = match;
+        runInBackground(() -> {
+            try {
+                matchOp.accept(matchRef);
+            }
+            catch (IOException | InterruptedException e) {
+                System.err.println("accept or reject match failed: " + e);
+            }
+        });
+    }
+
+    private void acceptMatch()
+    {
+        acceptOrRejectMatch(network::acceptMatch);
+    }
+
+    private void rejectMatch()
+    {
+        acceptOrRejectMatch(network::rejectMatch);
     }
 
     /**
