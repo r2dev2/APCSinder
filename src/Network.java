@@ -20,7 +20,6 @@ public class Network
      * Constructor.
      *
      * @param url the url of the server
-     * @param username the user to login
      */
     public Network(String url)
     {
@@ -43,13 +42,15 @@ public class Network
      * Logs in the user to the server.
      * The username and login token are stored.
      *
-     * @param username the user's username
+     * @param name the user's username
      * @param password the user's password
      * @return the result of the login
+     * @throws IOException possible exception
+     * @throws InterruptedException possible exception
      */
-    public LoginResult login(String username, String password) throws IOException, InterruptedException
+    public LoginResult login(String name, String password) throws IOException, InterruptedException
     {
-        String serialized = Serializer.serialize(new LoginAttempt(username, password));
+        String serialized = Serializer.serialize(new LoginAttempt(name, password));
         HttpRequest req = HttpRequest.newBuilder()
             .uri(endpoint("/login"))
             .POST(HttpRequest.BodyPublishers.ofString(serialized))
@@ -58,7 +59,7 @@ public class Network
         LoginResult res = Serializer.deserialize(r.body());
         if (res != null && res.success) {
             token = res.token;
-            this.username = username;
+            this.username = name;
         }
         return res;
     }
@@ -163,12 +164,12 @@ public class Network
 
     /**
      * Place a description of your method here.
-     * @param username the username of the User
+     * @param name the username of the User
      * @return the user associated with this username
      */
-    public User getUser(String username)
+    public User getUser(String name)
     {
-        var req = buildGetRequestWithHeader("/user", "Username", username);
+        var req = buildGetRequestWithHeader("/user", "Username", name);
         return getResource(req, new User());
     }
 
@@ -176,6 +177,8 @@ public class Network
      * Sends a message.
      *
      * @param msg the message to send
+     * @throws IOException possible exception
+     * @throws InterruptedException possible exception
      */
     public void sendMessage(Message msg) throws IOException, InterruptedException
     {
@@ -186,6 +189,8 @@ public class Network
      * Accepts a recommended match.
      *
      * @param match the recommended match to accept
+     * @throws IOException possible exception
+     * @throws InterruptedException possible exception
      */
     public void acceptMatch(Match match) throws IOException, InterruptedException
     {
@@ -196,6 +201,8 @@ public class Network
      * Rejects a recommended match.
      *
      * @param match the recommended match to reject
+     * @throws IOException possible exception
+     * @throws InterruptedException possible exception
      */
     public void rejectMatch(Match match) throws IOException, InterruptedException
     {
@@ -204,6 +211,8 @@ public class Network
 
     /**
      * Testing grounds for how to do this class.
+     * @throws IOException possible exception
+     * @throws InterruptedException possible exception
      */
     public void playground() throws IOException, InterruptedException
     {

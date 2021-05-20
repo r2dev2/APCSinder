@@ -18,7 +18,6 @@ public class AppContainer extends JFrame
     private MatchingUI matching;
     private CardLayout c;
     private Network n;
-    //implement matching UI.
 
     /**
      * Create a new AppContainer object.

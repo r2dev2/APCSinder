@@ -1,5 +1,13 @@
 import java.io.Serializable;
 
+/**
+ *  Represents one message sent from one user to another user.
+ *  Model class that holds the message, sender, receiver, and
+ *  can be compared based on timestamp.
+ *
+ *  @author Ronak Badhe
+ *  @version May 20, 2021
+ */
 public class Message implements Serializable, Comparable<Message>
 {
     /**

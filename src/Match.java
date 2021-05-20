@@ -84,11 +84,22 @@ public class Match implements Serializable
         }
     }
 
+    /**
+     * Checks if a user is in this match.
+     * @param user  username of user
+     * @return  true if in match, false otherwise
+     */
     public boolean hasUser(String user)
     {
         return firstUser.equals(user) || secondUser.equals(user);
     }
 
+    /**
+     * Returns the username of the other user in a match when
+     * given one user.
+     * @param user  username of one user in the match
+     * @return  username of the other user in the match
+     */
     public String otherUser(String user)
     {
         return secondUser.equals(user) ? firstUser : secondUser;
