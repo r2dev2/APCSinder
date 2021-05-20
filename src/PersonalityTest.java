@@ -83,9 +83,8 @@ public class PersonalityTest
     }
 
     /**
-     * Calculates the personality from the answers, then creates
-     * a new User with the given name and personality. Sends this
-     * User to the network to register on the server end.
+     * Calculates the personality from the answers.
+     * @return appropriate PersonalityType
      */
     public PersonalityType finishTest()
     {
