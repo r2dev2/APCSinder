@@ -207,8 +207,8 @@ public class MatchingUI extends JPanel
         {
             if (m == null) {
                 name.setText("Oops!");
-                userDescription.setText("<html><p>There aren't any matches ready for "
-                    + "you yet. Maybe find some friends elsewhere?</p></html>");
+                userDescription.setText("There aren't any matches ready for "
+                    + "you yet. Maybe find some friends elsewhere?");
                 return;
             }
             String personName = m.otherUser(username);
