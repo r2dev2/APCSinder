@@ -20,6 +20,7 @@ public class Server
      * Main method.
      *
      * @param args the cli args - not used
+     * @throws Exception
      */
     public static void main(String[] args) throws Exception
     {
@@ -66,7 +67,7 @@ public class Server
         server.createContext("/listenpotentialmatches",
                 createEventStream(db::subscribePotentialMatches, db));
         server.createContext("/listenmatches", createEventStream(db::subscribe, db));
-        
+
         server.setExecutor(null);
         server.start();
     }

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- *  A ChatUI is a class that allows two matched people to talk to each other.
+ *  A ChatUI is a class that allows a a user to chat to other users and choose which user to chat with.
  *
  *  @author Justin Chang
  *  @version Apr 29, 2021

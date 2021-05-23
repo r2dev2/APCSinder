@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- *  Write a one-sentence summary of your class here.
- *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
+ *  The MatchingUI class creates a ui for users to match up with other potential matches
+ *  based on their personality types.
  *
  *  @author Kevin Li
  *  @version May 3, 2021
@@ -67,8 +66,6 @@ public class MatchingUI extends JPanel
      */
     private Match findMatch()
     {
-        // ArrayList<Match> matches = network.getPotentialMatches();
-
         if (matches.size() == 0) {
             return null;
         }

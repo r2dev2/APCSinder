@@ -12,7 +12,7 @@ public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Messag
     private HashMap<Match, ArrayList<Message>> messages;
 
     /**
-     * Constructor.
+     * Constructor that creates a new MessageDB object with a specific filename.
      *
      * @param filename the filename to persist this messagedb to
      */
@@ -22,6 +22,9 @@ public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Messag
         messages = load();
     }
 
+    /**
+     * Create a new MessageDB object with a null filename.
+     */
     public MessageDB()
     {
         this(null);
@@ -54,9 +57,10 @@ public class MessageDB extends BaseDB<HashMap<Match, ArrayList<Message>>, Messag
     }
 
     /**
-     * Get the messages for a particlar user pair.
+     * Get the messages for a particular user pair.
      *
      * @param match the user pair
+     * @return the list of messages for a particular user pair.
      */
     public ArrayList<Message> get(Match match)
     {

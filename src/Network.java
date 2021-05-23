@@ -219,9 +219,6 @@ public class Network
         createUser(new User("bruh", new PersonalityType(), "I like turtles"), "moment");
         login("bruh", "moment");
         sendMessage(new Message("Hello there", "bruh", "Justin"));
-        // createUser(new User("Justin", new PersonalityType()), "moment");
-        // login("Justin", "moment");
-        // sendMessage(new Message("Hello there", "Justin", "bruh"));
 
         getMessages();
         getMatches();

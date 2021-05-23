@@ -44,9 +44,9 @@ public class AppContainer extends JFrame
     /**
      * Updates the name and password from CreateUserUI and refreshes the title.
      * Proceeds with opening up the next UI screens (personality, matching, chat).
-     * @param name username
-     * @param pwd password
-     * @param desc description
+     * @param name the username of the user
+     * @param pwd password the password of the user
+     * @param desc description the user's description
      */
     public void completeSetup(String name, String pwd, String desc) {
         username = name;
@@ -98,7 +98,7 @@ public class AppContainer extends JFrame
     }
 
     /**
-     * Swaps from the matching UI to the chat UI.
+     * Swaps from the matching UI to the chat UI and loads the list of users on the chatUI's sidepanel.
      */
     public void matchingToChat()
     {

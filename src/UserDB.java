@@ -20,7 +20,7 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
     private MatchingDB mdb;
 
     /**
-     * Constructor.
+     * Constructor that creates a UserDB object with the given filename.
      *
      * @param filename the filename to persist to
      */
@@ -34,6 +34,9 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         mdb = new MatchingDB(filename == null ? null : filename + ".pot.db");
     }
 
+    /**
+     * Constructor that creates a new UserDB object with a filename set to null.
+     */
     public UserDB()
     {
         this(null);

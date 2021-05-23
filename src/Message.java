@@ -57,15 +57,4 @@ public class Message implements Serializable, Comparable<Message>
     {
         return String.format("%s: %s", sender, msg);
     }
-
-    /**
-     * Compare based on timestamp.
-     *
-     * @param other the other message
-     * @return m1 &lt; m2 if it was more recent
-     */
-    public int compareTo(Message other)
-    {
-        return 0;
-    }
 }

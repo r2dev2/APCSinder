@@ -1,7 +1,8 @@
 import java.io.Serializable;
 
 /**
- *  TODO
+ *  The LoginAttempt class represents a login attempt tied
+ *  to a username and password used in the login attempt.
  *
  *  @author Ronak Badhe
  *  @version May 8, 2021

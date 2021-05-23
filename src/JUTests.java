@@ -8,7 +8,7 @@ import junit.framework.JUnit4TestAdapter;
  *  Follow it with additional details about its purpose, what abstraction
  *  it represents, and how to use it.
  *
- *  @author Justin Chang
+ *  @author Ronak Badhe
  *  @version May 8, 2021
  */
 public class JUTests

@@ -66,6 +66,10 @@ public class PersonalityType implements Serializable
         return preferredTypes;
     }
 
+    /**
+     * Returns the hashcode of the PersonalityType
+     * @return the hashcode of the PersonalityType
+     */
     public int hashCode()
     {
         return type.hashCode();
@@ -81,6 +85,11 @@ public class PersonalityType implements Serializable
         return type.equals(other.type);
     }
 
+    /**
+     * Determines if two PersonalityTypes are equal (Object compare)
+     * @param other the other personality type object.
+     * @return true of they are the same time, false otherwise.
+     */
     public boolean equals(Object other)
     {
         try {
@@ -91,6 +100,9 @@ public class PersonalityType implements Serializable
         }
     }
 
+    /**
+     * Returns the string representation of the PersonalityType.
+     */
     public String toString()
     {
         return type;
