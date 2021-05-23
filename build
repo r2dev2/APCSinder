@@ -7,3 +7,7 @@ function failure() {
 
 mkdir -p bin
 cd src && javac $(ls -1 | grep \.java | grep -v JU) && mv *.class ../bin || failure
+if [ "$1" = jar ]
+then
+    cd ../bin && jar cfm ../APCSinder.jar ../src/manifest.mf *.class
+fi
