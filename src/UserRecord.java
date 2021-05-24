@@ -1,14 +1,40 @@
 import java.util.*;
 import java.io.Serializable;
 
+/**
+ *  The UserRecord class holds the data on a user.
+ *
+ *  @author Ronak Badhe
+ *  @version May 24, 2021
+ */
 public class UserRecord implements Serializable
 {
+    /**
+     * The password of this user
+     */
     public String password;
+    /**
+     * The user associated with this UserRecord
+     */
     public User user;
+    /**
+     * List of users this user has matched with
+     */
     public HashSet<String> matches;
+    /**
+     * List of users this user has accepted matches with
+     */
     public HashSet<String> accepted;
+    /**
+     * List of users this user has rejected matches with
+     */
     public HashSet<String> rejected;
 
+    /**
+     * Create a new UserRecord object.
+     * @param user the user associated with this UserRecord
+     * @param password the password linked to this UserRecord
+     */
     public UserRecord(User user, String password)
     {
         this.user = user;
