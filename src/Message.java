@@ -53,6 +53,9 @@ public class Message implements Serializable, Comparable<Message>
         this(msg, sender, receiver, System.currentTimeMillis() / 1000L);
     }
 
+    /**
+     * Return a string representaion of this message in the form [sender]: [message]
+     */
     public String toString()
     {
         return String.format("%s: %s", sender, msg);

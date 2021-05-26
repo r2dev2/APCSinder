@@ -124,6 +124,11 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return users.get(username);
     }
 
+    /**
+     * Returns the user with a given username.
+     * @param username the username of the user
+     * @return the User associated with this username
+     */
     public User getUser(String username)
     {
         return getRecord(username).user;
