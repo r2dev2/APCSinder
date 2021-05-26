@@ -3,8 +3,7 @@ import java.util.HashMap;
 import java.io.Serializable;
 
 /**
- *  Calculates and holds a Myers-Briggs personality type, as well as
- *  a static Map to hold ideal matches for each personality type.
+ *  Calculates and holds a Myers-Briggs personality type.
  *
  *  @author Ronak Badhe
  *  @version May 13, 2021

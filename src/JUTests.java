@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 import junit.framework.JUnit4TestAdapter;
 
 /**
- *  Write a one-sentence summary of your class here.
- *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
+ *  Unit tests.
  *
  *  @author Ronak Badhe
  *  @version May 8, 2021

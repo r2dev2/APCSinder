@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- *  This class stores the result of a login attempt
+ *  This class stores the result of a login attempt.
  *
  *  @author Ronak Badhe
  *  @version May 8, 2021

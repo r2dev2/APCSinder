@@ -19,7 +19,7 @@ public class Server
     /**
      * Main method.
      *
-     * @param args the cli args - not used
+     * @param args the cli args: --memory is whether it will be in memory or not
      * @throws Exception
      */
     public static void main(String[] args) throws Exception

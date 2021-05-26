@@ -84,6 +84,12 @@ public class UserDB extends BaseDB<HashMap<String, UserRecord>, Match>
         return true;
     }
 
+    /**
+     * Subscribes to potential matches.
+     *
+     * @param id the id of the user to subscribe to
+     * @param subscriber the subscriber
+     */
     public void subscribePotentialMatches(String id, BaseDB.Subscriber<Match> subscriber)
     {
         mdb.subscribe(id, subscriber);

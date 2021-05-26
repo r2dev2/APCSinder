@@ -1,3 +1,12 @@
+/**
+ * Server Client Integration tests.
+ *
+ * These tests test whether the client can communicate across http
+ * and correctly modify server state.
+ *
+ * @author Ronak Badhe
+ * @version May 18, 2021
+ */
 public class ServerClientIntegration
 {
     private Process server;
@@ -11,7 +20,7 @@ public class ServerClientIntegration
         new PersonalityType(true, false, true, true);
     private static String pass = "testing123";
 
-    public ServerClientIntegration() throws Exception
+    public ServerClientIntegration()
     {
         tests = new TestCase[] {
             new TestCase("create user", this::testCreateUser),

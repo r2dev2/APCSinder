@@ -3,10 +3,9 @@ import java.util.*;
 
 /**
  * Serializes stuff sanely.
- * Because in the "high level language" of java, one must write 20 lines and
- * create 3 objects to serialize a goddamn object.
  *
- * Edit: ok now i see why it's supposed to throw exceptions, not return null
+ * @author Ronak Badhe
+ * @version May 8, 2021
  */
 public class Serializer
 {
@@ -14,7 +13,7 @@ public class Serializer
      * Serializes an object.
      *
      * @param obj the object to serialize
-     * @return the base64 encoded serialization of the object.
+     * @return the base64 encoded serialization of the object or null if it fails.
      */
     public static String serialize(Serializable obj)
     {
@@ -44,7 +43,7 @@ public class Serializer
      * Deserializes an object.
      *
      * @param serialized the base64 encoded serialization of an object.
-     * @return the deserialized object
+     * @return the deserialized object or null if it fails
      */
     public static <T extends Serializable> T deserialize(String serialized)
     {

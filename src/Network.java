@@ -8,6 +8,9 @@ import java.util.stream.Stream;
 
 /**
  * Networking for client.
+ *
+ * @author Ronak Badhe
+ * @version May 8, 2021
  */
 public class Network
 {

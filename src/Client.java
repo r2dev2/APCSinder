@@ -8,30 +8,18 @@ public class Client
 {
     /**
      * Starts the client frontend.
-     * @param args an String array that contains the URL.
+     *
+     * @param args cli args: -s serverurl
      * @throws Exception
      */
     public static void main(String[] args) throws Exception
     {
         System.out.println("Client program");
-        String s = Serializer.serialize(new User("bruh",
-                new PersonalityType(true, true, true, true), "I like turtles"));
-        User usr = Serializer.deserialize(s);
-        System.out.println(s);
-        System.out.println(usr);
-
-        System.out.println("Login success: " + Serializer.serialize(
-                    new LoginResult(true)));
-        System.out.println("Login failure: " + Serializer.serialize(
-                    new LoginResult(false)));
-
 
         String url = getServerURL(args);
         Network n = url == null
             ? new Network()
             : new Network(url);
-        // n.playground();
-        // Thread.sleep(100);
         AppContainer a = new AppContainer(n);
     }
 
