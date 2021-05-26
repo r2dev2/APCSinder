@@ -44,6 +44,11 @@ public class UserRecord implements Serializable
         this.accepted = new HashSet<>();
     }
 
+    /**
+     * Gets the matches of the user.
+     *
+     * @return the matches of the user in ArrayList&lt;Match&gt; form.
+     */
     public ArrayList<Match> getMatches()
     {
         var matches = new ArrayList<Match>();
@@ -54,21 +59,44 @@ public class UserRecord implements Serializable
         return matches;
     }
 
+    /**
+     * Returns whether the user has rejected the other user.
+     *
+     * @param other the other userrecord
+     * @return whether the other person has been rejected
+     */
     public boolean hasRejected(UserRecord other)
     {
         return rejected.contains(other.user.username);
     }
 
+    /**
+     * Get whether the user has accepted the other user.
+     *
+     * @param other the other userrecord
+     * @return whether the other person has been approved for matching
+     */
     public boolean hasAccepted(UserRecord other)
     {
         return accepted.contains(other.user.username);
     }
 
+    /**
+     * Get whether the user has matched with another user.
+     *
+     * @param other the other user
+     * @return whether the user has matched with the other user.
+     */
     public boolean hasMatched(UserRecord other)
     {
         return matches.contains(other.user.username);
     }
 
+    /**
+     * Approve of another user.
+     *
+     * @param user the user that the person wants to match with
+     */
     public void acceptUser(String user)
     {
         accepted.add(user);
